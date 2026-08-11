@@ -1,18 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabasePublishableKey =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-const supabaseAnonKey =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    "Les variables Supabase sont manquantes."
-  );
+if (!supabaseUrl || !supabasePublishableKey) {
+  throw new Error("Les variables Supabase sont manquantes.");
 }
 
 export const supabase = createClient(
   supabaseUrl,
-  supabaseAnonKey
+  supabasePublishableKey
 );
