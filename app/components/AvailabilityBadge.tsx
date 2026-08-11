@@ -12,23 +12,18 @@ export default function AvailabilityBadge() {
     useState<SiteConfig>(defaultSiteConfig);
 
   useEffect(() => {
-    setConfig(getSiteConfig());
-
-    const handleStorage = () => {
-      setConfig(getSiteConfig());
+    const loadConfig = async () => {
+      const data = await getSiteConfig();
+      setConfig(data);
     };
 
-    window.addEventListener(
-      "storage",
-      handleStorage
-    );
+    loadConfig();
 
-    return () => {
-      window.removeEventListener(
-        "storage",
-        handleStorage
-      );
-    };
+    const interval = setInterval(() => {
+      loadConfig();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const colors = {
@@ -38,14 +33,12 @@ export default function AvailabilityBadge() {
       background: "bg-emerald-500/[0.06]",
       text: "text-emerald-400",
     },
-
     soon: {
       dot: "bg-orange-400",
       border: "border-orange-500/20",
       background: "bg-orange-500/[0.06]",
       text: "text-orange-400",
     },
-
     unavailable: {
       dot: "bg-red-400",
       border: "border-red-500/20",
@@ -58,10 +51,14 @@ export default function AvailabilityBadge() {
 
   return (
     <div
-      className={`inline-flex items-center gap-3 rounded-full border px-4 py-2 ${color.border} ${color.background}`}
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 ${color.border} ${color.background}`}
     >
       <span
-        className={`h-2 w-2 rounded-full ${color.dot} shadow-[0_0_12px_currentColor]`}
+        className={`h-2 w-2 rounded-full ${color.dot} ${
+          config.availability === "available"
+            ? "animate-pulse"
+            : ""
+        }`}
       />
 
       <span

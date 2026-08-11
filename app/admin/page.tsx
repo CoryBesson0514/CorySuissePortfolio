@@ -35,19 +35,54 @@ export default function AdminPage() {
     useState<SiteConfig>(defaultSiteConfig);
 
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // =========================
+  // CHARGER LA CONFIGURATION
+  // =========================
+
+  const loadConfig = async () => {
+    try {
+      const data = await getSiteConfig();
+      setConfig(data);
+    } catch (error) {
+      console.error(
+        "Erreur lors du chargement de la configuration :",
+        error
+      );
+    }
+  };
+
+  // =========================
+  // VÉRIFIER LA SESSION
+  // =========================
 
   useEffect(() => {
-    const session = sessionStorage.getItem(
-      "cory-admin-session"
-    );
+    const checkSession = async () => {
+      const session = sessionStorage.getItem(
+        "cory-admin-session"
+      );
 
-    if (session === "true") {
-      setLoggedIn(true);
-      setConfig(getSiteConfig());
-    }
+      if (session === "true") {
+        setLoggedIn(true);
+      
+        const loadConfig = async () => {
+          const data = await getSiteConfig();
+          setConfig(data);
+        };
+      
+        loadConfig();
+      };
+    }  
+
+    checkSession();
   }, []);
 
-  const handleLogin = (
+  // =========================
+  // CONNEXION
+  // =========================
+
+  const handleLogin = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
@@ -63,7 +98,8 @@ export default function AdminPage() {
 
       setLoggedIn(true);
       setError("");
-      setConfig(getSiteConfig());
+
+      await loadConfig();
 
       return;
     }
@@ -73,30 +109,50 @@ export default function AdminPage() {
     );
   };
 
+  // =========================
+  // DÉCONNEXION
+  // =========================
+
   const handleLogout = () => {
-    // Supprime la session administrateur
     sessionStorage.removeItem(
       "cory-admin-session"
     );
 
-    // Nettoie les champs
     setLoggedIn(false);
     setUsername("");
     setPassword("");
 
-    // Retour à la page principale
     router.push("/");
   };
 
-  const handleSave = () => {
-    saveSiteConfig(config);
+  // =========================
+  // SAUVEGARDE
+  // =========================
 
-    setSaved(true);
+  const handleSave = async () => {
+    try {
+      await saveSiteConfig(config);
 
-    setTimeout(() => {
-      setSaved(false);
-    }, 2500);
+      setSaved(true);
+
+      setTimeout(() => {
+        setSaved(false);
+      }, 2500);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la sauvegarde :",
+        error
+      );
+
+      alert(
+        "Impossible d'enregistrer les modifications."
+      );
+    }
   };
+
+  // =========================
+  // MODIFICATION CONFIG
+  // =========================
 
   const updateConfig = (
     key: keyof SiteConfig,
@@ -107,6 +163,10 @@ export default function AdminPage() {
       [key]: value,
     }));
   };
+
+  // =========================
+  // DISPONIBILITÉ
+  // =========================
 
   const changeAvailability = (
     status: AvailabilityStatus
@@ -140,9 +200,23 @@ export default function AdminPage() {
     }));
   };
 
-  /* =========================
-     PAGE DE CONNEXION
-  ========================= */
+  // =========================
+  // CHARGEMENT
+  // =========================
+
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#050505] text-white">
+        <div className="text-sm text-zinc-500">
+          Chargement...
+        </div>
+      </main>
+    );
+  }
+
+  // =========================
+  // PAGE DE CONNEXION
+  // =========================
 
   if (!loggedIn) {
     return (
@@ -280,9 +354,9 @@ export default function AdminPage() {
     );
   }
 
-  /* =========================
-     ADMIN CONNECTÉ
-  ========================= */
+  // =========================
+  // ADMIN CONNECTÉ
+  // =========================
 
   return (
     <main className="min-h-screen bg-[#050505] text-white">
