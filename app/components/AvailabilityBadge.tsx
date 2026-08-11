@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import {
-  getSiteConfig,
   defaultSiteConfig,
+  getSiteConfig,
   type SiteConfig,
 } from "../lib/siteConfig";
 
@@ -11,54 +11,25 @@ export default function AvailabilityBadge() {
   const [config, setConfig] =
     useState<SiteConfig>(defaultSiteConfig);
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    let mounted = true;
-
     async function loadConfig() {
       try {
         const data = await getSiteConfig();
-
-        if (mounted) {
-          setConfig(data);
-        }
+        setConfig(data);
       } catch (error) {
         console.error(
-          "Erreur lors du chargement de la disponibilité :",
+          "Erreur chargement disponibilité :",
           error
         );
 
-        if (mounted) {
-          setConfig(defaultSiteConfig);
-        }
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        setConfig(defaultSiteConfig);
       }
     }
 
     loadConfig();
-
-    return () => {
-      mounted = false;
-    };
   }, []);
 
-  if (loading) {
-    return (
-      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
-        <span className="h-2 w-2 animate-pulse rounded-full bg-zinc-500" />
-
-        <span className="text-xs text-zinc-500">
-          Chargement...
-        </span>
-      </div>
-    );
-  }
-
-  const statusStyles = {
+  const styles = {
     available: {
       dot: "bg-emerald-400",
       border: "border-emerald-500/20",
@@ -82,8 +53,8 @@ export default function AvailabilityBadge() {
   };
 
   const style =
-    statusStyles[config.availability] ??
-    statusStyles.available;
+    styles[config.availability] ??
+    styles.available;
 
   return (
     <div
