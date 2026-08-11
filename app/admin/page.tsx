@@ -59,21 +59,26 @@ export default function AdminPage() {
 
   useEffect(() => {
     const checkSession = async () => {
-      const session = sessionStorage.getItem(
-        "cory-admin-session"
-      );
+      try {
+        const session = sessionStorage.getItem(
+          "cory-admin-session"
+        );
 
-      if (session === "true") {
-        setLoggedIn(true);
-      
-        const loadConfig = async () => {
-          const data = await getSiteConfig();
-          setConfig(data);
-        };
-      
-        loadConfig();
-      };
-    }  
+        if (session === "true") {
+          setLoggedIn(true);
+          await loadConfig();
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la vérification de session :",
+          error
+        );
+      } finally {
+        // IMPORTANT :
+        // permet de sortir de "Chargement..."
+        setLoading(false);
+      }
+    };
 
     checkSession();
   }, []);
@@ -87,6 +92,8 @@ export default function AdminPage() {
   ) => {
     event.preventDefault();
 
+    setError("");
+
     if (
       username === "admin" &&
       password === "@Gruissan11"
@@ -97,9 +104,12 @@ export default function AdminPage() {
       );
 
       setLoggedIn(true);
-      setError("");
 
-      await loadConfig();
+      try {
+        await loadConfig();
+      } catch (error) {
+        console.error(error);
+      }
 
       return;
     }
@@ -272,7 +282,6 @@ export default function AdminPage() {
                   </label>
 
                   <div className="relative">
-
                     <User
                       size={18}
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600"
@@ -282,15 +291,12 @@ export default function AdminPage() {
                       type="text"
                       value={username}
                       onChange={(event) =>
-                        setUsername(
-                          event.target.value
-                        )
+                        setUsername(event.target.value)
                       }
                       placeholder="Identifiant"
                       autoComplete="username"
                       className="w-full rounded-2xl border border-white/10 bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/25 focus:bg-white/[0.05]"
                     />
-
                   </div>
                 </div>
 
@@ -301,7 +307,6 @@ export default function AdminPage() {
                   </label>
 
                   <div className="relative">
-
                     <Lock
                       size={18}
                       className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600"
@@ -311,15 +316,12 @@ export default function AdminPage() {
                       type="password"
                       value={password}
                       onChange={(event) =>
-                        setPassword(
-                          event.target.value
-                        )
+                        setPassword(event.target.value)
                       }
                       placeholder="Mot de passe"
                       autoComplete="current-password"
                       className="w-full rounded-2xl border border-white/10 bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/25 focus:bg-white/[0.05]"
                     />
-
                   </div>
                 </div>
 
@@ -344,11 +346,8 @@ export default function AdminPage() {
                 </button>
 
               </form>
-
             </div>
-
           </motion.div>
-
         </div>
       </main>
     );
@@ -367,7 +366,6 @@ export default function AdminPage() {
         <div className="mb-10 flex items-center justify-between">
 
           <div>
-
             <p className="text-sm font-semibold tracking-tight">
               CORY
               <span className="text-zinc-500">
@@ -382,7 +380,6 @@ export default function AdminPage() {
             <p className="mt-2 text-sm text-zinc-500">
               Gérez les informations affichées sur votre site.
             </p>
-
           </div>
 
           {/* Déconnexion */}
@@ -403,7 +400,6 @@ export default function AdminPage() {
         <section className="rounded-[28px] border border-white/10 bg-white/[0.025] p-6 md:p-8">
 
           <div className="mb-8">
-
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-600">
               Informations
             </p>
@@ -411,14 +407,12 @@ export default function AdminPage() {
             <h2 className="mt-2 text-xl font-medium">
               Coordonnées
             </h2>
-
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
 
             {/* Téléphone */}
             <div>
-
               <label className="mb-2 flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-zinc-500">
                 <Phone size={14} />
                 Téléphone
@@ -435,12 +429,10 @@ export default function AdminPage() {
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
-
             </div>
 
             {/* Email */}
             <div>
-
               <label className="mb-2 flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-zinc-500">
                 <Mail size={14} />
                 E-mail
@@ -457,18 +449,15 @@ export default function AdminPage() {
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
-
             </div>
 
           </div>
-
         </section>
 
         {/* Disponibilité */}
         <section className="mt-6 rounded-[28px] border border-white/10 bg-white/[0.025] p-6 md:p-8">
 
           <div className="mb-8">
-
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-600">
               Statut
             </p>
@@ -480,7 +469,6 @@ export default function AdminPage() {
             <p className="mt-2 text-sm text-zinc-500">
               Cette information apparaîtra sur votre site.
             </p>
-
           </div>
 
           {/* Choix statut */}
@@ -498,25 +486,20 @@ export default function AdminPage() {
                   : "border-white/10 bg-white/[0.02] hover:bg-white/[0.05]"
               }`}
             >
-
               <div className="flex items-center gap-3">
-
                 <span className="h-3 w-3 rounded-full bg-emerald-400" />
 
                 <span className="text-sm font-medium">
                   Disponible
                 </span>
 
-                {config.availability ===
-                  "available" && (
+                {config.availability === "available" && (
                   <Check
                     size={16}
                     className="ml-auto text-emerald-400"
                   />
                 )}
-
               </div>
-
             </button>
 
             {/* Prochainement */}
@@ -531,9 +514,7 @@ export default function AdminPage() {
                   : "border-white/10 bg-white/[0.02] hover:bg-white/[0.05]"
               }`}
             >
-
               <div className="flex items-center gap-3">
-
                 <span className="h-3 w-3 rounded-full bg-orange-400" />
 
                 <span className="text-sm font-medium">
@@ -546,9 +527,7 @@ export default function AdminPage() {
                     className="ml-auto text-orange-400"
                   />
                 )}
-
               </div>
-
             </button>
 
             {/* Indisponible */}
@@ -563,25 +542,20 @@ export default function AdminPage() {
                   : "border-white/10 bg-white/[0.02] hover:bg-white/[0.05]"
               }`}
             >
-
               <div className="flex items-center gap-3">
-
                 <span className="h-3 w-3 rounded-full bg-red-400" />
 
                 <span className="text-sm font-medium">
                   Indisponible
                 </span>
 
-                {config.availability ===
-                  "unavailable" && (
+                {config.availability === "unavailable" && (
                   <Check
                     size={16}
                     className="ml-auto text-red-400"
                   />
                 )}
-
               </div>
-
             </button>
 
           </div>
@@ -590,7 +564,6 @@ export default function AdminPage() {
           <div className="mt-6 grid gap-5 md:grid-cols-2">
 
             <div>
-
               <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-zinc-500">
                 Texte de la pastille
               </label>
@@ -606,11 +579,9 @@ export default function AdminPage() {
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
-
             </div>
 
             <div>
-
               <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-zinc-500">
                 Message
               </label>
@@ -626,11 +597,9 @@ export default function AdminPage() {
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
-
             </div>
 
           </div>
-
         </section>
 
         {/* Enregistrer */}
@@ -640,7 +609,6 @@ export default function AdminPage() {
             onClick={handleSave}
             className="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition hover:scale-105 hover:bg-zinc-200 active:scale-95"
           >
-
             {saved ? (
               <>
                 <Check size={17} />
@@ -652,7 +620,6 @@ export default function AdminPage() {
                 Enregistrer
               </>
             )}
-
           </button>
 
         </div>
