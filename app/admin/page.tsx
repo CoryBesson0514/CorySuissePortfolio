@@ -54,7 +54,7 @@ export default function AdminPage() {
 
     if (
       username === "admin" &&
-      password === "change-moi"
+      password === "@Gruissan11"
     ) {
       sessionStorage.setItem(
         "cory-admin-session",
