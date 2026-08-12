@@ -198,7 +198,7 @@ export default function Experience() {
                   }
                   onMouseLeave={() => setActiveImage(null)}
                 >
-                  Garage Richard Vaianni
+                  Garage Richard Vaiannii
                 </span>
               </p>
 
