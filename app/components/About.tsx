@@ -86,7 +86,7 @@ export default function About() {
             <p>
               Avec mon cousin, je développe également{" "}
               <span
-                className="pointer-events-none fixed z-50 w-[calc(100vw-40px)] max-w-[400px] overflow-hidden rounded-2xl border border-white/10 bg-black/60 shadow-2xl backdrop-blur-xl"
+                className="cursor-pointer text-white underline decoration-white/20 underline-offset-4 transition hover:decoration-white"
                 onMouseEnter={(event) => handleMouseEnter(event, "bsn")}
                 onMouseLeave={() => setActiveImage(null)}
                 onClick={(event) => handleMouseEnter(event, "bsn")}
