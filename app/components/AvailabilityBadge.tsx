@@ -30,6 +30,7 @@ export default function AvailabilityBadge() {
       border: "border-emerald-500/20",
       background: "bg-emerald-500/[0.06]",
       text: "text-emerald-400",
+      message: "text-emerald-700",
     },
 
     soon: {
@@ -37,6 +38,7 @@ export default function AvailabilityBadge() {
       border: "border-orange-500/20",
       background: "bg-orange-500/[0.06]",
       text: "text-orange-400",
+      message: "text-orange-700",
     },
 
     unavailable: {
@@ -44,30 +46,31 @@ export default function AvailabilityBadge() {
       border: "border-red-500/20",
       background: "bg-red-500/[0.06]",
       text: "text-red-400",
+      message: "text-red-700",
     },
   };
 
   const style = styles[config.availability] ?? styles.available;
 
   return (
-    <div className="flex flex-col items-start gap-3">
-      <div
-        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 ${style.border} ${style.background}`}
-      >
-        <span
-          className={`h-2 w-2 rounded-full ${style.dot} ${
-            config.availability === "available" ? "animate-pulse" : ""
-          }`}
-        />
+    <div
+      className={`inline-flex max-w-xl items-start gap-2 rounded-2xl border px-3 py-2 ${style.border} ${style.background}`}
+    >
+      <span
+        className={`mt-1 h-2 w-2 shrink-0 rounded-full ${style.dot} ${
+          config.availability === "available" ? "animate-pulse" : ""
+        }`}
+      />
 
+      <div className="flex flex-col">
         <span className={`text-xs font-medium ${style.text}`}>
           {config.availabilityLabel}
         </span>
-      </div>
 
-      <p className="max-w-xl text-sm leading-relaxed text-zinc-500">
-        {config.availabilityMessage}
-      </p>
+        <span className={`mt-0.5 text-xs leading-relaxed ${style.message}`}>
+          {config.availabilityMessage}
+        </span>
+      </div>
     </div>
   );
 }
