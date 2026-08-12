@@ -308,7 +308,7 @@ export default function Experience() {
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
                 Après ces différentes expériences, j'ai choisi de m'installer en
                 Suisse afin de rejoindre ma famille et de construire une
-                nouvelle étape de mon parcours professionnel.
+                nouvelle étape de mon parcours professionnel et personnel.
               </p>
             </div>
           </div>
