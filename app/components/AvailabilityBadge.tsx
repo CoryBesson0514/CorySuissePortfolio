@@ -6,11 +6,16 @@ import {
   getSiteConfig,
   type SiteConfig,
 } from "../lib/siteConfig";
+import { supabase } from "../lib/supabase";
 
 export default function AvailabilityBadge() {
   const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
 
   useEffect(() => {
+    // =========================
+    // CHARGEMENT INITIAL
+    // =========================
+
     async function loadConfig() {
       try {
         const data = await getSiteConfig();
@@ -22,7 +27,47 @@ export default function AvailabilityBadge() {
     }
 
     loadConfig();
+
+    // =========================
+    // SYNCHRONISATION EN TEMPS RÉEL
+    // =========================
+
+    const channel = supabase
+      .channel("site-config-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "site_config",
+        },
+        (payload) => {
+          const data = payload.new;
+
+          setConfig({
+            id: data.id,
+            phone: data.phone,
+            email: data.email,
+            availability: data.availability,
+            availabilityLabel: data.availability_label,
+            availabilityMessage: data.availability_message,
+          });
+        }
+      )
+      .subscribe();
+
+    // =========================
+    // NETTOYAGE
+    // =========================
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
+
+  // =========================
+  // STYLES
+  // =========================
 
   const styles = {
     available: {
@@ -51,6 +96,10 @@ export default function AvailabilityBadge() {
   };
 
   const style = styles[config.availability] ?? styles.available;
+
+  // =========================
+  // AFFICHAGE
+  // =========================
 
   return (
     <div
