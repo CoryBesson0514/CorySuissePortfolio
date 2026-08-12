@@ -1,32 +1,50 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ImageKey = "sophie" | "frj" | "vaianni";
 
-const images = {
+const images: Record<
+  ImageKey,
+  {
+    photos: string[];
+    alt: string;
+  }
+> = {
   sophie: {
-    src: "/sophie.jpg",
+    photos: ["/sophie.jpg", "/sophie2.jpg", "/sophie3.jpg"],
     alt: "Sophie LeBreuilly — Boulangerie",
   },
+
   frj: {
-    src: "/frj.jpg",
+    photos: ["/frj.jpg", "/frj2.jpg"],
     alt: "FRJ Location — Hertz",
   },
+
   vaianni: {
-    src: "/vaianni.jpg",
-    alt: "Vaianni — Mécanique automobile",
+    photos: ["/vaianni.jpg"],
+    alt: "Garage Richard Vaianni — Mécanique automobile",
   },
 };
 
 export default function Experience() {
   const [activeImage, setActiveImage] = useState<ImageKey | null>(null);
 
+  const [previewIndex, setPreviewIndex] = useState(0);
+
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
   const [imagePosition, setImagePosition] = useState({
     x: 0,
     y: 0,
   });
+
+  // =========================
+  // POSITION DE L'APERÇU
+  // =========================
 
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLSpanElement>,
@@ -59,12 +77,104 @@ export default function Experience() {
       y,
     });
 
+    setPreviewIndex(0);
     setActiveImage(image);
   };
+
+  // =========================
+  // CHANGEMENT AUTOMATIQUE
+  // =========================
+
+  useEffect(() => {
+    if (!activeImage) return;
+
+    const photos = images[activeImage].photos;
+
+    if (photos.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setPreviewIndex((current) => (current + 1) % photos.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [activeImage]);
+
+  // =========================
+  // OUVRIR GALERIE
+  // =========================
+
+  const openGallery = () => {
+    if (!activeImage) return;
+
+    setGalleryIndex(previewIndex);
+    setIsGalleryOpen(true);
+  };
+
+  // =========================
+  // FERMER GALERIE
+  // =========================
+
+  const closeGallery = () => {
+    setIsGalleryOpen(false);
+  };
+
+  // =========================
+  // PHOTO SUIVANTE
+  // =========================
+
+  const nextPhoto = () => {
+    if (!activeImage) return;
+
+    const photos = images[activeImage].photos;
+
+    setGalleryIndex((current) => (current + 1) % photos.length);
+  };
+
+  // =========================
+  // PHOTO PRÉCÉDENTE
+  // =========================
+
+  const previousPhoto = () => {
+    if (!activeImage) return;
+
+    const photos = images[activeImage].photos;
+
+    setGalleryIndex((current) => (current - 1 + photos.length) % photos.length);
+  };
+
+  // =========================
+  // CLAVIER
+  // =========================
+
+  useEffect(() => {
+    if (!isGalleryOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeGallery();
+      }
+
+      if (event.key === "ArrowRight") {
+        nextPhoto();
+      }
+
+      if (event.key === "ArrowLeft") {
+        previousPhoto();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isGalleryOpen, activeImage]);
 
   return (
     <section id="experience" className="section relative">
       <div className="container-site">
+        {/* =========================
+            TITRE
+        ========================= */}
+
         <div className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             Expérience
@@ -77,7 +187,10 @@ export default function Experience() {
         </div>
 
         <div className="space-y-16">
-          {/* Sophie LeBreuilly */}
+          {/* =========================
+              SOPHIE
+          ========================= */}
+
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
             <div>
               <p className="text-sm text-zinc-500">2023 — 2025</p>
@@ -109,7 +222,10 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* FRJ Location — Hertz */}
+          {/* =========================
+              FRJ LOCATION
+          ========================= */}
+
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
             <div>
               <p className="text-sm text-zinc-500">2025 — 2026</p>
@@ -148,7 +264,10 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* Mécanique */}
+          {/* =========================
+              GARAGE RICHARD VAIANNI
+          ========================= */}
+
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
             <div>
               <p className="text-sm text-zinc-500">2026</p>
@@ -180,7 +299,10 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* Suisse */}
+          {/* =========================
+              SUISSE
+          ========================= */}
+
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
             <div>
               <p className="text-sm text-zinc-500">2026 — aujourd'hui</p>
@@ -205,9 +327,12 @@ export default function Experience() {
         </div>
       </div>
 
-      {/* Image au survol */}
+      {/* =========================
+          APERÇU AU SURVOL
+      ========================= */}
+
       <AnimatePresence>
-        {activeImage && (
+        {activeImage && !isGalleryOpen && (
           <motion.div
             key={activeImage}
             initial={{
@@ -230,13 +355,151 @@ export default function Experience() {
               left: imagePosition.x,
               top: imagePosition.y,
             }}
-            className="pointer-events-none fixed z-50 hidden w-[400px] overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl lg:block"
+            onClick={openGallery}
+            className="pointer-events-auto fixed z-50 hidden w-[400px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl lg:block"
           >
-            <img
-              src={images[activeImage].src}
-              alt={images[activeImage].alt}
-              className="aspect-[4/3] w-full object-cover"
-            />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={previewIndex}
+                src={images[activeImage].photos[previewIndex]}
+                alt={images[activeImage].alt}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                }}
+                transition={{
+                  duration: 0.8,
+                }}
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </AnimatePresence>
+
+            {/* Points */}
+
+            {images[activeImage].photos.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/50 px-3 py-2 backdrop-blur-md">
+                {images[activeImage].photos.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`h-1.5 w-1.5 rounded-full transition ${
+                      index === previewIndex ? "bg-white" : "bg-white/30"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* =========================
+          GALERIE
+      ========================= */}
+
+      <AnimatePresence>
+        {activeImage && isGalleryOpen && (
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-5 backdrop-blur-md"
+            onClick={closeGallery}
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.95,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.95,
+              }}
+              className="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center"
+              onClick={(event) => event.stopPropagation()}
+            >
+              {/* IMAGE */}
+
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={galleryIndex}
+                  src={images[activeImage].photos[galleryIndex]}
+                  alt={images[activeImage].alt}
+                  initial={{
+                    opacity: 0,
+                    scale: 0.98,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.98,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                  className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
+                />
+              </AnimatePresence>
+
+              {/* FERMER */}
+
+              <button
+                onClick={closeGallery}
+                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-xl text-white backdrop-blur-md transition hover:bg-black/80"
+                aria-label="Fermer"
+              >
+                ×
+              </button>
+
+              {/* PRÉCÉDENTE */}
+
+              {images[activeImage].photos.length > 1 && (
+                <button
+                  onClick={previousPhoto}
+                  className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-2xl text-white backdrop-blur-md transition hover:bg-black/80"
+                  aria-label="Photo précédente"
+                >
+                  ←
+                </button>
+              )}
+
+              {/* SUIVANTE */}
+
+              {images[activeImage].photos.length > 1 && (
+                <button
+                  onClick={nextPhoto}
+                  className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-2xl text-white backdrop-blur-md transition hover:bg-black/80"
+                  aria-label="Photo suivante"
+                >
+                  →
+                </button>
+              )}
+
+              {/* COMPTEUR */}
+
+              {images[activeImage].photos.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-sm text-white backdrop-blur-md">
+                  {galleryIndex + 1} / {images[activeImage].photos.length}
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
