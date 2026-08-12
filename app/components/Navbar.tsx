@@ -239,11 +239,11 @@ export default function Navbar() {
                 </p>
 
                 <h2 className="mt-2 text-2xl font-medium text-white">
-                  Mon QR Code
+                  Portfolio
                 </h2>
 
                 <p className="mt-2 text-sm text-zinc-500">
-                  Scannez ce code pour accéder rapidement à mon site.
+                  Scannez ce code pour accéder rapidement à mon portfolio.
                 </p>
               </div>
 
