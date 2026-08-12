@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download, X, Share } from "lucide-react";
+import { motion } from "motion/react";
 
 export default function InstallPrompt() {
   const [show, setShow] = useState(false);
@@ -22,6 +23,7 @@ export default function InstallPrompt() {
 
     // Détecte iPhone / iPad
     const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
     setIsIOS(ios);
 
     // Petit délai avant d'afficher
@@ -39,7 +41,21 @@ export default function InstallPrompt() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[100] md:hidden">
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 80,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.5,
+        ease: "easeOut",
+      }}
+      className="fixed bottom-4 left-4 right-4 z-[100] md:hidden"
+    >
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111]/95 p-4 shadow-2xl backdrop-blur-xl">
         {/* Bouton fermer */}
         <button
@@ -76,6 +92,6 @@ export default function InstallPrompt() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
