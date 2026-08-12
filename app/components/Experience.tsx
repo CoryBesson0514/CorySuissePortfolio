@@ -3,12 +3,16 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
-type ImageKey = "sophie" | "vaianni";
+type ImageKey = "sophie" | "frj" | "vaianni";
 
 const images = {
   sophie: {
     src: "/sophie.jpg",
     alt: "Sophie LeBreuilly — Boulangerie",
+  },
+  frj: {
+    src: "/frj.jpg",
+    alt: "FRJ Location — Hertz",
   },
   vaianni: {
     src: "/vaianni.jpg",
@@ -88,11 +92,11 @@ export default function Experience() {
 
             <div>
               <p className="text-sm text-zinc-500">
-                2025 — 2026
+                2023 — 2025
               </p>
 
               <p className="mt-2 text-sm text-zinc-600">
-                1 an
+                2 ans
               </p>
             </div>
 
@@ -123,6 +127,53 @@ export default function Experience() {
 
           </div>
 
+          {/* FRJ Location — Hertz */}
+          <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
+
+            <div>
+              <p className="text-sm text-zinc-500">
+                2025 — 2026
+              </p>
+
+              <p className="mt-2 text-sm text-zinc-600">
+                Expérience professionnelle
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-medium text-white md:text-3xl">
+                Préparateur automobile
+              </h3>
+
+              <p className="mt-2 text-zinc-500">
+                <span
+                  className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
+                  onMouseEnter={(event) =>
+                    handleMouseEnter(event, "frj")
+                  }
+                  onMouseLeave={() => setActiveImage(null)}
+                >
+                  FRJ Location — Hertz
+                </span>
+              </p>
+
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
+                Une expérience dans le secteur de la location automobile,
+                où j'étais principalement chargé de préparer et nettoyer les
+                véhicules avant leur remise aux clients. J'ai également
+                réalisé des contrats de location et participé à la gestion
+                quotidienne de la flotte.
+              </p>
+
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
+                J'ai également eu l'occasion de créer un site internet dédié
+                à la vente des anciens véhicules de la flotte et d'effectuer
+                des missions de convoyage de véhicules.
+              </p>
+            </div>
+
+          </div>
+
           {/* Mécanique */}
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
 
@@ -132,13 +183,13 @@ export default function Experience() {
               </p>
 
               <p className="mt-2 text-sm text-zinc-600">
-                6 mois
+                4 mois
               </p>
             </div>
 
             <div>
               <h3 className="text-2xl font-medium text-white md:text-3xl">
-                Mécanique automobile
+                Garage Richard Vaianni Toyota/Volkswagen
               </h3>
 
               <p className="mt-2 text-zinc-500">
@@ -147,7 +198,7 @@ export default function Experience() {
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
                 Après la boulangerie, j'ai choisi de me réorienter vers la
-                mécanique automobile. Une expérience de six mois qui m'a
+                mécanique automobile. Une expérience de quattres mois qui m'a
                 permis de développer de nouvelles compétences techniques et
                 d'aborder un environnement professionnel complètement
                 différent.
@@ -162,7 +213,7 @@ export default function Experience() {
                   }
                   onMouseLeave={() => setActiveImage(null)}
                 >
-                  Vaianni
+                  Garage Richard Vaianni
                 </span>
               </p>
             </div>

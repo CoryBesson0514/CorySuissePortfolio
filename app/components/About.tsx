@@ -88,7 +88,7 @@ export default function About() {
 
             <p>
               <span className="text-white">
-                Français, à 21 ans, 
+                Français, à 22 ans, 
               </span>{" "}
                 j'ai choisi de m'installer en{" "}
               <span className="text-white">
