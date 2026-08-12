@@ -31,11 +31,9 @@ const images: Record<
 export default function Experience() {
   const [activeImage, setActiveImage] = useState<ImageKey | null>(null);
 
-  const [previewIndex, setPreviewIndex] = useState(0);
+  const [gallery, setGallery] = useState<ImageKey | null>(null);
 
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-
-  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
 
   const [imagePosition, setImagePosition] = useState({
     x: 0,
@@ -43,7 +41,7 @@ export default function Experience() {
   });
 
   // =========================
-  // POSITION DE L'APERÇU
+  // IMAGE AU SURVOL
   // =========================
 
   const handleMouseEnter = (
@@ -77,45 +75,26 @@ export default function Experience() {
       y,
     });
 
-    setPreviewIndex(0);
     setActiveImage(image);
   };
 
   // =========================
-  // CHANGEMENT AUTOMATIQUE
+  // OUVRIR LA GALERIE
   // =========================
 
-  useEffect(() => {
-    if (!activeImage) return;
-
-    const photos = images[activeImage].photos;
-
-    if (photos.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setPreviewIndex((current) => (current + 1) % photos.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [activeImage]);
-
-  // =========================
-  // OUVRIR GALERIE
-  // =========================
-
-  const openGallery = () => {
-    if (!activeImage) return;
-
-    setGalleryIndex(previewIndex);
-    setIsGalleryOpen(true);
+  const openGallery = (image: ImageKey) => {
+    setActiveImage(null);
+    setGallery(image);
+    setCurrentPhoto(0);
   };
 
   // =========================
-  // FERMER GALERIE
+  // FERMER LA GALERIE
   // =========================
 
   const closeGallery = () => {
-    setIsGalleryOpen(false);
+    setGallery(null);
+    setCurrentPhoto(0);
   };
 
   // =========================
@@ -123,11 +102,11 @@ export default function Experience() {
   // =========================
 
   const nextPhoto = () => {
-    if (!activeImage) return;
+    if (!gallery) return;
 
-    const photos = images[activeImage].photos;
+    const photos = images[gallery].photos;
 
-    setGalleryIndex((current) => (current + 1) % photos.length);
+    setCurrentPhoto((current) => (current + 1) % photos.length);
   };
 
   // =========================
@@ -135,19 +114,19 @@ export default function Experience() {
   // =========================
 
   const previousPhoto = () => {
-    if (!activeImage) return;
+    if (!gallery) return;
 
-    const photos = images[activeImage].photos;
+    const photos = images[gallery].photos;
 
-    setGalleryIndex((current) => (current - 1 + photos.length) % photos.length);
+    setCurrentPhoto((current) => (current - 1 + photos.length) % photos.length);
   };
 
   // =========================
-  // CLAVIER
+  // TOUCHES CLAVIER
   // =========================
 
   useEffect(() => {
-    if (!isGalleryOpen) return;
+    if (!gallery) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -163,10 +142,16 @@ export default function Experience() {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isGalleryOpen, activeImage]);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+
+      document.body.style.overflow = "";
+    };
+  }, [gallery]);
 
   return (
     <section id="experience" className="section relative">
@@ -208,6 +193,7 @@ export default function Experience() {
                   className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
                   onMouseEnter={(event) => handleMouseEnter(event, "sophie")}
                   onMouseLeave={() => setActiveImage(null)}
+                  onClick={() => openGallery("sophie")}
                 >
                   Sophie LeBreuilly
                 </span>
@@ -223,7 +209,7 @@ export default function Experience() {
           </div>
 
           {/* =========================
-              FRJ LOCATION
+              FRJ
           ========================= */}
 
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
@@ -243,6 +229,7 @@ export default function Experience() {
                   className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
                   onMouseEnter={(event) => handleMouseEnter(event, "frj")}
                   onMouseLeave={() => setActiveImage(null)}
+                  onClick={() => openGallery("frj")}
                 >
                   FRJ Location — Hertz
                 </span>
@@ -265,7 +252,7 @@ export default function Experience() {
           </div>
 
           {/* =========================
-              GARAGE RICHARD VAIANNI
+              VAIANNI
           ========================= */}
 
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
@@ -285,6 +272,7 @@ export default function Experience() {
                   className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
                   onMouseEnter={(event) => handleMouseEnter(event, "vaianni")}
                   onMouseLeave={() => setActiveImage(null)}
+                  onClick={() => openGallery("vaianni")}
                 >
                   Garage Richard Vaianni
                 </span>
@@ -328,11 +316,11 @@ export default function Experience() {
       </div>
 
       {/* =========================
-          APERÇU AU SURVOL
+          IMAGE AU SURVOL
       ========================= */}
 
       <AnimatePresence>
-        {activeImage && !isGalleryOpen && (
+        {activeImage && !gallery && (
           <motion.div
             key={activeImage}
             initial={{
@@ -355,54 +343,23 @@ export default function Experience() {
               left: imagePosition.x,
               top: imagePosition.y,
             }}
-            onClick={openGallery}
-            className="pointer-events-auto fixed z-50 hidden w-[400px] cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl lg:block"
+            className="pointer-events-none fixed z-50 hidden w-[400px] overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl lg:block"
           >
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={previewIndex}
-                src={images[activeImage].photos[previewIndex]}
-                alt={images[activeImage].alt}
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: 0.8,
-                }}
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </AnimatePresence>
-
-            {/* Points */}
-
-            {images[activeImage].photos.length > 1 && (
-              <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/50 px-3 py-2 backdrop-blur-md">
-                {images[activeImage].photos.map((_, index) => (
-                  <span
-                    key={index}
-                    className={`h-1.5 w-1.5 rounded-full transition ${
-                      index === previewIndex ? "bg-white" : "bg-white/30"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
+            <img
+              src={images[activeImage].photos[0]}
+              alt={images[activeImage].alt}
+              className="aspect-[4/3] w-full object-cover"
+            />
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* =========================
-          GALERIE
+          GALERIE PLEIN ÉCRAN
       ========================= */}
 
       <AnimatePresence>
-        {activeImage && isGalleryOpen && (
+        {gallery && (
           <motion.div
             initial={{
               opacity: 0,
@@ -413,9 +370,14 @@ export default function Experience() {
             exit={{
               opacity: 0,
             }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-5 backdrop-blur-md"
+            transition={{
+              duration: 0.25,
+            }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-5 backdrop-blur-sm"
             onClick={closeGallery}
           >
+            {/* CONTENU GALERIE */}
+
             <motion.div
               initial={{
                 opacity: 0,
@@ -429,16 +391,19 @@ export default function Experience() {
                 opacity: 0,
                 scale: 0.95,
               }}
-              className="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center"
+              transition={{
+                duration: 0.25,
+              }}
+              className="relative flex h-[85vh] w-full max-w-6xl items-center justify-center"
               onClick={(event) => event.stopPropagation()}
             >
               {/* IMAGE */}
 
               <AnimatePresence mode="wait">
                 <motion.img
-                  key={galleryIndex}
-                  src={images[activeImage].photos[galleryIndex]}
-                  alt={images[activeImage].alt}
+                  key={currentPhoto}
+                  src={images[gallery].photos[currentPhoto]}
+                  alt={images[gallery].alt}
                   initial={{
                     opacity: 0,
                     scale: 0.98,
@@ -452,51 +417,62 @@ export default function Experience() {
                     scale: 0.98,
                   }}
                   transition={{
-                    duration: 0.25,
+                    duration: 0.2,
                   }}
-                  className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-2xl"
+                  className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
                 />
               </AnimatePresence>
 
-              {/* FERMER */}
+              {/* =========================
+                  BOUTON FERMER
+              ========================= */}
 
               <button
+                type="button"
                 onClick={closeGallery}
-                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-xl text-white backdrop-blur-md transition hover:bg-black/80"
+                className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10"
                 aria-label="Fermer"
               >
                 ×
               </button>
 
-              {/* PRÉCÉDENTE */}
+              {/* =========================
+                  FLÈCHE GAUCHE
+              ========================= */}
 
-              {images[activeImage].photos.length > 1 && (
+              {images[gallery].photos.length > 1 && (
                 <button
+                  type="button"
                   onClick={previousPhoto}
-                  className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-2xl text-white backdrop-blur-md transition hover:bg-black/80"
+                  className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10 md:-left-16"
                   aria-label="Photo précédente"
                 >
                   ←
                 </button>
               )}
 
-              {/* SUIVANTE */}
+              {/* =========================
+                  FLÈCHE DROITE
+              ========================= */}
 
-              {images[activeImage].photos.length > 1 && (
+              {images[gallery].photos.length > 1 && (
                 <button
+                  type="button"
                   onClick={nextPhoto}
-                  className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-2xl text-white backdrop-blur-md transition hover:bg-black/80"
+                  className="absolute right-0 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10 md:-right-16"
                   aria-label="Photo suivante"
                 >
                   →
                 </button>
               )}
 
-              {/* COMPTEUR */}
+              {/* =========================
+                  COMPTEUR
+              ========================= */}
 
-              {images[activeImage].photos.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-sm text-white backdrop-blur-md">
-                  {galleryIndex + 1} / {images[activeImage].photos.length}
+              {images[gallery].photos.length > 1 && (
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-black/50 px-4 py-2 text-sm text-zinc-300 backdrop-blur-xl">
+                  {currentPhoto + 1} / {images[gallery].photos.length}
                 </div>
               )}
             </motion.div>
