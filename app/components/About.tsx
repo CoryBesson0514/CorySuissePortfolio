@@ -39,17 +39,11 @@ export default function About() {
       x = rect.left - imageWidth - gap;
     }
 
-    x = Math.max(
-      20,
-      Math.min(x, window.innerWidth - imageWidth - 20)
-    );
+    x = Math.max(20, Math.min(x, window.innerWidth - imageWidth - 20));
 
     let y = rect.top + rect.height / 2 - imageHeight / 2;
 
-    y = Math.max(
-      20,
-      Math.min(y, window.innerHeight - imageHeight - 20)
-    );
+    y = Math.max(20, Math.min(y, window.innerHeight - imageHeight - 20));
 
     setImagePosition({
       x,
@@ -62,7 +56,6 @@ export default function About() {
   return (
     <section id="about" className="section relative">
       <div className="container-site">
-
         <div className="mb-12">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             À propos
@@ -70,14 +63,11 @@ export default function About() {
 
           <h2 className="max-w-4xl text-4xl font-medium leading-tight tracking-tight md:text-6xl">
             Un nouveau départ en Suisse,
-            <span className="text-zinc-500">
-              {" "}avec l'envie de construire.
-            </span>
+            <span className="text-zinc-500"> avec l'envie de construire.</span>
           </h2>
         </div>
 
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
-
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-zinc-600">
               Ma situation
@@ -85,41 +75,34 @@ export default function About() {
           </div>
 
           <div className="space-y-6 text-lg leading-relaxed text-zinc-400 md:text-xl">
-
             <p>
-              <span className="text-white">
-                Français, à 22 ans, 
-              </span>{" "}
-                j'ai choisi de m'installer en{" "}
-              <span className="text-white">
-                Suisse
-              </span>{" "}
-              pour rejoindre une partie de ma famille et saisir une nouvelle
-              opportunité professionnelle.
+              <span className="text-white">Français, à 22 ans,</span> j'ai
+              choisi de m'installer en{" "}
+              <span className="text-white">Suisse</span> pour rejoindre une
+              partie de ma famille et saisir une nouvelle opportunité
+              professionnelle.
             </p>
 
             <p>
               Avec mon cousin, je développe également{" "}
               <span
                 className="cursor-pointer text-white underline decoration-white/20 underline-offset-4 transition hover:decoration-white"
-                onMouseEnter={(event) =>
-                  handleMouseEnter(event, "bsn")
-                }
+                onMouseEnter={(event) => handleMouseEnter(event, "bsn")}
                 onMouseLeave={() => setActiveImage(null)}
+                onClick={(event) => handleMouseEnter(event, "bsn")}
               >
                 BSN
               </span>
-              , une entreprise spécialisée dans la photographie et la vidéo.
-              Ce projet représente pour moi l'occasion de développer une
-              activité entrepreneuriale et de mettre à profit ma créativité.
+              , une entreprise spécialisée dans la photographie et la vidéo. Ce
+              projet représente pour moi l'occasion de développer une activité
+              entrepreneuriale et de mettre à profit ma créativité.
             </p>
 
             <p className="text-zinc-300">
               Aujourd'hui, je souhaite poursuivre mon évolution en Suisse,
-              découvrir de nouveaux environnements professionnels et
-              continuer à développer mes compétences.
+              découvrir de nouveaux environnements professionnels et continuer à
+              développer mes compétences.
             </p>
-
           </div>
         </div>
       </div>
@@ -158,7 +141,6 @@ export default function About() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
 }
