@@ -2,21 +2,15 @@
 
 import { motion } from "motion/react";
 import AvailabilityBadge from "./AvailabilityBadge";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  MapPin,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight, MapPin, Car } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className="grid-background relative flex min-h-screen items-center overflow-hidden">
-
       {/* Lumière centrale */}
       <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-3xl" />
 
       <div className="container-site relative z-10 pt-28">
-
         {/* Statut */}
         <motion.div
           initial={{
@@ -53,10 +47,7 @@ export default function Hero() {
         >
           CORY
           <br />
-
-          <span className="text-gradient">
-            BESSON.
-          </span>
+          <span className="text-gradient">BESSON.</span>
         </motion.h1>
 
         {/* Bas du Hero */}
@@ -75,17 +66,23 @@ export default function Hero() {
           }}
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
-
           {/* Description */}
           <div>
             <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-              Jeune professionnel à la recherche
-              d'une nouvelle opportunité en Suisse.
+              Jeune professionnel à la recherche d'une nouvelle opportunité en
+              Suisse.
             </p>
 
-            <div className="mt-5 flex items-center gap-2 text-sm text-zinc-500">
-              <MapPin size={15} />
-              Neuchâtel, Suisse
+            <div className="mt-5 flex items-center gap-5 text-sm text-zinc-500">
+              <div className="flex items-center gap-2">
+                <MapPin size={15} />
+                Neuchâtel, Suisse
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Car size={15} />
+                Véhicule
+              </div>
             </div>
           </div>
 
@@ -95,7 +92,6 @@ export default function Hero() {
             className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
           >
             Découvrir mon parcours
-
             <ArrowUpRight
               size={17}
               className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -119,7 +115,6 @@ export default function Hero() {
         >
           <ArrowDown className="animate-bounce" />
         </motion.a>
-
       </div>
     </section>
   );
