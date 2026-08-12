@@ -279,10 +279,10 @@ export default function Experience() {
               </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Après la boulangerie, j'ai choisi de me réorienter vers la
-                mécanique automobile. Une expérience de cinq mois qui m'a permis
-                de développer de nouvelles compétences techniques et d'aborder
-                un environnement professionnel complètement différent.
+                Après Hertz, j'ai choisi de me réorienter vers la mécanique
+                automobile. Une expérience de cinq mois qui m'a permis de
+                développer de nouvelles compétences techniques et d'aborder un
+                environnement professionnel complètement différent.
               </p>
             </div>
           </div>
