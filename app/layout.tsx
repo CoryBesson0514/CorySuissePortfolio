@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import InstallPrompt from "./components/InstallPrompt";
 
 export const metadata: Metadata = {
   title: "Cory Besson — Portfolio",
-  description:
-    "Portfolio créer pour et par Cory Besson",
+  description: "Portfolio créer pour et par Cory Besson",
 };
 
 export default function RootLayout({
@@ -14,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body>
+        {" "}
+        {children}
+        <InstallPrompt />
+      </body>
     </html>
   );
 }
