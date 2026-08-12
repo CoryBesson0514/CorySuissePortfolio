@@ -154,13 +154,9 @@ export default function About() {
               flex
               items-center
               justify-center
-              bg-black/50
-              backdrop-blur-sm
               lg:pointer-events-none
               lg:inset-auto
               lg:block
-              lg:bg-transparent
-              lg:backdrop-blur-none
             "
           >
             <motion.div
