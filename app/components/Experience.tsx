@@ -136,7 +136,7 @@ export default function Experience() {
               </p>
 
               <p className="mt-2 text-sm text-zinc-600">
-                Expérience professionnelle
+                1 an
               </p>
             </div>
 
@@ -183,7 +183,7 @@ export default function Experience() {
               </p>
 
               <p className="mt-2 text-sm text-zinc-600">
-                4 mois
+                5 mois
               </p>
             </div>
 
@@ -192,20 +192,8 @@ export default function Experience() {
                 Garage Richard Vaianni Toyota/Volkswagen
               </h3>
 
-              <p className="mt-2 text-zinc-500">
-                Expérience professionnelle
-              </p>
-
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Après la boulangerie, j'ai choisi de me réorienter vers la
-                mécanique automobile. Une expérience de quattres mois qui m'a
-                permis de développer de nouvelles compétences techniques et
-                d'aborder un environnement professionnel complètement
-                différent.
-              </p>
-
               <p className="mt-4 text-zinc-400">
-                Expérience visuelle :{" "}
+                Garage Richard Vaianni :{" "}
                 <span
                   className="cursor-pointer text-white underline decoration-white/20 underline-offset-4 transition hover:decoration-white"
                   onMouseEnter={(event) =>
@@ -215,6 +203,14 @@ export default function Experience() {
                 >
                   Garage Richard Vaianni
                 </span>
+              </p>
+
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
+                Après la boulangerie, j'ai choisi de me réorienter vers la
+                mécanique automobile. Une expérience de quattres mois qui m'a
+                permis de développer de nouvelles compétences techniques et
+                d'aborder un environnement professionnel complètement
+                différent.
               </p>
             </div>
 
