@@ -31,8 +31,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [config, setConfig] =
-    useState<SiteConfig>(defaultSiteConfig);
+  const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
 
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -46,10 +45,7 @@ export default function AdminPage() {
       const data = await getSiteConfig();
       setConfig(data);
     } catch (error) {
-      console.error(
-        "Erreur lors du chargement de la configuration :",
-        error
-      );
+      console.error("Erreur lors du chargement de la configuration :", error);
     }
   };
 
@@ -60,22 +56,15 @@ export default function AdminPage() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const session = sessionStorage.getItem(
-          "cory-admin-session"
-        );
+        const session = sessionStorage.getItem("cory-admin-session");
 
         if (session === "true") {
           setLoggedIn(true);
           await loadConfig();
         }
       } catch (error) {
-        console.error(
-          "Erreur lors de la vérification de session :",
-          error
-        );
+        console.error("Erreur lors de la vérification de session :", error);
       } finally {
-        // IMPORTANT :
-        // permet de sortir de "Chargement..."
         setLoading(false);
       }
     };
@@ -87,21 +76,13 @@ export default function AdminPage() {
   // CONNEXION
   // =========================
 
-  const handleLogin = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setError("");
 
-    if (
-      username === "admin" &&
-      password === "@Gruissan11"
-    ) {
-      sessionStorage.setItem(
-        "cory-admin-session",
-        "true"
-      );
+    if (username === "admin" && password === "@Gruissan11") {
+      sessionStorage.setItem("cory-admin-session", "true");
 
       setLoggedIn(true);
 
@@ -114,9 +95,7 @@ export default function AdminPage() {
       return;
     }
 
-    setError(
-      "Identifiant ou mot de passe incorrect."
-    );
+    setError("Identifiant ou mot de passe incorrect.");
   };
 
   // =========================
@@ -124,9 +103,7 @@ export default function AdminPage() {
   // =========================
 
   const handleLogout = () => {
-    sessionStorage.removeItem(
-      "cory-admin-session"
-    );
+    sessionStorage.removeItem("cory-admin-session");
 
     setLoggedIn(false);
     setUsername("");
@@ -149,14 +126,9 @@ export default function AdminPage() {
         setSaved(false);
       }, 2500);
     } catch (error) {
-      console.error(
-        "Erreur lors de la sauvegarde :",
-        error
-      );
+      console.error("Erreur lors de la sauvegarde :", error);
 
-      alert(
-        "Impossible d'enregistrer les modifications."
-      );
+      alert("Impossible d'enregistrer les modifications.");
     }
   };
 
@@ -164,10 +136,7 @@ export default function AdminPage() {
   // MODIFICATION CONFIG
   // =========================
 
-  const updateConfig = (
-    key: keyof SiteConfig,
-    value: string
-  ) => {
+  const updateConfig = (key: keyof SiteConfig, value: string) => {
     setConfig((current) => ({
       ...current,
       [key]: value,
@@ -178,9 +147,7 @@ export default function AdminPage() {
   // DISPONIBILITÉ
   // =========================
 
-  const changeAvailability = (
-    status: AvailabilityStatus
-  ) => {
+  const changeAvailability = (status: AvailabilityStatus) => {
     const presets = {
       available: {
         label: "Disponible",
@@ -196,8 +163,7 @@ export default function AdminPage() {
 
       unavailable: {
         label: "Indisponible",
-        message:
-          "Actuellement indisponible pour de nouvelles opportunités.",
+        message: "Actuellement indisponible pour de nouvelles opportunités.",
       },
     };
 
@@ -205,8 +171,7 @@ export default function AdminPage() {
       ...current,
       availability: status,
       availabilityLabel: presets[status].label,
-      availabilityMessage:
-        presets[status].message,
+      availabilityMessage: presets[status].message,
     }));
   };
 
@@ -217,9 +182,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#050505] text-white">
-        <div className="text-sm text-zinc-500">
-          Chargement...
-        </div>
+        <div className="text-sm text-zinc-500">Chargement...</div>
       </main>
     );
   }
@@ -232,7 +195,6 @@ export default function AdminPage() {
     return (
       <main className="min-h-screen bg-[#050505] text-white">
         <div className="flex min-h-screen items-center justify-center px-5">
-
           <motion.div
             initial={{
               opacity: 0,
@@ -250,13 +212,10 @@ export default function AdminPage() {
             }}
             className="w-full max-w-md"
           >
-
             <div className="mb-8 text-center">
               <p className="text-sm font-semibold tracking-tight">
                 CORY
-                <span className="text-zinc-500">
-                  .
-                </span>
+                <span className="text-zinc-500">.</span>
               </p>
 
               <h1 className="mt-6 text-3xl font-medium tracking-tight">
@@ -269,12 +228,7 @@ export default function AdminPage() {
             </div>
 
             <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-7 shadow-2xl backdrop-blur-xl">
-
-              <form
-                onSubmit={handleLogin}
-                className="space-y-5"
-              >
-
+              <form onSubmit={handleLogin} className="space-y-5">
                 {/* Identifiant */}
                 <div>
                   <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-zinc-500">
@@ -290,9 +244,7 @@ export default function AdminPage() {
                     <input
                       type="text"
                       value={username}
-                      onChange={(event) =>
-                        setUsername(event.target.value)
-                      }
+                      onChange={(event) => setUsername(event.target.value)}
                       placeholder="Identifiant"
                       autoComplete="username"
                       className="w-full rounded-2xl border border-white/10 bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/25 focus:bg-white/[0.05]"
@@ -315,9 +267,7 @@ export default function AdminPage() {
                     <input
                       type="password"
                       value={password}
-                      onChange={(event) =>
-                        setPassword(event.target.value)
-                      }
+                      onChange={(event) => setPassword(event.target.value)}
                       placeholder="Mot de passe"
                       autoComplete="current-password"
                       className="w-full rounded-2xl border border-white/10 bg-white/[0.03] py-3.5 pl-12 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/25 focus:bg-white/[0.05]"
@@ -338,15 +288,26 @@ export default function AdminPage() {
                   className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-3.5 text-sm font-medium text-black transition hover:scale-[1.01] hover:bg-zinc-200 active:scale-[0.99]"
                 >
                   Se connecter
-
                   <ArrowRight
                     size={17}
                     className="transition-transform duration-300 group-hover:translate-x-1"
                   />
                 </button>
-
               </form>
             </div>
+
+            {/* Retour à l'accueil */}
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="mt-5 flex w-full items-center justify-center gap-2 text-sm text-zinc-500 transition hover:text-white"
+            >
+              <ArrowRight
+                size={16}
+                className="rotate-180 transition-transform duration-300"
+              />
+              Retour à l'accueil
+            </button>
           </motion.div>
         </div>
       </main>
@@ -359,18 +320,13 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-[#050505] text-white">
-
       <div className="mx-auto max-w-5xl px-5 py-10 md:px-8">
-
         {/* Header */}
         <div className="mb-10 flex items-center justify-between">
-
           <div>
             <p className="text-sm font-semibold tracking-tight">
               CORY
-              <span className="text-zinc-500">
-                .
-              </span>
+              <span className="text-zinc-500">.</span>
             </p>
 
             <h1 className="mt-4 text-3xl font-medium tracking-tight md:text-4xl">
@@ -389,28 +345,21 @@ export default function AdminPage() {
           >
             <LogOut size={16} />
 
-            <span className="hidden sm:inline">
-              Déconnexion
-            </span>
+            <span className="hidden sm:inline">Déconnexion</span>
           </button>
-
         </div>
 
         {/* Informations */}
         <section className="rounded-[28px] border border-white/10 bg-white/[0.025] p-6 md:p-8">
-
           <div className="mb-8">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-600">
               Informations
             </p>
 
-            <h2 className="mt-2 text-xl font-medium">
-              Coordonnées
-            </h2>
+            <h2 className="mt-2 text-xl font-medium">Coordonnées</h2>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
-
             {/* Téléphone */}
             <div>
               <label className="mb-2 flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-zinc-500">
@@ -421,12 +370,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 value={config.phone}
-                onChange={(event) =>
-                  updateConfig(
-                    "phone",
-                    event.target.value
-                  )
-                }
+                onChange={(event) => updateConfig("phone", event.target.value)}
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
             </div>
@@ -441,30 +385,21 @@ export default function AdminPage() {
               <input
                 type="email"
                 value={config.email}
-                onChange={(event) =>
-                  updateConfig(
-                    "email",
-                    event.target.value
-                  )
-                }
+                onChange={(event) => updateConfig("email", event.target.value)}
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
             </div>
-
           </div>
         </section>
 
         {/* Disponibilité */}
         <section className="mt-6 rounded-[28px] border border-white/10 bg-white/[0.025] p-6 md:p-8">
-
           <div className="mb-8">
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-600">
               Statut
             </p>
 
-            <h2 className="mt-2 text-xl font-medium">
-              Disponibilité
-            </h2>
+            <h2 className="mt-2 text-xl font-medium">Disponibilité</h2>
 
             <p className="mt-2 text-sm text-zinc-500">
               Cette information apparaîtra sur votre site.
@@ -473,13 +408,10 @@ export default function AdminPage() {
 
           {/* Choix statut */}
           <div className="grid gap-3 md:grid-cols-3">
-
             {/* Disponible */}
             <button
               type="button"
-              onClick={() =>
-                changeAvailability("available")
-              }
+              onClick={() => changeAvailability("available")}
               className={`rounded-2xl border p-4 text-left transition ${
                 config.availability === "available"
                   ? "border-emerald-500/40 bg-emerald-500/[0.08]"
@@ -489,15 +421,10 @@ export default function AdminPage() {
               <div className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-full bg-emerald-400" />
 
-                <span className="text-sm font-medium">
-                  Disponible
-                </span>
+                <span className="text-sm font-medium">Disponible</span>
 
                 {config.availability === "available" && (
-                  <Check
-                    size={16}
-                    className="ml-auto text-emerald-400"
-                  />
+                  <Check size={16} className="ml-auto text-emerald-400" />
                 )}
               </div>
             </button>
@@ -505,9 +432,7 @@ export default function AdminPage() {
             {/* Prochainement */}
             <button
               type="button"
-              onClick={() =>
-                changeAvailability("soon")
-              }
+              onClick={() => changeAvailability("soon")}
               className={`rounded-2xl border p-4 text-left transition ${
                 config.availability === "soon"
                   ? "border-orange-500/40 bg-orange-500/[0.08]"
@@ -517,15 +442,10 @@ export default function AdminPage() {
               <div className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-full bg-orange-400" />
 
-                <span className="text-sm font-medium">
-                  Prochainement
-                </span>
+                <span className="text-sm font-medium">Prochainement</span>
 
                 {config.availability === "soon" && (
-                  <Check
-                    size={16}
-                    className="ml-auto text-orange-400"
-                  />
+                  <Check size={16} className="ml-auto text-orange-400" />
                 )}
               </div>
             </button>
@@ -533,9 +453,7 @@ export default function AdminPage() {
             {/* Indisponible */}
             <button
               type="button"
-              onClick={() =>
-                changeAvailability("unavailable")
-              }
+              onClick={() => changeAvailability("unavailable")}
               className={`rounded-2xl border p-4 text-left transition ${
                 config.availability === "unavailable"
                   ? "border-red-500/40 bg-red-500/[0.08]"
@@ -545,24 +463,17 @@ export default function AdminPage() {
               <div className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-full bg-red-400" />
 
-                <span className="text-sm font-medium">
-                  Indisponible
-                </span>
+                <span className="text-sm font-medium">Indisponible</span>
 
                 {config.availability === "unavailable" && (
-                  <Check
-                    size={16}
-                    className="ml-auto text-red-400"
-                  />
+                  <Check size={16} className="ml-auto text-red-400" />
                 )}
               </div>
             </button>
-
           </div>
 
           {/* Textes personnalisables */}
           <div className="mt-6 grid gap-5 md:grid-cols-2">
-
             <div>
               <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-zinc-500">
                 Texte de la pastille
@@ -572,10 +483,7 @@ export default function AdminPage() {
                 type="text"
                 value={config.availabilityLabel}
                 onChange={(event) =>
-                  updateConfig(
-                    "availabilityLabel",
-                    event.target.value
-                  )
+                  updateConfig("availabilityLabel", event.target.value)
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
@@ -590,21 +498,16 @@ export default function AdminPage() {
                 type="text"
                 value={config.availabilityMessage}
                 onChange={(event) =>
-                  updateConfig(
-                    "availabilityMessage",
-                    event.target.value
-                  )
+                  updateConfig("availabilityMessage", event.target.value)
                 }
                 className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition focus:border-white/25"
               />
             </div>
-
           </div>
         </section>
 
         {/* Enregistrer */}
         <div className="mt-6 flex justify-end">
-
           <button
             onClick={handleSave}
             className="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition hover:scale-105 hover:bg-zinc-200 active:scale-95"
@@ -621,9 +524,7 @@ export default function AdminPage() {
               </>
             )}
           </button>
-
         </div>
-
       </div>
     </main>
   );
