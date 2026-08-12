@@ -73,6 +73,7 @@ export default function Hero() {
               Suisse.
             </p>
 
+            {/* Localisation + véhicule */}
             <div className="mt-5 flex items-center gap-5 text-sm text-zinc-500">
               <div className="flex items-center gap-2">
                 <MapPin size={15} />
@@ -86,17 +87,28 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Bouton */}
-          <a
-            href="#about"
-            className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
-          >
-            Découvrir mon parcours
-            <ArrowUpRight
-              size={17}
-              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-            />
-          </a>
+          {/* Boutons */}
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="#about"
+              className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
+            >
+              Découvrir mon parcours
+              <ArrowUpRight
+                size={17}
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </a>
+
+            <a
+              href="/CV-Cory-Besson.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
+            >
+              Mon CV
+            </a>
+          </div>
         </motion.div>
 
         {/* Flèche */}
