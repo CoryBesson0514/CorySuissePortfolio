@@ -46,7 +46,7 @@ export default function Experience() {
 
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLSpanElement>,
-    image: ImageKey
+    image: ImageKey,
   ) => {
     const rect = event.currentTarget.getBoundingClientRect();
 
@@ -162,7 +162,7 @@ export default function Experience() {
 
         <div className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
-            Expérience
+            Expériences
           </p>
 
           <h2 className="max-w-4xl text-4xl font-medium leading-tight tracking-tight md:text-6xl">
