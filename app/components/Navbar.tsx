@@ -75,7 +75,7 @@ export default function Navbar() {
                 onClick={() => setQrOpen(true)}
                 aria-label="QR Code"
                 title="QR Code"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.08]"
               >
                 <QrCode size={16} />
               </button>
@@ -152,7 +152,7 @@ export default function Navbar() {
                     setOpen(false);
                     setQrOpen(true);
                   }}
-                  className="flex items-center gap-3 text-zinc-400 transition hover:text-white"
+                  className="flex items-center gap-3 text-white transition hover:text-white"
                 >
                   <QrCode size={17} />
                   QR Code
