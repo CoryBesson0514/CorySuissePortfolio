@@ -14,6 +14,7 @@ const images = {
 
 export default function About() {
   const [activeImage, setActiveImage] = useState<ImageKey | null>(null);
+
   const [imagePosition, setImagePosition] = useState({
     x: 0,
     y: 0,
@@ -53,6 +54,19 @@ export default function About() {
     setActiveImage(image);
   };
 
+  const handleMobileClick = (
+    event: React.MouseEvent<HTMLSpanElement>,
+    image: ImageKey
+  ) => {
+    event.stopPropagation();
+
+    setActiveImage(image);
+  };
+
+  const closeImage = () => {
+    setActiveImage(null);
+  };
+
   return (
     <section id="about" className="section relative">
       <div className="container-site">
@@ -89,7 +103,7 @@ export default function About() {
                 className="cursor-pointer text-white underline decoration-white/20 underline-offset-4 transition hover:decoration-white"
                 onMouseEnter={(event) => handleMouseEnter(event, "bsn")}
                 onMouseLeave={() => setActiveImage(null)}
-                onClick={(event) => handleMouseEnter(event, "bsn")}
+                onClick={(event) => handleMobileClick(event, "bsn")}
               >
                 BSN
               </span>
@@ -107,6 +121,7 @@ export default function About() {
         </div>
       </div>
 
+      {/* IMAGE */}
       <AnimatePresence>
         {activeImage && (
           <motion.div
@@ -131,13 +146,44 @@ export default function About() {
               left: imagePosition.x,
               top: imagePosition.y,
             }}
-            className="pointer-events-none fixed z-50 hidden w-[400px] overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl lg:block"
+            onClick={closeImage}
+            className="
+              fixed
+              inset-0
+              z-50
+              flex
+              items-center
+              justify-center
+              bg-black/50
+              backdrop-blur-sm
+              lg:pointer-events-none
+              lg:inset-auto
+              lg:block
+              lg:bg-transparent
+              lg:backdrop-blur-none
+            "
           >
-            <img
-              src={images[activeImage].src}
-              alt={images[activeImage].alt}
-              className="aspect-[4/3] w-full object-cover"
-            />
+            <motion.div
+              onClick={(event) => event.stopPropagation()}
+              className="
+                w-[calc(100vw-40px)]
+                max-w-[400px]
+                overflow-hidden
+                rounded-2xl
+                border
+                border-white/10
+                bg-black/70
+                shadow-2xl
+                lg:w-[400px]
+                lg:bg-black/40
+              "
+            >
+              <img
+                src={images[activeImage].src}
+                alt={images[activeImage].alt}
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
