@@ -394,7 +394,7 @@ export default function Experience() {
               transition={{
                 duration: 0.25,
               }}
-              className="relative flex h-[85vh] w-full max-w-6xl items-center justify-center"
+              className="relative flex max-h-[85vh] max-w-[calc(100vw-100px)] items-center justify-center"
               onClick={(event) => event.stopPropagation()}
             >
               {/* IMAGE */}
@@ -419,59 +419,51 @@ export default function Experience() {
                   transition={{
                     duration: 0.2,
                   }}
-                  className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
+                  className="max-h-[85vh] max-w-[calc(100vw-100px)] rounded-2xl object-contain shadow-2xl"
                 />
               </AnimatePresence>
 
-              {/* =========================
-                  BOUTON FERMER
-              ========================= */}
+              {/* BOUTON FERMER */}
 
               <button
                 type="button"
                 onClick={closeGallery}
-                className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10"
+                className="absolute -right-5 -top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/60 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10"
                 aria-label="Fermer"
               >
                 ×
               </button>
 
-              {/* =========================
-                  FLÈCHE GAUCHE
-              ========================= */}
+              {/* FLÈCHE GAUCHE */}
 
               {images[gallery].photos.length > 1 && (
                 <button
                   type="button"
                   onClick={previousPhoto}
-                  className="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10 md:-left-16"
+                  className="absolute left-0 top-1/2 z-20 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10"
                   aria-label="Photo précédente"
                 >
                   ←
                 </button>
               )}
 
-              {/* =========================
-                  FLÈCHE DROITE
-              ========================= */}
+              {/* FLÈCHE DROITE */}
 
               {images[gallery].photos.length > 1 && (
                 <button
                   type="button"
                   onClick={nextPhoto}
-                  className="absolute right-0 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black/50 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10 md:-right-16"
+                  className="absolute right-0 top-1/2 z-20 flex h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-2xl text-white backdrop-blur-xl transition hover:bg-white/10"
                   aria-label="Photo suivante"
                 >
                   →
                 </button>
               )}
 
-              {/* =========================
-                  COMPTEUR
-              ========================= */}
+              {/* COMPTEUR */}
 
               {images[gallery].photos.length > 1 && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-black/50 px-4 py-2 text-sm text-zinc-300 backdrop-blur-xl">
+                <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-sm text-zinc-300 backdrop-blur-xl">
                   {currentPhoto + 1} / {images[gallery].photos.length}
                 </div>
               )}
