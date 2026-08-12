@@ -81,7 +81,7 @@ export default function Hero() {
 
               <div className="flex items-center gap-2">
                 <Car size={15} />
-                Véhicule
+                Véhiculé
               </div>
             </div>
           </div>
