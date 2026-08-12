@@ -17,7 +17,6 @@ export default function AvailabilityBadge() {
         setConfig(data);
       } catch (error) {
         console.error("Erreur chargement disponibilité :", error);
-
         setConfig(defaultSiteConfig);
       }
     }
@@ -51,18 +50,24 @@ export default function AvailabilityBadge() {
   const style = styles[config.availability] ?? styles.available;
 
   return (
-    <div
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 ${style.border} ${style.background}`}
-    >
-      <span
-        className={`h-2 w-2 rounded-full ${style.dot} ${
-          config.availability === "available" ? "animate-pulse" : ""
-        }`}
-      />
+    <div className="flex flex-col items-start gap-3">
+      <div
+        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 ${style.border} ${style.background}`}
+      >
+        <span
+          className={`h-2 w-2 rounded-full ${style.dot} ${
+            config.availability === "available" ? "animate-pulse" : ""
+          }`}
+        />
 
-      <span className={`text-xs font-medium ${style.text}`}>
-        {config.availabilityLabel}
-      </span>
+        <span className={`text-xs font-medium ${style.text}`}>
+          {config.availabilityLabel}
+        </span>
+      </div>
+
+      <p className="max-w-xl text-sm leading-relaxed text-zinc-500">
+        {config.availabilityMessage}
+      </p>
     </div>
   );
 }
