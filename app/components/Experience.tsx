@@ -188,9 +188,6 @@ export default function Experience() {
             </div>
 
             <div>
-              <h3 className="text-2xl font-medium text-white md:text-3xl">
-                Garage Richard Vaianni Toyota/Volkswagen
-              </h3>
 
               <p className="mt-4 text-zinc-400">
                 Garage Richard Vaianni :{" "}
