@@ -39,7 +39,7 @@ export default function Experience() {
   });
 
   // =========================
-  // IMAGE AU SURVOL
+  // APERÇU IMAGE AU SURVOL
   // =========================
 
   const handleMouseEnter = (
@@ -54,7 +54,7 @@ export default function Experience() {
 
     const spaceOnRight = window.innerWidth - rect.right;
 
-    let x;
+    let x: number;
 
     if (spaceOnRight >= imageWidth + gap) {
       x = rect.right + gap;
@@ -77,7 +77,7 @@ export default function Experience() {
   };
 
   // =========================
-  // OUVRIR LA GALERIE
+  // OUVRIR GALERIE
   // =========================
 
   const openGallery = (image: ImageKey) => {
@@ -87,7 +87,7 @@ export default function Experience() {
   };
 
   // =========================
-  // FERMER LA GALERIE
+  // FERMER GALERIE
   // =========================
 
   const closeGallery = () => {
@@ -120,7 +120,7 @@ export default function Experience() {
   };
 
   // =========================
-  // TOUCHES CLAVIER
+  // CLAVIER
   // =========================
 
   useEffect(() => {
@@ -157,7 +157,27 @@ export default function Experience() {
             TITRE
         ========================= */}
 
-        <div className="mb-20">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+            filter: "blur(6px)",
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+          className="mb-20"
+        >
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             Expériences
           </p>
@@ -166,7 +186,7 @@ export default function Experience() {
             Des expériences différentes,
             <span className="text-zinc-500"> une même envie d'apprendre.</span>
           </h2>
-        </div>
+        </motion.div>
 
         {/* =========================
             TIMELINE
@@ -174,7 +194,8 @@ export default function Experience() {
 
         <div className="relative">
           {/* Ligne verticale */}
-          <div className="absolute left-[7px] top-2 bottom-0 w-px bg-white/10 md:left-[119px]" />
+
+          <div className="absolute bottom-0 left-[7px] top-2 w-px bg-white/10 md:left-[119px]" />
 
           <div className="space-y-16">
             {/* =========================
@@ -184,32 +205,40 @@ export default function Experience() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 35,
+                filter: "blur(6px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               viewport={{
                 once: true,
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.6,
+                duration: 0.8,
+                ease: "easeOut",
               }}
               className="relative grid gap-6 md:grid-cols-[120px_1fr]"
             >
-              {/* Année */}
+              {/* Date */}
+
               <div className="relative pl-8 md:pl-0">
                 <p className="text-sm font-medium text-zinc-400">2023 — 2025</p>
+
+                <p className="mt-2 text-xs text-zinc-600">2 ans</p>
               </div>
 
               {/* Point */}
+
               <div className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-white/20 bg-[#050505] md:left-[112px]">
                 <span className="h-1.5 w-1.5 rounded-full bg-white" />
               </div>
 
               {/* Contenu */}
+
               <div className="pl-8 md:pl-10">
                 <h3 className="text-2xl font-medium text-white md:text-3xl">
                   Responsable boulangerie
@@ -256,32 +285,34 @@ export default function Experience() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 35,
+                filter: "blur(6px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               viewport={{
                 once: true,
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.6,
+                duration: 0.8,
+                ease: "easeOut",
               }}
               className="relative grid gap-6 md:grid-cols-[120px_1fr]"
             >
-              {/* Année */}
               <div className="relative pl-8 md:pl-0">
                 <p className="text-sm font-medium text-zinc-400">2025 — 2026</p>
+
+                <p className="mt-2 text-xs text-zinc-600">1 an</p>
               </div>
 
-              {/* Point */}
               <div className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-white/20 bg-[#050505] md:left-[112px]">
                 <span className="h-1.5 w-1.5 rounded-full bg-white" />
               </div>
 
-              {/* Contenu */}
               <div className="pl-8 md:pl-10">
                 <h3 className="text-2xl font-medium text-white md:text-3xl">
                   Préparateur automobile
@@ -335,32 +366,34 @@ export default function Experience() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 35,
+                filter: "blur(6px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               viewport={{
                 once: true,
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.6,
+                duration: 0.8,
+                ease: "easeOut",
               }}
               className="relative grid gap-6 md:grid-cols-[120px_1fr]"
             >
-              {/* Année */}
               <div className="relative pl-8 md:pl-0">
                 <p className="text-sm font-medium text-zinc-400">2026</p>
+
+                <p className="mt-2 text-xs text-zinc-600">5 mois</p>
               </div>
 
-              {/* Point */}
               <div className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-white/20 bg-[#050505] md:left-[112px]">
                 <span className="h-1.5 w-1.5 rounded-full bg-white" />
               </div>
 
-              {/* Contenu */}
               <div className="pl-8 md:pl-10">
                 <h3 className="text-2xl font-medium text-white md:text-3xl">
                   Préparateur automobile
@@ -407,34 +440,34 @@ export default function Experience() {
             <motion.div
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 35,
+                filter: "blur(6px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               viewport={{
                 once: true,
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.6,
+                duration: 0.8,
+                ease: "easeOut",
               }}
               className="relative grid gap-6 md:grid-cols-[120px_1fr]"
             >
-              {/* Année */}
               <div className="relative pl-8 md:pl-0">
                 <p className="text-sm font-medium text-emerald-400">
                   2026 — aujourd'hui
                 </p>
               </div>
 
-              {/* Point actuel */}
               <div className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-emerald-500/30 bg-[#050505] md:left-[112px]">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
               </div>
 
-              {/* Contenu */}
               <div className="pl-8 md:pl-10">
                 <div className="mb-3 flex flex-wrap items-center gap-3">
                   <h3 className="text-2xl font-medium text-white md:text-3xl">
@@ -460,7 +493,7 @@ export default function Experience() {
       </div>
 
       {/* =========================
-          IMAGE AU SURVOL
+          APERÇU IMAGE
       ========================= */}
 
       <AnimatePresence>
@@ -499,7 +532,7 @@ export default function Experience() {
       </AnimatePresence>
 
       {/* =========================
-          GALERIE PLEIN ÉCRAN
+          GALERIE
       ========================= */}
 
       <AnimatePresence>
@@ -565,7 +598,7 @@ export default function Experience() {
                 />
               </AnimatePresence>
 
-              {/* BOUTON FERMER */}
+              {/* FERMER */}
 
               <button
                 type="button"
@@ -576,7 +609,7 @@ export default function Experience() {
                 ×
               </button>
 
-              {/* FLÈCHE GAUCHE */}
+              {/* GAUCHE */}
 
               {images[gallery].photos.length > 1 && (
                 <button
@@ -589,7 +622,7 @@ export default function Experience() {
                 </button>
               )}
 
-              {/* FLÈCHE DROITE */}
+              {/* DROITE */}
 
               {images[gallery].photos.length > 1 && (
                 <button
