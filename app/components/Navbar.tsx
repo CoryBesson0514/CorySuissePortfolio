@@ -11,7 +11,7 @@ const links = [
     href: "#about",
   },
   {
-    name: "Expérience",
+    name: "Expériencee",
     href: "#experience",
   },
   {
