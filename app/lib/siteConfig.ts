@@ -1,9 +1,6 @@
 import { supabase } from "./supabase";
 
-export type AvailabilityStatus =
-  | "available"
-  | "soon"
-  | "unavailable";
+export type AvailabilityStatus = "available" | "soon" | "unavailable";
 
 export type SiteConfig = {
   id?: number;
@@ -56,80 +53,53 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 /**
  * Enregistre la configuration dans Supabase
  */
-export async function saveSiteConfig(
-  config: SiteConfig
-) {
+export async function saveSiteConfig(config: SiteConfig) {
   // Cherche la ligne de configuration existante
-  const {
-    data: existing,
-    error: findError,
-  } = await supabase
+  const { data: existing, error: findError } = await supabase
     .from("site_config")
     .select("id")
     .limit(1)
     .single();
 
   if (findError) {
-    console.error(
-      "ERREUR LECTURE CONFIGURATION :",
-      findError
-    );
+    console.error("ERREUR LECTURE CONFIGURATION :", findError);
 
     throw findError;
   }
 
   if (!existing) {
-    const error = new Error(
-      "Aucune configuration trouvée dans Supabase."
-    );
+    const error = new Error("Aucune configuration trouvée dans Supabase.");
 
     console.error(error);
 
     throw error;
   }
 
-  console.log(
-    "ID DE LA CONFIGURATION :",
-    existing.id
-  );
+  console.log("ID DE LA CONFIGURATION :", existing.id);
 
-  console.log(
-    "CONFIGURATION À ENREGISTRER :",
-    config
-  );
+  console.log("CONFIGURATION À ENREGISTRER :", config);
 
   // Mise à jour
-  const {
-    data,
-    error,
-  } = await supabase
+  const { data, error } = await supabase
     .from("site_config")
     .update({
       phone: config.phone,
       email: config.email,
       availability: config.availability,
-      availability_label:
-        config.availabilityLabel,
-      availability_message:
-        config.availabilityMessage,
+      availability_label: config.availabilityLabel,
+      availability_message: config.availabilityMessage,
       updated_at: new Date().toISOString(),
     })
     .eq("id", existing.id)
     .select();
 
   if (error) {
-    console.error(
-      "ERREUR UPDATE SUPABASE :",
-      error
-    );
+    console.error("ERREUR UPDATE SUPABASE :", error);
 
     throw error;
   }
 
-  console.log(
-    "CONFIGURATION ENREGISTRÉE :",
-    data
-  );
+  console.log("CONFIGURATION ENREGISTRÉE :", data);
 
   return data;
 }

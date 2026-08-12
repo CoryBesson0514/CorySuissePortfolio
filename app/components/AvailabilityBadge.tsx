@@ -8,8 +8,7 @@ import {
 } from "../lib/siteConfig";
 
 export default function AvailabilityBadge() {
-  const [config, setConfig] =
-    useState<SiteConfig>(defaultSiteConfig);
+  const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
 
   useEffect(() => {
     async function loadConfig() {
@@ -17,10 +16,7 @@ export default function AvailabilityBadge() {
         const data = await getSiteConfig();
         setConfig(data);
       } catch (error) {
-        console.error(
-          "Erreur chargement disponibilité :",
-          error
-        );
+        console.error("Erreur chargement disponibilité :", error);
 
         setConfig(defaultSiteConfig);
       }
@@ -52,9 +48,7 @@ export default function AvailabilityBadge() {
     },
   };
 
-  const style =
-    styles[config.availability] ??
-    styles.available;
+  const style = styles[config.availability] ?? styles.available;
 
   return (
     <div
@@ -62,15 +56,11 @@ export default function AvailabilityBadge() {
     >
       <span
         className={`h-2 w-2 rounded-full ${style.dot} ${
-          config.availability === "available"
-            ? "animate-pulse"
-            : ""
+          config.availability === "available" ? "animate-pulse" : ""
         }`}
       />
 
-      <span
-        className={`text-xs font-medium ${style.text}`}
-      >
+      <span className={`text-xs font-medium ${style.text}`}>
         {config.availabilityLabel}
       </span>
     </div>

@@ -1,22 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import {
-  X,
-  Phone,
-  Mail,
-  MessageCircle,
-} from "lucide-react";
+import { X, Phone, Mail, MessageCircle } from "lucide-react";
 
 type ContactModalProps = {
   open: boolean;
   onClose: () => void;
 };
 
-export default function ContactModal({
-  open,
-  onClose,
-}: ContactModalProps) {
+export default function ContactModal({ open, onClose }: ContactModalProps) {
   return (
     <AnimatePresence>
       {open && (
@@ -89,12 +81,12 @@ export default function ContactModal({
               </h2>
 
               <p className="mt-2 max-w-sm text-sm leading-relaxed text-zinc-500">
-                Disponible pour de nouvelles opportunités professionnelles en Suisse.
+                Disponible pour de nouvelles opportunités professionnelles en
+                Suisse.
               </p>
 
               {/* Informations de contact */}
               <div className="mt-7 space-y-3">
-
                 {/* Téléphone */}
                 <div className="group flex items-center gap-4 rounded-2xl border border-red-500/20 bg-red-500/[0.04] p-4">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-400">
@@ -145,7 +137,6 @@ export default function ContactModal({
 
               {/* Réseaux sociaux */}
               <div className="mt-5 grid grid-cols-2 gap-3">
-
                 {/* Instagram */}
                 <a
                   href="https://www.instagram.com/cory.besson"
@@ -163,19 +154,9 @@ export default function ContactModal({
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <rect
-                      x="3"
-                      y="3"
-                      width="18"
-                      height="18"
-                      rx="5"
-                    />
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
 
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="4"
-                    />
+                    <circle cx="12" cy="12" r="4" />
 
                     <circle
                       cx="17.5"
@@ -186,9 +167,7 @@ export default function ContactModal({
                     />
                   </svg>
 
-                  <span className="text-sm">
-                    Instagram
-                  </span>
+                  <span className="text-sm">Instagram</span>
                 </a>
 
                 {/* WhatsApp */}
@@ -203,11 +182,8 @@ export default function ContactModal({
                     className="transition-transform duration-300 group-hover:scale-110"
                   />
 
-                  <span className="text-sm">
-                    WhatsApp
-                  </span>
+                  <span className="text-sm">WhatsApp</span>
                 </a>
-
               </div>
             </div>
           </motion.div>

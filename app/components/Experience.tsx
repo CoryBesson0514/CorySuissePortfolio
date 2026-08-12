@@ -48,17 +48,11 @@ export default function Experience() {
       x = rect.left - imageWidth - gap;
     }
 
-    x = Math.max(
-      20,
-      Math.min(x, window.innerWidth - imageWidth - 20)
-    );
+    x = Math.max(20, Math.min(x, window.innerWidth - imageWidth - 20));
 
     let y = rect.top + rect.height / 2 - imageHeight / 2;
 
-    y = Math.max(
-      20,
-      Math.min(y, window.innerHeight - imageHeight - 20)
-    );
+    y = Math.max(20, Math.min(y, window.innerHeight - imageHeight - 20));
 
     setImagePosition({
       x,
@@ -71,7 +65,6 @@ export default function Experience() {
   return (
     <section id="experience" className="section relative">
       <div className="container-site">
-
         <div className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             Expérience
@@ -79,25 +72,17 @@ export default function Experience() {
 
           <h2 className="max-w-4xl text-4xl font-medium leading-tight tracking-tight md:text-6xl">
             Des expériences différentes,
-            <span className="text-zinc-500">
-              {" "}une même envie d'apprendre.
-            </span>
+            <span className="text-zinc-500"> une même envie d'apprendre.</span>
           </h2>
         </div>
 
         <div className="space-y-16">
-
           {/* Sophie LeBreuilly */}
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
-
             <div>
-              <p className="text-sm text-zinc-500">
-                2023 — 2025
-              </p>
+              <p className="text-sm text-zinc-500">2023 — 2025</p>
 
-              <p className="mt-2 text-sm text-zinc-600">
-                2 ans
-              </p>
+              <p className="mt-2 text-sm text-zinc-600">2 ans</p>
             </div>
 
             <div>
@@ -108,9 +93,7 @@ export default function Experience() {
               <p className="mt-2 text-zinc-500">
                 <span
                   className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
-                  onMouseEnter={(event) =>
-                    handleMouseEnter(event, "sophie")
-                  }
+                  onMouseEnter={(event) => handleMouseEnter(event, "sophie")}
                   onMouseLeave={() => setActiveImage(null)}
                 >
                   Sophie LeBreuilly
@@ -118,26 +101,20 @@ export default function Experience() {
               </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Une première expérience professionnelle importante dans
-                laquelle j'ai évolué jusqu'au poste de responsable de
-                boulangerie. J'y ai développé mon sens des responsabilités,
-                mon organisation et ma rigueur au quotidien.
+                Une première expérience professionnelle importante dans laquelle
+                j'ai évolué jusqu'au poste de responsable de boulangerie. J'y ai
+                développé mon sens des responsabilités, mon organisation et ma
+                rigueur au quotidien.
               </p>
             </div>
-
           </div>
 
           {/* FRJ Location — Hertz */}
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
-
             <div>
-              <p className="text-sm text-zinc-500">
-                2025 — 2026
-              </p>
+              <p className="text-sm text-zinc-500">2025 — 2026</p>
 
-              <p className="mt-2 text-sm text-zinc-600">
-                1 an
-              </p>
+              <p className="mt-2 text-sm text-zinc-600">1 an</p>
             </div>
 
             <div>
@@ -148,9 +125,7 @@ export default function Experience() {
               <p className="mt-2 text-zinc-500">
                 <span
                   className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
-                  onMouseEnter={(event) =>
-                    handleMouseEnter(event, "frj")
-                  }
+                  onMouseEnter={(event) => handleMouseEnter(event, "frj")}
                   onMouseLeave={() => setActiveImage(null)}
                 >
                   FRJ Location — Hertz
@@ -158,68 +133,57 @@ export default function Experience() {
               </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Une expérience dans le secteur de la location automobile,
-                où j'étais principalement chargé de préparer et nettoyer les
-                véhicules avant leur remise aux clients. J'ai également
-                réalisé des contrats de location et participé à la gestion
-                quotidienne de la flotte.
+                Une expérience dans le secteur de la location automobile, où
+                j'étais principalement chargé de préparer et nettoyer les
+                véhicules avant leur remise aux clients. J'ai également réalisé
+                des contrats de location et participé à la gestion quotidienne
+                de la flotte.
               </p>
 
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                J'ai également eu l'occasion de créer un site internet dédié
-                à la vente des anciens véhicules de la flotte et d'effectuer
-                des missions de convoyage de véhicules.
+                J'ai également eu l'occasion de créer un site internet dédié à
+                la vente des anciens véhicules de la flotte et d'effectuer des
+                missions de convoyage de véhicules.
               </p>
             </div>
-
           </div>
 
           {/* Mécanique */}
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
-
             <div>
-              <p className="text-sm text-zinc-500">
-                2026
-              </p>
+              <p className="text-sm text-zinc-500">2026</p>
 
-              <p className="mt-2 text-sm text-zinc-600">
-                5 mois
-              </p>
+              <p className="mt-2 text-sm text-zinc-600">5 mois</p>
             </div>
 
             <div>
+              <h3 className="text-2xl font-medium text-white md:text-3xl">
+                Préparateur automobile
+              </h3>
 
-              <p className="mt-4 text-zinc-400">
-                Garage Richard Vaianni :{" "}
+              <p className="mt-2 text-zinc-500">
                 <span
-                  className="cursor-pointer text-white underline decoration-white/20 underline-offset-4 transition hover:decoration-white"
-                  onMouseEnter={(event) =>
-                    handleMouseEnter(event, "vaianni")
-                  }
+                  className="cursor-pointer text-zinc-300 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white"
+                  onMouseEnter={(event) => handleMouseEnter(event, "vaianni")}
                   onMouseLeave={() => setActiveImage(null)}
                 >
-                  Garage Richard Vaiannii
+                  Garage Richard Vaianni
                 </span>
               </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
                 Après la boulangerie, j'ai choisi de me réorienter vers la
-                mécanique automobile. Une expérience de quattres mois qui m'a
-                permis de développer de nouvelles compétences techniques et
-                d'aborder un environnement professionnel complètement
-                différent.
+                mécanique automobile. Une expérience de cinq mois qui m'a permis
+                de développer de nouvelles compétences techniques et d'aborder
+                un environnement professionnel complètement différent.
               </p>
             </div>
-
           </div>
 
           {/* Suisse */}
           <div className="grid gap-6 border-t border-white/10 pt-8 md:grid-cols-[180px_1fr]">
-
             <div>
-              <p className="text-sm text-zinc-500">
-                2026 — aujourd'hui
-              </p>
+              <p className="text-sm text-zinc-500">2026 — aujourd'hui</p>
             </div>
 
             <div>
@@ -232,14 +196,12 @@ export default function Experience() {
               </p>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                Après ces différentes expériences, j'ai choisi de m'installer
-                en Suisse afin de rejoindre ma famille et de construire une
+                Après ces différentes expériences, j'ai choisi de m'installer en
+                Suisse afin de rejoindre ma famille et de construire une
                 nouvelle étape de mon parcours professionnel.
               </p>
             </div>
-
           </div>
-
         </div>
       </div>
 
@@ -278,7 +240,6 @@ export default function Experience() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
 }

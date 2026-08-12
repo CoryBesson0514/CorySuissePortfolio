@@ -33,7 +33,6 @@ export default function Skills() {
   return (
     <section id="skills" className="section">
       <div className="container-site">
-
         {/* Header */}
         <div className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
@@ -42,15 +41,12 @@ export default function Skills() {
 
           <h2 className="max-w-4xl text-4xl font-medium leading-tight tracking-tight md:text-6xl">
             Ce que je peux apporter,
-            <span className="text-zinc-500">
-              {" "}au-delà d'un simple CV.
-            </span>
+            <span className="text-zinc-500"> au-delà d'un simple CV.</span>
           </h2>
         </div>
 
         {/* Skills */}
         <div className="grid border-t border-white/10 md:grid-cols-2">
-
           {skills.map((skill, index) => (
             <motion.div
               key={skill.number}
@@ -72,9 +68,7 @@ export default function Skills() {
               }}
               className="group border-b border-white/10 p-8 transition-colors duration-300 hover:bg-white/[0.03] md:p-10"
             >
-
               <div className="flex items-start justify-between gap-6">
-
                 <span className="text-sm text-zinc-600 transition-colors duration-300 group-hover:text-zinc-400">
                   {skill.number}
                 </span>
@@ -82,7 +76,6 @@ export default function Skills() {
                 <span className="text-xs uppercase tracking-[0.15em] text-zinc-700 transition-colors duration-300 group-hover:text-zinc-500">
                   0{index + 1}
                 </span>
-
               </div>
 
               <h3 className="mt-10 text-2xl font-medium text-white md:text-3xl">
@@ -94,12 +87,9 @@ export default function Skills() {
               </p>
 
               <div className="mt-8 h-px w-0 bg-white transition-all duration-500 group-hover:w-full" />
-
             </motion.div>
           ))}
-
         </div>
-
       </div>
     </section>
   );
