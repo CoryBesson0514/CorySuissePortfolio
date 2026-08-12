@@ -1,12 +1,10 @@
 "use client";
-import { motion } from "motion/react";
-import {
-  Menu,
-  X,
-  Settings,
-} from "lucide-react";
+
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X, Settings, QrCode } from "lucide-react";
 import { useState } from "react";
 import ContactModal from "./ContactModal";
+
 const links = [
   {
     name: "À propos",
@@ -21,13 +19,17 @@ const links = [
     href: "#skills",
   },
 ];
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
+
   const handleContact = () => {
     setOpen(false);
     setContactOpen(true);
   };
+
   return (
     <>
       {/* Navbar */}
@@ -48,15 +50,11 @@ export default function Navbar() {
         <div className="container-site pt-5">
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
             {/* Logo */}
-            <a
-              href="#"
-              className="text-sm font-semibold tracking-tight"
-            >
+            <a href="#" className="text-sm font-semibold tracking-tight">
               CORY
-              <span className="text-zinc-500">
-                .
-              </span>
+              <span className="text-zinc-500">.</span>
             </a>
+
             {/* Navigation desktop */}
             <div className="hidden items-center gap-7 md:flex">
               {links.map((link) => (
@@ -69,8 +67,19 @@ export default function Navbar() {
                 </a>
               ))}
             </div>
+
             {/* Actions desktop */}
             <div className="hidden items-center gap-2 md:flex">
+              {/* QR Code */}
+              <button
+                onClick={() => setQrOpen(true)}
+                aria-label="QR Code"
+                title="QR Code"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              >
+                <QrCode size={16} />
+              </button>
+
               {/* Admin */}
               <a
                 href="/admin"
@@ -80,6 +89,7 @@ export default function Navbar() {
               >
                 <Settings size={16} />
               </a>
+
               {/* Contact */}
               <button
                 onClick={handleContact}
@@ -88,6 +98,7 @@ export default function Navbar() {
                 Me contacter
               </button>
             </div>
+
             {/* Menu mobile */}
             <button
               onClick={() => setOpen(!open)}
@@ -95,13 +106,10 @@ export default function Navbar() {
               aria-label="Menu"
               aria-expanded={open}
             >
-              {open ? (
-                <X size={21} />
-              ) : (
-                <Menu size={21} />
-              )}
+              {open ? <X size={21} /> : <Menu size={21} />}
             </button>
           </nav>
+
           {/* Menu mobile */}
           {open && (
             <motion.div
@@ -134,8 +142,22 @@ export default function Navbar() {
                     {link.name}
                   </a>
                 ))}
+
                 {/* Séparateur */}
                 <div className="h-px bg-white/10" />
+
+                {/* QR Code mobile */}
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    setQrOpen(true);
+                  }}
+                  className="flex items-center gap-3 text-zinc-400 transition hover:text-white"
+                >
+                  <QrCode size={17} />
+                  QR Code
+                </button>
+
                 {/* Admin mobile */}
                 <a
                   href="/admin"
@@ -145,6 +167,7 @@ export default function Navbar() {
                   <Settings size={17} />
                   Administration
                 </a>
+
                 {/* Contact mobile */}
                 <button
                   onClick={handleContact}
@@ -157,11 +180,88 @@ export default function Navbar() {
           )}
         </div>
       </motion.header>
+
+      {/* Fenêtre QR Code */}
+      <AnimatePresence>
+        {qrOpen && (
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.2,
+            }}
+            onClick={() => setQrOpen(false)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.9,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                y: 20,
+              }}
+              transition={{
+                duration: 0.25,
+                ease: "easeOut",
+              }}
+              onClick={(event) => event.stopPropagation()}
+              className="relative w-full max-w-sm rounded-[28px] border border-white/10 bg-[#111]/95 p-6 shadow-2xl backdrop-blur-xl"
+            >
+              {/* Fermer */}
+              <button
+                onClick={() => setQrOpen(false)}
+                aria-label="Fermer"
+                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white"
+              >
+                <X size={18} />
+              </button>
+
+              {/* Titre */}
+              <div className="mb-6 text-center">
+                <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
+                  Scanner
+                </p>
+
+                <h2 className="mt-2 text-2xl font-medium text-white">
+                  Mon QR Code
+                </h2>
+
+                <p className="mt-2 text-sm text-zinc-500">
+                  Scannez ce code pour accéder rapidement à mon site.
+                </p>
+              </div>
+
+              {/* QR Code */}
+              <div className="overflow-hidden rounded-2xl bg-white p-4">
+                <img
+                  src="/qr-code.png"
+                  alt="QR Code vers le site de Cory Besson"
+                  className="h-auto w-full"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Fenêtre de contact */}
-      <ContactModal
-        open={contactOpen}
-        onClose={() => setContactOpen(false)}
-      />
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );
 }
