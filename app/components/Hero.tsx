@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Strengths from "./Strengths";
 import AvailabilityBadge from "./AvailabilityBadge";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ArrowDown, ArrowUpRight, MapPin, Car } from "lucide-react";
 
 export default function Hero() {
