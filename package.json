@@ -17,6 +17,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-map-gl": "^8.1.2",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
