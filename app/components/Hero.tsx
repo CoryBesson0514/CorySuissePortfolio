@@ -8,7 +8,10 @@ import { ArrowDown, ArrowUpRight, MapPin, Car } from "lucide-react";
 export default function Hero() {
   return (
     <section className="grid-background relative flex min-h-screen items-center overflow-hidden">
-      {/* Lumière centrale */}
+      {/* =========================
+          LUMIÈRE CENTRALE
+      ========================= */}
+
       <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-3xl" />
 
       <div className="container-site relative z-10 pt-28">
@@ -74,14 +77,16 @@ export default function Hero() {
             duration: 0.8,
             delay: 0.25,
           }}
-          className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
+          className="mt-10 flex flex-col justify-between gap-10 md:flex-row md:items-end"
         >
           {/* =========================
               INFORMATIONS
           ========================= */}
 
-          <div>
-            {/* À PROPOS */}
+          <div className="max-w-2xl">
+            {/* =========================
+                À PROPOS
+            ========================= */}
 
             <motion.div
               initial={{
@@ -120,8 +125,12 @@ export default function Hero() {
                 duration: 0.6,
                 delay: 0.5,
               }}
-              className="mt-6"
+              className="mt-7"
             >
+              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
+                Points forts
+              </p>
+
               <Strengths />
             </motion.div>
 
@@ -142,10 +151,14 @@ export default function Hero() {
               }}
               className="mt-6 flex flex-wrap items-center gap-5 text-sm text-zinc-500"
             >
+              {/* Localisation */}
+
               <div className="flex items-center gap-2">
                 <MapPin size={15} />
                 Neuchâtel, Suisse
               </div>
+
+              {/* Véhicule */}
 
               <div className="flex items-center gap-2">
                 <Car size={15} />
@@ -173,7 +186,10 @@ export default function Hero() {
             }}
             className="flex flex-wrap items-center gap-3"
           >
-            {/* Découvrir */}
+            {/* =========================
+                DÉCOUVRIR
+            ========================= */}
+
             <a
               href="#about"
               className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
@@ -185,7 +201,10 @@ export default function Hero() {
               />
             </a>
 
-            {/* CV */}
+            {/* =========================
+                CV
+            ========================= */}
+
             <a
               href="/CV-Cory-Besson.pdf"
               target="_blank"
