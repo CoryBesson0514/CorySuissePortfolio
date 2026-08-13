@@ -123,7 +123,7 @@ export default function Hero() {
               className="mt-6"
             >
               <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
-                Points forts
+                Points fortsss
               </p>
 
               <Strengths />
