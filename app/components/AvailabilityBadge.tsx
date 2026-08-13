@@ -35,7 +35,7 @@ export default function AvailabilityBadge() {
       border: "rgba(52, 211, 153, 0.20)",
       background: "rgba(52, 211, 153, 0.06)",
       label: "#6ee7b7",
-      message: "#a7f3d0",
+      message: "rgba(167, 243, 208, 0.55)",
     },
 
     soon: {
@@ -44,7 +44,7 @@ export default function AvailabilityBadge() {
       border: "rgba(251, 146, 60, 0.20)",
       background: "rgba(251, 146, 60, 0.06)",
       label: "#fdba74",
-      message: "#fed7aa",
+      message: "rgba(254, 215, 170, 0.55)",
     },
 
     unavailable: {
@@ -53,14 +53,14 @@ export default function AvailabilityBadge() {
       border: "rgba(248, 113, 113, 0.20)",
       background: "rgba(248, 113, 113, 0.06)",
       label: "#fca5a5",
-      message: "#fecaca",
+      message: "rgba(254, 202, 202, 0.55)",
     },
   };
 
   const colors = statusColors[config.availability] ?? statusColors.unavailable;
 
   // =========================
-  // VITESSE DE PULSATION
+  // VITESSE DE L'ANIMATION
   // =========================
 
   const pulseDuration =
@@ -87,7 +87,7 @@ export default function AvailabilityBadge() {
         duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="flex max-w-3xl flex-wrap items-center gap-x-3 gap-y-2"
+      className="inline-flex max-w-xl"
     >
       {/* =========================
           PASTILLE
@@ -103,86 +103,94 @@ export default function AvailabilityBadge() {
           duration: 0.7,
           ease: "easeInOut",
         }}
-        className="group relative flex shrink-0 items-center gap-2.5 rounded-full border px-3.5 py-2 backdrop-blur-xl"
+        className="relative rounded-2xl border px-4 py-3 backdrop-blur-xl"
       >
-        {/* Halo */}
+        {/* =========================
+            STATUT PRINCIPAL
+        ========================= */}
 
-        <motion.span
-          className="absolute left-3.5 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full"
-          animate={{
-            scale: [1, 2.2, 1],
-            opacity: [0.35, 0, 0.35],
-            backgroundColor: colors.dot,
-          }}
-          transition={{
-            duration: pulseDuration,
-            repeat: Infinity,
-            ease: "easeOut",
-          }}
-          style={{
-            boxShadow: `0 0 18px ${colors.glow}`,
-          }}
-        />
+        <div className="flex items-center gap-2.5">
+          {/* Halo */}
 
-        {/* Point */}
+          <motion.span
+            className="absolute left-4 top-[19px] h-2 w-2 rounded-full"
+            animate={{
+              scale: [1, 2.2, 1],
+              opacity: [0.35, 0, 0.35],
+              backgroundColor: colors.dot,
+            }}
+            transition={{
+              duration: pulseDuration,
+              repeat: Infinity,
+              ease: "easeOut",
+            }}
+            style={{
+              boxShadow: `0 0 18px ${colors.glow}`,
+            }}
+          />
 
-        <motion.span
-          className="relative h-2 w-2 rounded-full"
-          animate={{
-            backgroundColor: colors.dot,
-            boxShadow: [
-              `0 0 0px ${colors.glow}`,
-              `0 0 10px ${colors.glow}`,
-              `0 0 0px ${colors.glow}`,
-            ],
-          }}
-          transition={{
-            duration: pulseDuration,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
+          {/* Point */}
 
-        {/* Label */}
+          <motion.span
+            className="relative h-2 w-2 shrink-0 rounded-full"
+            animate={{
+              backgroundColor: colors.dot,
+              boxShadow: [
+                `0 0 0px ${colors.glow}`,
+                `0 0 10px ${colors.glow}`,
+                `0 0 0px ${colors.glow}`,
+              ],
+            }}
+            transition={{
+              duration: pulseDuration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
 
-        <motion.span
-          className="text-xs font-medium tracking-tight"
-          animate={{
-            color: colors.label,
-          }}
-          transition={{
-            duration: 0.7,
-            ease: "easeInOut",
-          }}
-        >
-          {config.availabilityLabel}
-        </motion.span>
+          {/* Texte principal */}
+
+          <motion.span
+            className="text-sm font-medium tracking-tight"
+            animate={{
+              color: colors.label,
+            }}
+            transition={{
+              duration: 0.7,
+              ease: "easeInOut",
+            }}
+          >
+            {config.availabilityLabel}
+          </motion.span>
+        </div>
+
+        {/* =========================
+            MESSAGE
+        ========================= */}
+
+        {config.availabilityMessage && (
+          <motion.p
+            key={config.availabilityMessage}
+            initial={{
+              opacity: 0,
+              y: 4,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              color: colors.message,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.05,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-1.5 pl-[19px] text-xs leading-relaxed"
+          >
+            {config.availabilityMessage}
+          </motion.p>
+        )}
       </motion.div>
-
-      {/* =========================
-          MESSAGE
-      ========================= */}
-
-      {config.availabilityMessage && (
-        <motion.p
-          key={config.availabilityMessage}
-          initial={{
-            opacity: 0,
-            x: -8,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          transition={{
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="text-xs leading-relaxed text-zinc-500"
-        >
-          {config.availabilityMessage}
-        </motion.p>
-      )}
     </motion.div>
   );
 }
