@@ -90,11 +90,17 @@ export default function LocationMap() {
                 longitude,
                 latitude,
                 zoom: 12.5,
+                pitch: 45,
+                bearing: -15,
               }}
               mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-              mapStyle="mapbox://styles/mapbox/dark-v11"
+              mapStyle="mapbox://styles/j0ppi/cmsrvl54g01a801s9dxsocqj4"
               attributionControl={false}
               reuseMaps
+              style={{
+                width: "100%",
+                height: "300px",
+              }}
             >
               <NavigationControl position="bottom-right" showCompass={false} />
 
