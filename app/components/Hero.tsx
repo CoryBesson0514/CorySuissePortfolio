@@ -3,8 +3,9 @@
 import { motion } from "motion/react";
 import Strengths from "./Strengths";
 import AvailabilityBadge from "./AvailabilityBadge";
+import LocationMap from "./LocationMap";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ArrowDown, ArrowUpRight, MapPin, Car } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Car } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -101,10 +102,7 @@ export default function Hero() {
           >
             {/* Localisation */}
 
-            <div className="flex items-center gap-2">
-              <MapPin size={15} />
-              Neuchâtel, Suisse
-            </div>
+            <LocationMap />
 
             {/* Véhicule */}
 
