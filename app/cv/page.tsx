@@ -44,7 +44,7 @@ export default function CVPage() {
 
           <div className="absolute left-1/2 -translate-x-1/2">
             <span className="text-sm font-medium tracking-tight">
-              CORY <span className="text-zinc-500">BESSON</span>
+              CORY <span className="text-zinc-500">.</span>
             </span>
           </div>
 
