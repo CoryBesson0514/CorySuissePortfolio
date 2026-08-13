@@ -1,125 +1,162 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import {
-  defaultSiteConfig,
-  getSiteConfig,
-  type SiteConfig,
-} from "../lib/siteConfig";
-import { supabase } from "../lib/supabase";
+import { getSiteConfig, type SiteConfig } from "../lib/siteConfig";
 
 export default function AvailabilityBadge() {
-  const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
+  const [config, setConfig] = useState<SiteConfig | null>(null);
 
   useEffect(() => {
-    // =========================
-    // CHARGEMENT INITIAL
-    // =========================
-
-    async function loadConfig() {
+    const loadConfig = async () => {
       try {
         const data = await getSiteConfig();
         setConfig(data);
       } catch (error) {
-        console.error("Erreur chargement disponibilité :", error);
-        setConfig(defaultSiteConfig);
+        console.error("Erreur lors du chargement de la disponibilité :", error);
       }
-    }
+    };
 
     loadConfig();
-
-    // =========================
-    // SYNCHRONISATION EN TEMPS RÉEL
-    // =========================
-
-    const channel = supabase
-      .channel("site-config-changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "site_config",
-        },
-        (payload) => {
-          const data = payload.new;
-
-          setConfig({
-            id: data.id,
-            phone: data.phone,
-            email: data.email,
-            availability: data.availability,
-            availabilityLabel: data.availability_label,
-            availabilityMessage: data.availability_message,
-          });
-        }
-      )
-      .subscribe();
-
-    // =========================
-    // NETTOYAGE
-    // =========================
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
+  if (!config) {
+    return null;
+  }
+
   // =========================
-  // STYLES
+  // COULEURS SELON LE STATUT
   // =========================
 
-  const styles = {
+  const statusColors = {
     available: {
-      dot: "bg-emerald-400",
-      border: "border-emerald-500/20",
-      background: "bg-emerald-500/[0.06]",
-      text: "text-emerald-400",
-      message: "text-emerald-700",
+      dot: "#34d399",
+      glow: "rgba(52, 211, 153, 0.35)",
+      border: "rgba(52, 211, 153, 0.20)",
+      background: "rgba(52, 211, 153, 0.06)",
+      text: "#6ee7b7",
     },
 
     soon: {
-      dot: "bg-orange-400",
-      border: "border-orange-500/20",
-      background: "bg-orange-500/[0.06]",
-      text: "text-orange-400",
-      message: "text-orange-700",
+      dot: "#fb923c",
+      glow: "rgba(251, 146, 60, 0.35)",
+      border: "rgba(251, 146, 60, 0.20)",
+      background: "rgba(251, 146, 60, 0.06)",
+      text: "#fdba74",
     },
 
     unavailable: {
-      dot: "bg-red-400",
-      border: "border-red-500/20",
-      background: "bg-red-500/[0.06]",
-      text: "text-red-400",
-      message: "text-red-700",
+      dot: "#f87171",
+      glow: "rgba(248, 113, 113, 0.35)",
+      border: "rgba(248, 113, 113, 0.20)",
+      background: "rgba(248, 113, 113, 0.06)",
+      text: "#fca5a5",
     },
   };
 
-  const style = styles[config.availability] ?? styles.available;
+  const colors = statusColors[config.availability] ?? statusColors.unavailable;
 
   // =========================
-  // AFFICHAGE
+  // ANIMATION SELON LE STATUT
   // =========================
+
+  const pulseDuration =
+    config.availability === "available"
+      ? 2
+      : config.availability === "soon"
+        ? 2.8
+        : 3.5;
 
   return (
-    <div
-      className={`inline-flex max-w-xl items-start gap-2 rounded-2xl border px-3 py-2 ${style.border} ${style.background}`}
+    <motion.div
+      layout
+      initial={{
+        opacity: 0,
+        y: 8,
+        scale: 0.96,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      transition={{
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="inline-flex"
     >
-      <span
-        className={`mt-1 h-2 w-2 shrink-0 rounded-full ${style.dot} ${
-          config.availability === "available" ? "animate-pulse" : ""
-        }`}
-      />
+      <motion.div
+        layout
+        animate={{
+          borderColor: colors.border,
+          backgroundColor: colors.background,
+        }}
+        transition={{
+          duration: 0.7,
+          ease: "easeInOut",
+        }}
+        className="group relative flex items-center gap-2.5 rounded-full border px-3.5 py-2 backdrop-blur-xl"
+      >
+        {/* =========================
+            HALO
+        ========================= */}
 
-      <div className="flex flex-col">
-        <span className={`text-xs font-medium ${style.text}`}>
+        <motion.span
+          className="absolute left-3.5 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full"
+          animate={{
+            scale: [1, 2.2, 1],
+            opacity: [0.35, 0, 0.35],
+            backgroundColor: colors.dot,
+          }}
+          transition={{
+            duration: pulseDuration,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+          style={{
+            boxShadow: `0 0 18px ${colors.glow}`,
+          }}
+        />
+
+        {/* =========================
+            POINT CENTRAL
+        ========================= */}
+
+        <motion.span
+          className="relative h-2 w-2 rounded-full"
+          animate={{
+            backgroundColor: colors.dot,
+            boxShadow: [
+              `0 0 0px ${colors.glow}`,
+              `0 0 10px ${colors.glow}`,
+              `0 0 0px ${colors.glow}`,
+            ],
+          }}
+          transition={{
+            duration: pulseDuration,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* =========================
+            TEXTE
+        ========================= */}
+
+        <motion.span
+          className="text-xs font-medium tracking-tight"
+          animate={{
+            color: colors.text,
+          }}
+          transition={{
+            duration: 0.7,
+            ease: "easeInOut",
+          }}
+        >
           {config.availabilityLabel}
-        </span>
-
-        <span className={`mt-0.5 text-xs leading-relaxed ${style.message}`}>
-          {config.availabilityMessage}
-        </span>
-      </div>
-    </div>
+        </motion.span>
+      </motion.div>
+    </motion.div>
   );
 }
