@@ -141,21 +141,7 @@ export default function LocationMap() {
                     bearing: -15,
                   }}
                   mapboxAccessToken={mapboxToken}
-                  /*
-                   * =========================
-                   * TEST MAPBOX
-                   * =========================
-                   *
-                   * On utilise temporairement
-                   * le style officiel Mapbox.
-                   *
-                   * Une fois que la carte fonctionne,
-                   * on remettra ton style 3D :
-                   *
-                   * mapbox://styles/j0ppi/cmsrvl54g01a801s9dxsocqj4
-                   */
-
-                  mapStyle="mapbox://styles/mapbox/streets-v12"
+                  mapStyle="mapbox://styles/j0ppi/cmsrvl54g01a801s9dxsocqj4"
                   attributionControl={false}
                   reuseMaps
                   style={{
