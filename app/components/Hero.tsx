@@ -6,6 +6,7 @@ import AvailabilityBadge from "./AvailabilityBadge";
 import LocationMap from "./LocationMap";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ArrowDown, ArrowUpRight, Car } from "lucide-react";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -146,14 +147,13 @@ export default function Hero() {
 
             {/* CV */}
 
-            <a
-              href="/CV-Cory-Besson.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/cv"
               className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
             >
               Mon CV
-              </a>
+            </Link>
+          </motion.div>
 
           {/* =========================
               À PROPOS
