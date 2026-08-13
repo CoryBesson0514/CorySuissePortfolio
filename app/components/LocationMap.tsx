@@ -48,7 +48,7 @@ export default function LocationMap() {
           className="transition-transform duration-300 group-hover:-translate-y-0.5"
         />
 
-        <span>Neuchâtel, Suisse</span>
+        <span>Neuchâtel test, Suisse</span>
 
         {/* Indicateur */}
 
