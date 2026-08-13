@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MapPin, X } from "lucide-react";
-import Map, {
-  Marker,
-  NavigationControl,
-  type MapRef,
-} from "react-map-gl/mapbox";
+import Map, { Marker, NavigationControl } from "react-map-gl/mapbox";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -18,8 +14,8 @@ export default function LocationMap() {
   // POSITION
   // =========================
 
-  const latitude = 46.996;
-  const longitude = 6.935;
+  const latitude = 47.013361;
+  const longitude = 6.976861;
 
   // =========================
   // TOKEN MAPBOX
@@ -136,7 +132,7 @@ export default function LocationMap() {
                   initialViewState={{
                     longitude,
                     latitude,
-                    zoom: 12.5,
+                    zoom: 15,
                     pitch: 45,
                     bearing: -15,
                   }}
@@ -149,12 +145,6 @@ export default function LocationMap() {
                     height: "300px",
                   }}
                   onLoad={(event) => {
-                    /*
-                     * La carte est ouverte avec une animation
-                     * de hauteur. On force Mapbox à recalculer
-                     * ses dimensions après son apparition.
-                     */
-
                     requestAnimationFrame(() => {
                       event.target.resize();
                     });
