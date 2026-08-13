@@ -76,6 +76,58 @@ export default function Hero() {
           }}
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
+          {/* =========================
+              INFORMATIONS
+          ========================= */}
+
+          <div>
+            {/* À PROPOS */}
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.4,
+              }}
+            >
+              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
+                Jeune professionnel à la recherche d'une nouvelle opportunité en
+                Suisse.
+              </p>
+            </motion.div>
+
+            {/* =========================
+                POINTS FORTS
+            ========================= */}
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5,
+              }}
+              className="mt-6"
+            >
+              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
+                Points forts
+              </p>
+
+              <Strengths />
+            </motion.div>
 
             {/* =========================
                 LOCALISATION + VÉHICULE
@@ -106,22 +158,6 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          
-          {/* =========================
-              INFORMATIONS
-          ========================= */}
-
-          <div>
-            {/* À PROPOS */}
-
-            <div>
-              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-                Jeune professionnel à la recherche d'une nouvelle opportunité en
-                Suisse.
-              </p>
-            </div>
-
-
           {/* =========================
               BOUTONS
           ========================= */}
@@ -141,6 +177,7 @@ export default function Hero() {
             }}
             className="flex flex-wrap items-center gap-3"
           >
+            {/* Découvrir */}
             <a
               href="#about"
               className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
@@ -152,6 +189,7 @@ export default function Hero() {
               />
             </a>
 
+            {/* CV */}
             <a
               href="/CV-Cory-Besson.pdf"
               target="_blank"
