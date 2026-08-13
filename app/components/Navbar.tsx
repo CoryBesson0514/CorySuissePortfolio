@@ -1,7 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Settings, QrCode } from "lucide-react";
+import {
+  Menu,
+  X,
+  Settings,
+  QrCode,
+  Link as LinkIcon,
+  Check,
+} from "lucide-react";
 import { useState } from "react";
 import ContactModal from "./ContactModal";
 
@@ -28,10 +35,25 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleContact = () => {
     setOpen(false);
     setContactOpen(true);
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText("https://corybesson.vercel.app/");
+
+      setCopied(true);
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Impossible de copier le lien :", error);
+    }
   };
 
   return (
@@ -259,6 +281,66 @@ export default function Navbar() {
                   className="h-auto w-full"
                 />
               </div>
+
+              {/* Copier le lien */}
+              <motion.button
+                type="button"
+                onClick={handleCopyLink}
+                whileTap={{
+                  scale: 0.97,
+                }}
+                animate={{
+                  scale: copied ? [1, 1.03, 1] : 1,
+                }}
+                transition={{
+                  duration: 0.25,
+                }}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+              >
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      initial={{
+                        opacity: 0,
+                        y: 4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      className="flex items-center gap-2"
+                    >
+                      <Check size={15} />
+                      Copié !
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="link"
+                      initial={{
+                        opacity: 0,
+                        y: 4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
+                      className="flex items-center gap-2"
+                    >
+                      <LinkIcon size={15} />
+                      Lien
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
