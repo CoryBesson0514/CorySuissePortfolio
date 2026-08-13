@@ -76,19 +76,6 @@ export default function Hero() {
           }}
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
-          {/* =========================
-              INFORMATIONS
-          ========================= */}
-
-          <div>
-            {/* À PROPOS */}
-
-            <div>
-              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-                Jeune professionnel à la recherche d'une nouvelle opportunité en
-                Suisse.
-              </p>
-            </div>
 
             {/* =========================
                 LOCALISATION + VÉHICULE
@@ -118,6 +105,22 @@ export default function Hero() {
               </div>
             </motion.div>
           </div>
+
+          
+          {/* =========================
+              INFORMATIONS
+          ========================= */}
+
+          <div>
+            {/* À PROPOS */}
+
+            <div>
+              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
+                Jeune professionnel à la recherche d'une nouvelle opportunité en
+                Suisse.
+              </p>
+            </div>
+
 
           {/* =========================
               BOUTONS
