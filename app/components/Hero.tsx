@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import Strengths from "./Strengths";
 import AvailabilityBadge from "./AvailabilityBadge";
 import { ArrowDown, ArrowUpRight, MapPin, Car } from "lucide-react";
 
@@ -11,7 +12,10 @@ export default function Hero() {
       <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-3xl" />
 
       <div className="container-site relative z-10 pt-28">
-        {/* Statut */}
+        {/* =========================
+            STATUT
+        ========================= */}
+
         <motion.div
           initial={{
             opacity: 0,
@@ -29,7 +33,10 @@ export default function Hero() {
           <AvailabilityBadge />
         </motion.div>
 
-        {/* Nom */}
+        {/* =========================
+            NOM
+        ========================= */}
+
         <motion.h1
           initial={{
             opacity: 0,
@@ -50,7 +57,10 @@ export default function Hero() {
           <span className="text-gradient">BESSON.</span>
         </motion.h1>
 
-        {/* Bas du Hero */}
+        {/* =========================
+            BAS DU HERO
+        ========================= */}
+
         <motion.div
           initial={{
             opacity: 0,
@@ -66,15 +76,59 @@ export default function Hero() {
           }}
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
-          {/* Description */}
+          {/* =========================
+              DESCRIPTION
+          ========================= */}
+
           <div>
             <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
               Jeune professionnel à la recherche d'une nouvelle opportunité en
               Suisse.
             </p>
 
-            {/* Localisation + véhicule */}
-            <div className="mt-5 flex items-center gap-5 text-sm text-zinc-500">
+            {/* =========================
+                POINTS FORTS
+            ========================= */}
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5,
+              }}
+              className="mt-6"
+            >
+              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
+                Points forts
+              </p>
+
+              <Strengths />
+            </motion.div>
+
+            {/* =========================
+                LOCALISATION + VÉHICULE
+            ========================= */}
+
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.6,
+              }}
+              className="mt-6 flex flex-wrap items-center gap-5 text-sm text-zinc-500"
+            >
               <div className="flex items-center gap-2">
                 <MapPin size={15} />
                 Neuchâtel, Suisse
@@ -84,11 +138,28 @@ export default function Hero() {
                 <Car size={15} />
                 Véhiculé
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Boutons */}
-          <div className="flex flex-wrap items-center gap-3">
+          {/* =========================
+              BOUTONS
+          ========================= */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.55,
+            }}
+            className="flex flex-wrap items-center gap-3"
+          >
             <a
               href="#about"
               className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
@@ -108,10 +179,13 @@ export default function Hero() {
             >
               Mon CV
             </a>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Flèche */}
+        {/* =========================
+            FLÈCHE
+        ========================= */}
+
         <motion.a
           href="#about"
           initial={{
@@ -122,6 +196,7 @@ export default function Hero() {
           }}
           transition={{
             delay: 1,
+            duration: 0.6,
           }}
           className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 text-zinc-500 md:block"
         >
