@@ -77,14 +77,22 @@ export default function Hero() {
           className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end"
         >
           {/* =========================
-              DESCRIPTION
+              INFORMATIONS
           ========================= */}
 
           <div>
-            <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-              Jeune professionnel à la recherche d'une nouvelle opportunité en
-              Suisse.
-            </p>
+            {/* À PROPOS */}
+
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
+                À propos
+              </p>
+
+              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
+                Jeune professionnel à la recherche d'une nouvelle opportunité en
+                Suisse.
+              </p>
+            </div>
 
             {/* =========================
                 POINTS FORTS
@@ -103,7 +111,7 @@ export default function Hero() {
                 duration: 0.6,
                 delay: 0.5,
               }}
-              className="mt-6"
+              className="mt-7"
             >
               <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
                 Points forts
