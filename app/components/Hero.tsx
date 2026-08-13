@@ -153,8 +153,7 @@ export default function Hero() {
               className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
             >
               Mon CV
-            </a>
-          </motion.div>
+              </a>
 
           {/* =========================
               À PROPOS
