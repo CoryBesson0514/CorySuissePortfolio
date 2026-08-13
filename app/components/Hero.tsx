@@ -61,110 +61,104 @@ export default function Hero() {
         </motion.h1>
 
         {/* =========================
-            BAS DU HERO
+            INFORMATIONS SOUS LE NOM
         ========================= */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 30,
+            y: 25,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 0.8,
-            delay: 0.25,
+            duration: 0.7,
+            delay: 0.3,
           }}
-          className="mt-10 flex flex-col justify-between gap-10 md:flex-row md:items-end"
+          className="mt-10"
         >
           {/* =========================
-              INFORMATIONS
+              LOCALISATION + VÉHICULE
           ========================= */}
 
-          <div className="max-w-2xl">
-            {/* =========================
-                À PROPOS
-            ========================= */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4,
+            }}
+            className="flex flex-wrap items-center gap-5 text-sm text-zinc-500"
+          >
+            {/* Localisation */}
 
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: 0.4,
-              }}
-            >
-              <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-                Jeune professionnel à la recherche d'une nouvelle opportunité en
-                Suisse.
-              </p>
-            </motion.div>
+            <div className="flex items-center gap-2">
+              <MapPin size={15} />
+              Neuchâtel, Suisse
+            </div>
 
-            {/* =========================
-                POINTS FORTS
-            ========================= */}
+            {/* Véhicule */}
 
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: 0.5,
-              }}
-              className="mt-7"
-            >
-              <Strengths />
-            </motion.div>
-
-            {/* =========================
-                LOCALISATION + VÉHICULE
-            ========================= */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: 0.6,
-              }}
-              className="mt-6 flex flex-wrap items-center gap-5 text-sm text-zinc-500"
-            >
-              {/* Localisation */}
-
-              <div className="flex items-center gap-2">
-                <MapPin size={15} />
-                Neuchâtel, Suisse
-              </div>
-
-              {/* Véhicule */}
-
-              <div className="flex items-center gap-2">
-                <Car size={15} />
-                Véhiculé
-              </div>
-            </motion.div>
-          </div>
+            <div className="flex items-center gap-2">
+              <Car size={15} />
+              Véhiculé
+            </div>
+          </motion.div>
 
           {/* =========================
               BOUTONS
+          ========================= */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.5,
+            }}
+            className="mt-5 flex flex-wrap items-center gap-3"
+          >
+            {/* Découvrir */}
+
+            <a
+              href="#about"
+              className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
+            >
+              Découvrir mon parcours
+              <ArrowUpRight
+                size={17}
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </a>
+
+            {/* CV */}
+
+            <a
+              href="/CV-Cory-Besson.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
+            >
+              Mon CV
+            </a>
+          </motion.div>
+
+          {/* =========================
+              À PROPOS
           ========================= */}
 
           <motion.div
@@ -178,37 +172,36 @@ export default function Hero() {
             }}
             transition={{
               duration: 0.6,
-              delay: 0.55,
+              delay: 0.6,
             }}
-            className="flex flex-wrap items-center gap-3"
+            className="mt-8"
           >
-            {/* =========================
-                DÉCOUVRIR
-            ========================= */}
+            <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
+              Jeune professionnel à la recherche d'une nouvelle opportunité en
+              Suisse.
+            </p>
+          </motion.div>
 
-            <a
-              href="#about"
-              className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
-            >
-              Découvrir mon parcours
-              <ArrowUpRight
-                size={17}
-                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-              />
-            </a>
+          {/* =========================
+              POINTS FORTS
+          ========================= */}
 
-            {/* =========================
-                CV
-            ========================= */}
-
-            <a
-              href="/CV-Cory-Besson.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
-            >
-              Mon CV
-            </a>
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.7,
+            }}
+            className="mt-8"
+          >
+            <Strengths />
           </motion.div>
         </motion.div>
 
