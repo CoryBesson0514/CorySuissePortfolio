@@ -84,41 +84,11 @@ export default function Hero() {
             {/* À PROPOS */}
 
             <div>
-              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
-                À propos
-              </p>
-
               <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
                 Jeune professionnel à la recherche d'une nouvelle opportunité en
                 Suisse.
               </p>
             </div>
-
-            {/* =========================
-                POINTS FORTS
-            ========================= */}
-
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: 0.5,
-              }}
-              className="mt-7"
-            >
-              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-zinc-600">
-                Points forts ..
-              </p>
-
-              <Strengths />
-            </motion.div>
 
             {/* =========================
                 LOCALISATION + VÉHICULE
