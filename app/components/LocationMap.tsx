@@ -47,11 +47,8 @@ export default function LocationMap() {
           size={15}
           className="transition-transform duration-300 group-hover:-translate-y-0.5"
         />
-
-        <span>Neuchâtel test, Suisse</span>
-
+        <span>Neuchâtel, Suisse</span> {/* Bouton principal */}
         {/* Indicateur */}
-
         <motion.span
           animate={{
             scale: open ? 1 : 0,
@@ -205,7 +202,7 @@ export default function LocationMap() {
               </p>
 
               <p className="mt-1 text-sm font-medium text-white">
-                Neuchâtel, Suisse
+                Hauterive, Suisse
               </p>
 
               <p className="mt-0.5 text-xs text-zinc-500">
