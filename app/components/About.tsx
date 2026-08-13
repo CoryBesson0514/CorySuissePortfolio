@@ -22,7 +22,7 @@ export default function About() {
 
   const handleMouseEnter = (
     event: React.MouseEvent<HTMLSpanElement>,
-    image: ImageKey
+    image: ImageKey,
   ) => {
     const rect = event.currentTarget.getBoundingClientRect();
 
@@ -56,7 +56,7 @@ export default function About() {
 
   const handleMobileClick = (
     event: React.MouseEvent<HTMLSpanElement>,
-    image: ImageKey
+    image: ImageKey,
   ) => {
     event.stopPropagation();
 
@@ -72,7 +72,7 @@ export default function About() {
       <div className="container-site">
         <div className="mb-12">
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
-            À propos
+            À propos ..
           </p>
 
           <h2 className="max-w-4xl text-4xl font-medium leading-tight tracking-tight md:text-6xl">
