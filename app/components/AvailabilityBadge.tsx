@@ -34,7 +34,8 @@ export default function AvailabilityBadge() {
       glow: "rgba(52, 211, 153, 0.35)",
       border: "rgba(52, 211, 153, 0.20)",
       background: "rgba(52, 211, 153, 0.06)",
-      text: "#6ee7b7",
+      label: "#6ee7b7",
+      message: "#a7f3d0",
     },
 
     soon: {
@@ -42,7 +43,8 @@ export default function AvailabilityBadge() {
       glow: "rgba(251, 146, 60, 0.35)",
       border: "rgba(251, 146, 60, 0.20)",
       background: "rgba(251, 146, 60, 0.06)",
-      text: "#fdba74",
+      label: "#fdba74",
+      message: "#fed7aa",
     },
 
     unavailable: {
@@ -50,14 +52,15 @@ export default function AvailabilityBadge() {
       glow: "rgba(248, 113, 113, 0.35)",
       border: "rgba(248, 113, 113, 0.20)",
       background: "rgba(248, 113, 113, 0.06)",
-      text: "#fca5a5",
+      label: "#fca5a5",
+      message: "#fecaca",
     },
   };
 
   const colors = statusColors[config.availability] ?? statusColors.unavailable;
 
   // =========================
-  // ANIMATION SELON LE STATUT
+  // VITESSE DE PULSATION
   // =========================
 
   const pulseDuration =
@@ -84,8 +87,12 @@ export default function AvailabilityBadge() {
         duration: 0.5,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="inline-flex"
+      className="flex max-w-3xl flex-wrap items-center gap-x-3 gap-y-2"
     >
+      {/* =========================
+          PASTILLE
+      ========================= */}
+
       <motion.div
         layout
         animate={{
@@ -96,11 +103,9 @@ export default function AvailabilityBadge() {
           duration: 0.7,
           ease: "easeInOut",
         }}
-        className="group relative flex items-center gap-2.5 rounded-full border px-3.5 py-2 backdrop-blur-xl"
+        className="group relative flex shrink-0 items-center gap-2.5 rounded-full border px-3.5 py-2 backdrop-blur-xl"
       >
-        {/* =========================
-            HALO
-        ========================= */}
+        {/* Halo */}
 
         <motion.span
           className="absolute left-3.5 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full"
@@ -119,9 +124,7 @@ export default function AvailabilityBadge() {
           }}
         />
 
-        {/* =========================
-            POINT CENTRAL
-        ========================= */}
+        {/* Point */}
 
         <motion.span
           className="relative h-2 w-2 rounded-full"
@@ -140,14 +143,12 @@ export default function AvailabilityBadge() {
           }}
         />
 
-        {/* =========================
-            TEXTE
-        ========================= */}
+        {/* Label */}
 
         <motion.span
           className="text-xs font-medium tracking-tight"
           animate={{
-            color: colors.text,
+            color: colors.label,
           }}
           transition={{
             duration: 0.7,
@@ -157,6 +158,31 @@ export default function AvailabilityBadge() {
           {config.availabilityLabel}
         </motion.span>
       </motion.div>
+
+      {/* =========================
+          MESSAGE
+      ========================= */}
+
+      {config.availabilityMessage && (
+        <motion.p
+          key={config.availabilityMessage}
+          initial={{
+            opacity: 0,
+            x: -8,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          transition={{
+            duration: 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="text-xs leading-relaxed text-zinc-500"
+        >
+          {config.availabilityMessage}
+        </motion.p>
+      )}
     </motion.div>
   );
 }
