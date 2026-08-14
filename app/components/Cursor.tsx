@@ -19,30 +19,25 @@ export default function Cursor() {
   const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
-    /*
-     * ADMIN
-     *
-     * Sur l'administration, on désactive complètement
-     * le curseur personnalisé et on réactive le curseur natif.
-     */
+    const html = document.documentElement;
+
+    /* =========================
+       MODE ADMIN
+    ========================= */
+
     if (isAdmin) {
-      document.documentElement.classList.add("admin-cursor");
-      document.body.classList.add("admin-cursor");
+      html.classList.add("admin-cursor");
 
       return () => {
-        document.documentElement.classList.remove("admin-cursor");
-        document.body.classList.remove("admin-cursor");
+        html.classList.remove("admin-cursor");
       };
     }
 
-    /*
-     * SITE
-     *
-     * Sur le portfolio, on cache le curseur natif
-     * pour utiliser notre curseur personnalisé.
-     */
-    document.documentElement.classList.remove("admin-cursor");
-    document.body.classList.remove("admin-cursor");
+    /* =========================
+       MODE SITE
+    ========================= */
+
+    html.classList.remove("admin-cursor");
 
     const handleMouseMove = (event: MouseEvent) => {
       setPosition({
@@ -57,9 +52,8 @@ export default function Cursor() {
         return;
       }
 
-      /*
-       * Curseurs personnalisés avec data-cursor
-       */
+      /* Curseur personnalisé */
+
       const cursorElement = target.closest("[data-cursor]");
 
       if (cursorElement) {
@@ -71,9 +65,8 @@ export default function Cursor() {
         }
       }
 
-      /*
-       * Éléments interactifs classiques
-       */
+      /* Éléments interactifs */
+
       if (
         target.closest("a") ||
         target.closest("button") ||
@@ -95,13 +88,15 @@ export default function Cursor() {
     };
   }, [isAdmin]);
 
-  /*
-   * Aucun curseur personnalisé sur l'administration.
-   * Le curseur natif est réactivé grâce à la classe CSS.
-   */
+  /* Pas de curseur personnalisé dans l'admin */
+
   if (isAdmin) {
     return null;
   }
+
+  /* =========================
+     TAILLE DU CURSEUR
+  ========================= */
 
   const size = cursorType === "default" ? 10 : cursorType === "hover" ? 18 : 54;
 
