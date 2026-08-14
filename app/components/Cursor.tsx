@@ -1,81 +1,54 @@
 "use client";
 
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { usePathname } from "next/navigation";
 
 export default function Cursor() {
-  const [visible, setVisible] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const pathname = usePathname();
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const x = useSpring(mouseX, {
-    stiffness: 500,
-    damping: 35,
-    mass: 0.5,
-  });
-
-  const y = useSpring(mouseY, {
-    stiffness: 500,
-    damping: 35,
-    mass: 0.5,
+  const [position, setPosition] = useState({
+    x: 0,
+    y: 0,
   });
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(pointer: fine)");
-
-    if (!mediaQuery.matches) return;
+    // Désactive complètement le curseur sur l'administration
+    if (pathname.startsWith("/admin")) {
+      return;
+    }
 
     const handleMouseMove = (event: MouseEvent) => {
-      mouseX.set(event.clientX);
-      mouseY.set(event.clientY);
-      setVisible(true);
-
-      const target = event.target as HTMLElement;
-
-      const interactive = target.closest(
-        "a, button, input, textarea, select, [role='button']",
-      );
-
-      setIsHovering(!!interactive);
-    };
-
-    const handleMouseLeave = () => {
-      setVisible(false);
+      setPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      document.documentElement.removeEventListener(
-        "mouseleave",
-        handleMouseLeave,
-      );
     };
-  }, [mouseX, mouseY]);
+  }, [pathname]);
+
+  // Aucun curseur personnalisé sur /admin
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <motion.div
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden rounded-full bg-white md:block"
-      style={{
-        x,
-        y,
-      }}
+      className="pointer-events-none fixed left-0 top-0 z-[9999] h-2.5 w-2.5 rounded-full bg-white"
       animate={{
-        width: isHovering ? 12 : 7,
-        height: isHovering ? 12 : 7,
-        opacity: visible ? 1 : 0,
-        translateX: "-50%",
-        translateY: "-50%",
+        x: position.x - 5,
+        y: position.y - 5,
       }}
       transition={{
         type: "spring",
         stiffness: 500,
         damping: 30,
+        mass: 0.2,
       }}
     />
   );
