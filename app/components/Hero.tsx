@@ -79,78 +79,79 @@ export default function Hero() {
             delay: 0.3,
           }}
           className="mt-10"
-        ></motion.div>
-        {/* =========================
+        >
+          {/* =========================
               LOCALISATION + VÉHICULE
           ========================= */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.4,
-          }}
-          className="flex flex-wrap items-center gap-5 text-sm text-zinc-500"
-        >
-          {/* Localisation */}
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4,
+            }}
+            className="flex flex-wrap items-center gap-5 text-sm text-zinc-500"
+          >
+            {/* Localisation */}
 
-          <LocationMap />
+            <LocationMap />
 
-          {/* Véhicule */}
+            {/* Véhicule */}
 
-          <div className="flex items-center gap-2">
-            <Car size={15} />
-            Véhiculé
-          </div>
-        </motion.div>
+            <div className="flex items-center gap-2">
+              <Car size={15} />
+              Véhiculé
+            </div>
+          </motion.div>
 
-        {/* =========================
+          {/* =========================
               BOUTONS
           ========================= */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 10,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.5,
-          }}
-          className="mt-5 flex flex-wrap items-center gap-3"
-        >
-          {/* Découvrir */}
-
-          <a
-            href="#about"
-            className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.5,
+            }}
+            className="mt-5 flex flex-wrap items-center gap-3"
           >
-            Découvrir mon parcours
-            <ArrowUpRight
-              size={17}
-              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-            />
-          </a>
+            {/* Découvrir */}
 
-          {/* CV */}
+            <a
+              href="#about"
+              className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
+            >
+              Découvrir mon parcours
+              <ArrowUpRight
+                size={17}
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              />
+            </a>
 
-          <Link
-            href="/cv"
-            className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
-          >
-            Mon CV
-          </Link>
+            {/* CV */}
+
+            <Link
+              href="/cv"
+              className="flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
+            >
+              Mon CV
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* =========================
