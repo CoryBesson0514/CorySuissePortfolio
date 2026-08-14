@@ -122,7 +122,11 @@ button {
     cursor: none;
   }
 }
-/* Curseur normal dans l'administration */
+
+/* =========================
+   ADMIN — CURSEUR NORMAL
+========================= */
+
 html.admin-cursor,
 html.admin-cursor body,
 html.admin-cursor * {

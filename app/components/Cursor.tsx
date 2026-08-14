@@ -27,22 +27,28 @@ export default function Cursor() {
     ========================= */
 
     if (isAdmin) {
+      html.classList.remove("custom-cursor");
+      html.classList.add("admin-cursor");
+
       html.style.cursor = "auto";
       body.style.cursor = "auto";
 
-      html.classList.remove("custom-cursor");
-
-      return;
+      return () => {
+        html.classList.remove("admin-cursor");
+        html.style.cursor = "";
+        body.style.cursor = "";
+      };
     }
 
     /* =========================
        SITE PUBLIC
     ========================= */
 
+    html.classList.remove("admin-cursor");
+    html.classList.add("custom-cursor");
+
     html.style.cursor = "";
     body.style.cursor = "";
-
-    html.classList.add("custom-cursor");
 
     const handleMouseMove = (event: MouseEvent) => {
       setPosition({
@@ -57,6 +63,10 @@ export default function Cursor() {
         return;
       }
 
+      /* =========================
+         DATA-CURSOR
+      ========================= */
+
       const cursorElement = target.closest("[data-cursor]");
 
       if (cursorElement) {
@@ -67,6 +77,10 @@ export default function Cursor() {
           return;
         }
       }
+
+      /* =========================
+         LIENS / BOUTONS / INPUTS
+      ========================= */
 
       if (
         target.closest("a") ||
@@ -86,7 +100,10 @@ export default function Cursor() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+
       html.classList.remove("custom-cursor");
+      html.classList.remove("admin-cursor");
+
       html.style.cursor = "";
       body.style.cursor = "";
     };
