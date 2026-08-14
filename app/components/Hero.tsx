@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import Strengths from "./Strengths";
 import AvailabilityBadge from "./AvailabilityBadge";
 import LocationMap from "./LocationMap";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -178,28 +177,6 @@ export default function Hero() {
               Jeune professionnel à la recherche d'une nouvelle opportunité en
               Suisse.
             </p>
-          </motion.div>
-
-          {/* =========================
-              POINTS FORTS
-          ========================= */}
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 15,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.7,
-            }}
-            className="mt-8"
-          >
-            <Strengths />
           </motion.div>
         </motion.div>
 
