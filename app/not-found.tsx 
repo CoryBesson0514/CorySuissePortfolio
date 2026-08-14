@@ -1,7 +1,17 @@
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black text-white">
-      <h1 className="text-5xl">MA 404 FONCTIONNE 👀</h1>
-    </main>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#000",
+        color: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "40px",
+      }}
+    >
+      TEST 404
+    </div>
   );
 }
