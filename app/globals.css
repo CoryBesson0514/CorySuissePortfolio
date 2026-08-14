@@ -107,7 +107,12 @@ button {
   }
 }
 
+/* =========================
+   CURSEUR PERSONNALISÉ
+========================= */
+
 @media (pointer: fine) {
+  /* Site public : curseur natif masqué */
   html:not(.admin-cursor),
   html:not(.admin-cursor) body,
   html:not(.admin-cursor) a,
@@ -118,6 +123,7 @@ button {
     cursor: none;
   }
 
+  /* Administration : curseur natif réactivé */
   html.admin-cursor,
   html.admin-cursor body,
   html.admin-cursor *,
@@ -128,21 +134,4 @@ button {
   html.admin-cursor select {
     cursor: auto !important;
   }
-}
-
-/* =========================
-   CURSEUR ADMIN
-========================= */
-
-html.admin-cursor,
-html.admin-cursor body {
-  cursor: auto !important;
-}
-
-html.admin-cursor a,
-html.admin-cursor button,
-html.admin-cursor input,
-html.admin-cursor textarea,
-html.admin-cursor select {
-  cursor: auto !important;
 }
