@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import AvailabilityBadge from "./AvailabilityBadge";
 import LocationMap from "./LocationMap";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ArrowDown, ArrowUpRight, Car } from "lucide-react";
 import Link from "next/link";
 
