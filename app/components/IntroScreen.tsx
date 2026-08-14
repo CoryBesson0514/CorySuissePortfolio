@@ -17,7 +17,7 @@ export default function IntroScreen() {
     const timer = setTimeout(() => {
       sessionStorage.setItem("cory-intro-seen", "true");
       setShow(false);
-    }, 16000);
+    }, 160000);
 
     return () => clearTimeout(timer);
   }, []);
