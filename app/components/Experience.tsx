@@ -241,7 +241,7 @@ export default function Experience() {
 
               <div className="pl-8 md:pl-10">
                 <h3 className="text-2xl font-medium text-white md:text-3xl">
-                  Responsable boulangerie
+                  Responsable de boulangerie
                 </h3>
 
                 <p className="mt-2 text-zinc-500">
@@ -411,10 +411,11 @@ export default function Experience() {
                 </p>
 
                 <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-                  Après Hertz, j'ai choisi de me réorienter vers la mécanique
-                  automobile. Une expérience de cinq mois qui m'a permis de
-                  développer de nouvelles compétences techniques et d'aborder un
-                  environnement professionnel complètement différent.
+                  Après cette expérience chez Hertz, j'ai choisi de me
+                  réorienter vers la mécanique automobile. Une expérience de
+                  cinq mois qui m'a permis de développer de nouvelles
+                  compétences techniques et d'aborder un environnement
+                  professionnel complètement différent.
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-2">

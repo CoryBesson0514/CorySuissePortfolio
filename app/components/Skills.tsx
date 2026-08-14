@@ -4,14 +4,14 @@ import { motion } from "motion/react";
 
 const skills = [
   {
-    number: "01",
+    number: "001",
     title: "Organisation",
     description:
       "Organisation du travail, gestion des priorités et capacité à travailler de manière autonome.",
   },
   {
     number: "02",
-    title: "Responsabilité",
+    title: "Responsabilités",
     description:
       "Habitué à prendre des responsabilités et à assurer le bon déroulement des tâches qui me sont confiées.",
   },
