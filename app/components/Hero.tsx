@@ -156,6 +156,31 @@ export default function Hero() {
           </motion.div>
 
           {/* =========================
+              À PROPOS
+          ========================= */}
+
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.6,
+            }}
+            className="mt-8"
+          >
+            <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
+              Jeune professionnel à la recherche d'une nouvelle opportunité en
+              Suisse.
+            </p>
+          </motion.div>
+
+          {/* =========================
               POINTS FORTS
           ========================= */}
 
@@ -198,31 +223,6 @@ export default function Hero() {
         >
           <ArrowDown className="animate-bounce" />
         </motion.a>
-
-        {/* =========================
-            À PROPOS
-        ========================= */}
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 15,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.6,
-          }}
-          className="mt-8"
-        >
-          <p className="max-w-xl text-xl leading-relaxed text-zinc-400 md:text-2xl">
-            Jeune professionnel à la recherche d'une nouvelle opportunité en
-            Suisse.
-          </p>
-        </motion.div>
       </div>
     </section>
   );
