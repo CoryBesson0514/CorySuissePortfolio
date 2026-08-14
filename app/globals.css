@@ -37,6 +37,10 @@ button {
   font: inherit;
 }
 
+/* =========================
+   SCROLLBAR
+========================= */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -54,14 +58,26 @@ button {
   background: #555;
 }
 
+/* =========================
+   CONTAINER
+========================= */
+
 .container-site {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
 
+/* =========================
+   SECTIONS
+========================= */
+
 .section {
   padding: 140px 0;
 }
+
+/* =========================
+   GRID BACKGROUND
+========================= */
 
 .grid-background {
   background-image:
@@ -77,12 +93,20 @@ button {
   background-size: 80px 80px;
 }
 
+/* =========================
+   GLASS
+========================= */
+
 .glass {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
+
+/* =========================
+   TEXT GRADIENT
+========================= */
 
 .text-gradient {
   background: linear-gradient(
@@ -95,16 +119,6 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 90px 0;
-  }
-
-  .container-site {
-    width: min(100% - 28px, 1180px);
-  }
 }
 
 /* =========================
@@ -124,11 +138,15 @@ button {
 }
 
 /* =========================
-   ADMIN — CURSEUR NORMAL
+   MOBILE
 ========================= */
 
-html.admin-cursor,
-html.admin-cursor body,
-html.admin-cursor * {
-  cursor: auto !important;
+@media (max-width: 768px) {
+  .section {
+    padding: 90px 0;
+  }
+
+  .container-site {
+    width: min(100% - 28px, 1180px);
+  }
 }

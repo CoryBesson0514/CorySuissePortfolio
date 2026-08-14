@@ -22,29 +22,17 @@ export default function Cursor() {
     const html = document.documentElement;
     const body = document.body;
 
-    /* =========================
-       ADMIN
-    ========================= */
-
     if (isAdmin) {
+      // Admin : curseur système
       html.classList.remove("custom-cursor");
-      html.classList.add("admin-cursor");
 
       html.style.cursor = "auto";
       body.style.cursor = "auto";
 
-      return () => {
-        html.classList.remove("admin-cursor");
-        html.style.cursor = "";
-        body.style.cursor = "";
-      };
+      return;
     }
 
-    /* =========================
-       SITE PUBLIC
-    ========================= */
-
-    html.classList.remove("admin-cursor");
+    // Site public : curseur personnalisé
     html.classList.add("custom-cursor");
 
     html.style.cursor = "";
@@ -63,10 +51,6 @@ export default function Cursor() {
         return;
       }
 
-      /* =========================
-         DATA-CURSOR
-      ========================= */
-
       const cursorElement = target.closest("[data-cursor]");
 
       if (cursorElement) {
@@ -77,10 +61,6 @@ export default function Cursor() {
           return;
         }
       }
-
-      /* =========================
-         LIENS / BOUTONS / INPUTS
-      ========================= */
 
       if (
         target.closest("a") ||
@@ -100,26 +80,13 @@ export default function Cursor() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-
       html.classList.remove("custom-cursor");
-      html.classList.remove("admin-cursor");
-
-      html.style.cursor = "";
-      body.style.cursor = "";
     };
   }, [isAdmin]);
-
-  /* =========================
-     ADMIN
-  ========================= */
 
   if (isAdmin) {
     return null;
   }
-
-  /* =========================
-     CURSEUR PERSONNALISÉ
-  ========================= */
 
   const size = cursorType === "default" ? 10 : cursorType === "hover" ? 18 : 54;
 
