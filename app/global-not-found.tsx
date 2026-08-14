@@ -76,19 +76,19 @@ export default function GlobalNotFound() {
           }
 
           .shooting-star::after {
-            content: "";
+             content: "";
             position: absolute;
-            right: 0;
-            top: 50%;
-            width: 90px;
-            height: 1px;
+            left: 0;
+             top: 50%;
+             width: 90px;
+             height: 1px;
             transform: translateY(-50%);
             background: linear-gradient(
-              to left,
-              rgba(255, 255, 255, 0.6),
-              transparent
+             to right,
+             rgba(255, 255, 255, 0.6),
+             transparent
             );
-          }
+}
 
           .shooting-star-1 {
             top: 18%;
