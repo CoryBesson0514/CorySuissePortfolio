@@ -8,15 +8,16 @@ import Contact from "./components/Contact";
 import Strengths from "./components/Strengths";
 import Cursor from "./components/Cursor";
 import Footer from "./components/Footer";
+import IntroScreen from "./components/IntroScreen";
 
 export default function Home() {
   return (
     <main>
+      <IntroScreen />
       <Cursor />
       <Navbar />
       <Hero />
       <About />
-      <Strengths />
       <Experience />
       <Skills />
       <Education />
