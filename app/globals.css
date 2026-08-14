@@ -106,3 +106,16 @@ button {
     width: min(100% - 28px, 1180px);
   }
 }
+
+html,
+body {
+  cursor: none;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  cursor: none;
+}
