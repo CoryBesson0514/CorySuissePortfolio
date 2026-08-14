@@ -122,3 +122,9 @@ button {
     cursor: none;
   }
 }
+/* Curseur normal dans l'administration */
+html.admin-cursor,
+html.admin-cursor body,
+html.admin-cursor * {
+  cursor: auto !important;
+}

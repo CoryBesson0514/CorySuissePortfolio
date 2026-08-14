@@ -21,19 +21,18 @@ export default function Cursor() {
   useEffect(() => {
     const html = document.documentElement;
 
-    /* =========================
-       ADMIN
-    ========================= */
-
     if (isAdmin) {
+      // Admin : curseur natif
       html.classList.remove("custom-cursor");
-      return;
+      html.classList.add("admin-cursor");
+
+      return () => {
+        html.classList.remove("admin-cursor");
+      };
     }
 
-    /* =========================
-       SITE PUBLIC
-    ========================= */
-
+    // Site public : curseur personnalisé
+    html.classList.remove("admin-cursor");
     html.classList.add("custom-cursor");
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -82,8 +81,7 @@ export default function Cursor() {
     };
   }, [isAdmin]);
 
-  /* Aucun curseur personnalisé dans l'admin */
-
+  // Pas de curseur personnalisé dans l'administration
   if (isAdmin) {
     return null;
   }
