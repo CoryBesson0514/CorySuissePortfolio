@@ -107,7 +107,6 @@ button {
   }
 }
 
-/* Curseur personnalisé */
 @media (pointer: fine) {
   html,
   body,
@@ -117,5 +116,10 @@ button {
   textarea,
   select {
     cursor: none;
+  }
+
+  .admin-page,
+  .admin-page * {
+    cursor: auto !important;
   }
 }

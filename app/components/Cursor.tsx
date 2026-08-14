@@ -13,7 +13,6 @@ export default function Cursor() {
   });
 
   useEffect(() => {
-    // Désactive complètement le curseur sur l'administration
     if (pathname.startsWith("/admin")) {
       return;
     }
@@ -32,7 +31,6 @@ export default function Cursor() {
     };
   }, [pathname]);
 
-  // Aucun curseur personnalisé sur /admin
   if (pathname.startsWith("/admin")) {
     return null;
   }

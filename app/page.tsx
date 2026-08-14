@@ -9,6 +9,7 @@ import Strengths from "./components/Strengths";
 import Cursor from "./components/Cursor";
 import Footer from "./components/Footer";
 import IntroScreen from "./components/IntroScreen";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   return (
@@ -26,3 +27,18 @@ export default function Home() {
     </main>
   );
 }
+
+const [saved, setSaved] = useState(false);
+const [loading, setLoading] = useState(true);
+
+// =========================
+// CURSEUR NORMAL SUR L'ADMIN
+// =========================
+
+useEffect(() => {
+  document.body.classList.add("admin-page");
+
+  return () => {
+    document.body.classList.remove("admin-page");
+  };
+}, []);
