@@ -20,19 +20,28 @@ export default function Cursor() {
 
   useEffect(() => {
     const html = document.documentElement;
+    const body = document.body;
+
+    /* =========================
+       ADMIN
+    ========================= */
 
     if (isAdmin) {
-      // Admin : curseur natif
-      html.classList.remove("custom-cursor");
-      html.classList.add("admin-cursor");
+      html.style.cursor = "auto";
+      body.style.cursor = "auto";
 
-      return () => {
-        html.classList.remove("admin-cursor");
-      };
+      html.classList.remove("custom-cursor");
+
+      return;
     }
 
-    // Site public : curseur personnalisé
-    html.classList.remove("admin-cursor");
+    /* =========================
+       SITE PUBLIC
+    ========================= */
+
+    html.style.cursor = "";
+    body.style.cursor = "";
+
     html.classList.add("custom-cursor");
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -78,13 +87,22 @@ export default function Cursor() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       html.classList.remove("custom-cursor");
+      html.style.cursor = "";
+      body.style.cursor = "";
     };
   }, [isAdmin]);
 
-  // Pas de curseur personnalisé dans l'administration
+  /* =========================
+     ADMIN
+  ========================= */
+
   if (isAdmin) {
     return null;
   }
+
+  /* =========================
+     CURSEUR PERSONNALISÉ
+  ========================= */
 
   const size = cursorType === "default" ? 10 : cursorType === "hover" ? 18 : 54;
 
