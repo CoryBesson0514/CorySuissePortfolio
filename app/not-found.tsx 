@@ -1,7 +1,17 @@
 export default function NotFound() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-black text-white">
-      <h1 className="text-6xl font-bold">MA 404 🔥</h1>
+      <div className="text-center">
+        <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
+          Oups...
+        </p>
+
+        <h1 className="mt-4 text-7xl font-semibold tracking-tight">404</h1>
+
+        <p className="mt-4 text-zinc-500">
+          T'es parti un peu trop loin dans l'espace 🚀
+        </p>
+      </div>
     </main>
   );
 }
