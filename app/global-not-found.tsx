@@ -1,5 +1,4 @@
 import "./globals.css";
-import Link from "next/link";
 
 export default function GlobalNotFound() {
   return (
@@ -36,12 +35,12 @@ export default function GlobalNotFound() {
               Moi non plus, je ne sais pas où elle est.
             </p>
 
-            <Link
+            <a
               href="/"
               className="mt-8 inline-flex rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm text-zinc-300 transition duration-300 hover:bg-white hover:text-black"
             >
               Retour au portfolio
-            </Link>
+            </a>
           </div>
         </main>
       </body>
