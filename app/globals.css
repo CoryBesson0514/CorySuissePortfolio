@@ -112,26 +112,13 @@ button {
 ========================= */
 
 @media (pointer: fine) {
-  /* Site public : curseur natif masqué */
-  html:not(.admin-cursor),
-  html:not(.admin-cursor) body,
-  html:not(.admin-cursor) a,
-  html:not(.admin-cursor) button,
-  html:not(.admin-cursor) input,
-  html:not(.admin-cursor) textarea,
-  html:not(.admin-cursor) select {
+  html.custom-cursor,
+  html.custom-cursor body,
+  html.custom-cursor a,
+  html.custom-cursor button,
+  html.custom-cursor input,
+  html.custom-cursor textarea,
+  html.custom-cursor select {
     cursor: none;
-  }
-
-  /* Administration : curseur natif réactivé */
-  html.admin-cursor,
-  html.admin-cursor body,
-  html.admin-cursor *,
-  html.admin-cursor a,
-  html.admin-cursor button,
-  html.admin-cursor input,
-  html.admin-cursor textarea,
-  html.admin-cursor select {
-    cursor: auto !important;
   }
 }

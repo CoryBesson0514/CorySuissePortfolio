@@ -22,22 +22,19 @@ export default function Cursor() {
     const html = document.documentElement;
 
     /* =========================
-       MODE ADMIN
+       ADMIN
     ========================= */
 
     if (isAdmin) {
-      html.classList.add("admin-cursor");
-
-      return () => {
-        html.classList.remove("admin-cursor");
-      };
+      html.classList.remove("custom-cursor");
+      return;
     }
 
     /* =========================
-       MODE SITE
+       SITE PUBLIC
     ========================= */
 
-    html.classList.remove("admin-cursor");
+    html.classList.add("custom-cursor");
 
     const handleMouseMove = (event: MouseEvent) => {
       setPosition({
@@ -52,8 +49,6 @@ export default function Cursor() {
         return;
       }
 
-      /* Curseur personnalisé */
-
       const cursorElement = target.closest("[data-cursor]");
 
       if (cursorElement) {
@@ -64,8 +59,6 @@ export default function Cursor() {
           return;
         }
       }
-
-      /* Éléments interactifs */
 
       if (
         target.closest("a") ||
@@ -85,18 +78,15 @@ export default function Cursor() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      html.classList.remove("custom-cursor");
     };
   }, [isAdmin]);
 
-  /* Pas de curseur personnalisé dans l'admin */
+  /* Aucun curseur personnalisé dans l'admin */
 
   if (isAdmin) {
     return null;
   }
-
-  /* =========================
-     TAILLE DU CURSEUR
-  ========================= */
 
   const size = cursorType === "default" ? 10 : cursorType === "hover" ? 18 : 54;
 
