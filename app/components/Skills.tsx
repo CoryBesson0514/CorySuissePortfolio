@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 const skills = [
   {
-    number: "001",
+    number: "01",
     title: "Organisation",
     description:
       "Organisation du travail, gestion des priorités et capacité à travailler de manière autonome.",
@@ -68,13 +68,9 @@ export default function Skills() {
               }}
               className="group border-b border-white/10 p-8 transition-colors duration-300 hover:bg-white/[0.03] md:p-10"
             >
-              <div className="flex items-start justify-between gap-6">
+              <div className="flex items-start gap-6">
                 <span className="text-sm text-zinc-600 transition-colors duration-300 group-hover:text-zinc-400">
                   {skill.number}
-                </span>
-
-                <span className="text-xs uppercase tracking-[0.15em] text-zinc-700 transition-colors duration-300 group-hover:text-zinc-500">
-                  0{index + 1}
                 </span>
               </div>
 
