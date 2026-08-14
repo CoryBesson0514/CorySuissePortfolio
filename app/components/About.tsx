@@ -8,7 +8,7 @@ type ImageKey = "bsn";
 const images = {
   bsn: {
     src: "/bsn.jpg",
-    alt: "BSN — photographie et vidéo",
+    alt: "BSN — photographie et vidéo automobile",
   },
 };
 
