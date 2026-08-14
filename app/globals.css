@@ -107,15 +107,15 @@ button {
   }
 }
 
-html,
-body {
-  cursor: none;
-}
-
-a,
-button,
-input,
-textarea,
-select {
-  cursor: none;
+/* Curseur personnalisé */
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
 }
