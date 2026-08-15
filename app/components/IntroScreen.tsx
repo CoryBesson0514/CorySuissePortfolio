@@ -9,7 +9,7 @@ export default function IntroScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(false);
-    }, 4200);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -23,27 +23,30 @@ export default function IntroScreen() {
           exit={{
             opacity: 0,
             transition: {
-              duration: 0.7,
+              duration: 0.8,
               ease: [0.22, 1, 0.36, 1],
             },
           }}
         >
-          {/* =================================
-              TEXTE
-          ================================= */}
+          {/* =====================================================
+              TEXTE CENTRAL
+          ===================================================== */}
 
           <div className="absolute inset-0 z-10 flex items-center justify-center">
             <motion.div
               initial={{
                 opacity: 0,
-                y: 15,
+                y: 18,
+                scale: 0.98,
               }}
               animate={{
                 opacity: 1,
                 y: 0,
+                scale: 1,
               }}
               transition={{
-                duration: 0.7,
+                duration: 0.8,
+                delay: 0.15,
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="text-center"
@@ -59,44 +62,64 @@ export default function IntroScreen() {
             </motion.div>
           </div>
 
-          {/* =================================
-              DRAPEAU
-          ================================= */}
+          {/* =====================================================
+              DRAPEAU SUISSE
+              
+              Il commence minuscule au centre,
+              puis devient progressivement immense.
+          ===================================================== */}
 
           <motion.div
+            className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-[#ff0000]"
             initial={{
-              width: 4,
-              height: 4,
-              borderRadius: "9999px",
+              width: 8,
+              height: 8,
+              borderRadius: "999px",
               opacity: 0,
             }}
             animate={{
-              width: [4, 4, "100vw", "100vw", 4],
-              height: [4, 4, "100vh", "100vh", 4],
+              width: ["8px", "8px", "180vw", "180vw", "180vw"],
+              height: ["8px", "8px", "180vw", "180vw", "180vw"],
+              borderRadius: ["999px", "999px", "0px", "0px", "0px"],
               opacity: [0, 1, 1, 1, 0],
             }}
             transition={{
-              duration: 3.2,
-              delay: 0.9,
-              times: [0, 0.08, 0.35, 0.75, 1],
-              ease: [0.22, 1, 0.36, 1],
+              duration: 3.8,
+              delay: 0.95,
+              times: [0, 0.08, 0.42, 0.78, 1],
+              ease: [0.16, 1, 0.3, 1],
             }}
-            className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-[#ff0000]"
           >
-            {/* Croix verticale */}
+            {/* =================================================
+                CROIX SUISSE
+            ================================================= */}
 
+            {/* Verticale */}
             <motion.div
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0, 1, 1, 0] }}
+              transition={{
+                duration: 3.8,
+                delay: 0.95,
+                times: [0, 0.12, 0.25, 0.8, 1],
+              }}
               style={{
                 width: "12%",
                 height: "36%",
               }}
             />
 
-            {/* Croix horizontale */}
-
+            {/* Horizontale */}
             <motion.div
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0, 1, 1, 0] }}
+              transition={{
+                duration: 3.8,
+                delay: 0.95,
+                times: [0, 0.12, 0.25, 0.8, 1],
+              }}
               style={{
                 width: "36%",
                 height: "12%",
@@ -104,21 +127,19 @@ export default function IntroScreen() {
             />
           </motion.div>
 
-          {/* =================================
-              FLASH FINAL
-          ================================= */}
+          {/* =====================================================
+              LÉGER FLASH
+          ===================================================== */}
 
           <motion.div
             className="pointer-events-none absolute inset-0 z-30 bg-white"
-            initial={{
-              opacity: 0,
-            }}
+            initial={{ opacity: 0 }}
             animate={{
-              opacity: [0, 0, 0.08, 0],
+              opacity: [0, 0, 0.12, 0],
             }}
             transition={{
-              duration: 0.8,
-              delay: 3.2,
+              duration: 0.7,
+              delay: 4.05,
               ease: "easeOut",
             }}
           />
