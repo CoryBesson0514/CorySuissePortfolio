@@ -10,13 +10,10 @@ import Contact from "./components/Contact";
 import Strengths from "./components/Strengths";
 import Cursor from "./components/Cursor";
 import Footer from "./components/Footer";
-import IntroScreen from "./components/IntroScreen";
-import { useEffect, useState } from "react";
 
 export default function Home() {
   return (
     <main>
-      <IntroScreen />
       <Cursor />
       <Navbar />
       <Hero />
@@ -24,23 +21,9 @@ export default function Home() {
       <Experience />
       <Skills />
       <Education />
+      <Strengths />
       <Contact />
       <Footer />
     </main>
   );
 }
-
-const [saved, setSaved] = useState(false);
-const [loading, setLoading] = useState(true);
-
-// =========================
-// CURSEUR NORMAL SUR L'ADMIN
-// =========================
-
-useEffect(() => {
-  document.body.classList.add("admin-page");
-
-  return () => {
-    document.body.classList.remove("admin-page");
-  };
-}, []);
