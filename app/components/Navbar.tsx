@@ -9,7 +9,7 @@ import {
   Link as LinkIcon,
   Check,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactModal from "./ContactModal";
 
 const links = [
@@ -36,6 +36,23 @@ export default function Navbar() {
   const [contactOpen, setContactOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [introFinished, setIntroFinished] = useState(false);
+
+  // =========================================
+  // FIN DE L'INTRO
+  // =========================================
+
+  useEffect(() => {
+    const handleIntroFinished = () => {
+      setIntroFinished(true);
+    };
+
+    window.addEventListener("intro-finished", handleIntroFinished);
+
+    return () => {
+      window.removeEventListener("intro-finished", handleIntroFinished);
+    };
+  }, []);
 
   const handleContact = () => {
     setOpen(false);
@@ -58,7 +75,10 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar */}
+      {/* =========================================
+          NAVBAR
+      ========================================= */}
+
       <motion.header
         initial={{
           y: -30,
@@ -66,22 +86,33 @@ export default function Navbar() {
         }}
         animate={{
           y: 0,
-          opacity: 1,
+          opacity: introFinished ? 1 : 0,
         }}
         transition={{
           duration: 0.7,
+          ease: [0.22, 1, 0.36, 1],
         }}
         className="fixed left-0 right-0 top-0 z-50"
       >
         <div className="container-site pt-5">
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
-            {/* Logo */}
-            <a href="#" className="text-sm font-semibold tracking-tight">
+            {/* =====================================
+                LOGO
+            ===================================== */}
+
+            <a
+              href="#"
+              data-cory-navbar-logo
+              className="text-sm font-semibold tracking-tight"
+            >
               CORY
               <span className="text-zinc-500">.</span>
             </a>
 
-            {/* Navigation desktop */}
+            {/* =====================================
+                NAVIGATION DESKTOP
+            ===================================== */}
+
             <div className="hidden items-center gap-7 md:flex">
               {links.map((link) => (
                 <a
@@ -94,9 +125,13 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Actions desktop */}
+            {/* =====================================
+                ACTIONS DESKTOP
+            ===================================== */}
+
             <div className="hidden items-center gap-2 md:flex">
               {/* QR Code */}
+
               <button
                 onClick={() => setQrOpen(true)}
                 aria-label="QR Code"
@@ -107,6 +142,7 @@ export default function Navbar() {
               </button>
 
               {/* Admin */}
+
               <a
                 href="/admin"
                 aria-label="Administration"
@@ -117,6 +153,7 @@ export default function Navbar() {
               </a>
 
               {/* Contact */}
+
               <button
                 onClick={handleContact}
                 className="rounded-full bg-white px-4 py-2 text-sm font-medium !text-black transition hover:scale-105 hover:bg-zinc-200"
@@ -125,7 +162,10 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Menu mobile */}
+            {/* =====================================
+                MENU MOBILE
+            ===================================== */}
+
             <button
               onClick={() => setOpen(!open)}
               className="text-zinc-300 transition hover:text-white md:hidden"
@@ -136,7 +176,10 @@ export default function Navbar() {
             </button>
           </nav>
 
-          {/* Menu mobile */}
+          {/* =====================================
+              MENU MOBILE OUVERT
+          ===================================== */}
+
           {open && (
             <motion.div
               initial={{
@@ -158,6 +201,7 @@ export default function Navbar() {
             >
               <div className="flex flex-col gap-5">
                 {/* Liens */}
+
                 {links.map((link) => (
                   <a
                     key={link.href}
@@ -170,9 +214,11 @@ export default function Navbar() {
                 ))}
 
                 {/* Séparateur */}
+
                 <div className="h-px bg-white/10" />
 
                 {/* QR Code mobile */}
+
                 <button
                   onClick={() => {
                     setOpen(false);
@@ -185,6 +231,7 @@ export default function Navbar() {
                 </button>
 
                 {/* Admin mobile */}
+
                 <a
                   href="/admin"
                   onClick={() => setOpen(false)}
@@ -195,6 +242,7 @@ export default function Navbar() {
                 </a>
 
                 {/* Contact mobile */}
+
                 <button
                   onClick={handleContact}
                   className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black transition hover:bg-zinc-200"
@@ -207,7 +255,10 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* Fenêtre QR Code */}
+      {/* =========================================
+          FENÊTRE QR CODE
+      ========================================= */}
+
       <AnimatePresence>
         {qrOpen && (
           <motion.div
@@ -250,6 +301,7 @@ export default function Navbar() {
               className="relative w-full max-w-sm rounded-[28px] border border-white/10 bg-[#111]/95 p-6 shadow-2xl backdrop-blur-xl"
             >
               {/* Fermer */}
+
               <button
                 onClick={() => setQrOpen(false)}
                 aria-label="Fermer"
@@ -259,6 +311,7 @@ export default function Navbar() {
               </button>
 
               {/* Titre */}
+
               <div className="mb-6 text-center">
                 <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
                   Scanner
@@ -274,6 +327,7 @@ export default function Navbar() {
               </div>
 
               {/* QR Code */}
+
               <div className="overflow-hidden rounded-2xl bg-white p-4">
                 <img
                   src="/qr-code.png"
@@ -283,6 +337,7 @@ export default function Navbar() {
               </div>
 
               {/* Copier le lien */}
+
               <motion.button
                 type="button"
                 onClick={handleCopyLink}
@@ -346,7 +401,10 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Fenêtre de contact */}
+      {/* =========================================
+          FENÊTRE DE CONTACT
+      ========================================= */}
+
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );
