@@ -9,14 +9,13 @@ export default function IntroScreen() {
 
   const introLogoRef = useRef<HTMLSpanElement>(null);
 
-  const [logoPosition, setLogoPosition] = useState({
+  const [position, setPosition] = useState({
     x: 0,
     y: 0,
-    scale: 1,
   });
 
   useEffect(() => {
-    const startTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       const introLogo = introLogoRef.current;
       const navbarLogo = document.querySelector(
         "[data-cory-navbar-logo]",
@@ -27,36 +26,40 @@ export default function IntroScreen() {
         return;
       }
 
-      const from = introLogo.getBoundingClientRect();
-      const to = navbarLogo.getBoundingClientRect();
+      const intro = introLogo.getBoundingClientRect();
+      const navbar = navbarLogo.getBoundingClientRect();
 
-      const fromX = from.left + from.width / 2;
-      const fromY = from.top + from.height / 2;
+      /*
+       * On calcule les CENTRES EXACTS
+       * des deux CORY.
+       */
 
-      const toX = to.left + to.width / 2;
-      const toY = to.top + to.height / 2;
+      const introCenterX = intro.left + intro.width / 2;
+      const introCenterY = intro.top + intro.height / 2;
 
-      setLogoPosition({
-        x: toX - fromX,
-        y: toY - fromY,
-        scale: to.width / from.width,
+      const navbarCenterX = navbar.left + navbar.width / 2;
+      const navbarCenterY = navbar.top + navbar.height / 2;
+
+      setPosition({
+        x: navbarCenterX - introCenterX,
+        y: navbarCenterY - introCenterY,
       });
 
       setMoving(true);
     }, 3000);
 
-    return () => clearTimeout(startTimer);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (!moving) return;
 
-    const finishTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       window.dispatchEvent(new Event("intro-finished"));
       setShow(false);
-    }, 1250);
+    }, 1350);
 
-    return () => clearTimeout(finishTimer);
+    return () => clearTimeout(timer);
   }, [moving]);
 
   return (
@@ -64,38 +67,33 @@ export default function IntroScreen() {
       {show && (
         <motion.div
           className="fixed inset-0 z-[99999] overflow-hidden bg-black"
-          initial={{ opacity: 1 }}
+          initial={{
+            opacity: 1,
+          }}
           exit={{
             opacity: 0,
             transition: {
-              duration: 0.7,
+              duration: 0.65,
               ease: [0.22, 1, 0.36, 1],
             },
           }}
         >
           {/* =========================================
-              CONTENU INTRO
+              INTRO
           ========================================= */}
 
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
-            initial={{
-              opacity: 0,
-              y: 12,
-            }}
             animate={{
               opacity: moving ? 0 : 1,
-              y: moving ? -8 : 0,
             }}
             transition={{
-              duration: 0.7,
-              ease: [0.22, 1, 0.36, 1],
+              duration: 0.45,
+              ease: "easeOut",
             }}
           >
             <div className="text-center">
-              {/* =====================================
-                  LOGO QUI VA SE DÉPLACER
-              ===================================== */}
+              {/* CORY */}
 
               <span
                 ref={introLogoRef}
@@ -105,18 +103,15 @@ export default function IntroScreen() {
                 <span className="text-zinc-500">.</span>
               </span>
 
-              {/* =====================================
-                  SOUS-TITRE
-              ===================================== */}
+              {/* SOUS TITRE */}
 
               <motion.p
                 className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-600"
                 animate={{
                   opacity: moving ? 0 : 1,
-                  y: moving ? -5 : 0,
                 }}
                 transition={{
-                  duration: 0.4,
+                  duration: 0.3,
                 }}
               >
                 Portfolio · <span className="text-zinc-300">Suisse</span>
@@ -125,24 +120,24 @@ export default function IntroScreen() {
           </motion.div>
 
           {/* =========================================
-              LOGO VOLANT VERS LA NAVBAR
+              CORY QUI REJOINT LA NAVBAR
           ========================================= */}
 
           {moving && (
             <motion.span
-              className="pointer-events-none fixed left-1/2 top-1/2 z-[100000] block -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
+              className="pointer-events-none fixed z-[100000] whitespace-nowrap text-sm font-semibold tracking-tight text-white"
               initial={{
-                x: 0,
-                y: 0,
-                scale: 1,
+                left: "50%",
+                top: "50%",
+                x: "-50%",
+                y: "-50%",
               }}
               animate={{
-                x: logoPosition.x,
-                y: logoPosition.y,
-                scale: logoPosition.scale,
+                x: `calc(-50% + ${position.x}px)`,
+                y: `calc(-50% + ${position.y}px)`,
               }}
               transition={{
-                duration: 1.15,
+                duration: 1.2,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
@@ -150,23 +145,6 @@ export default function IntroScreen() {
               <span className="text-zinc-500">.</span>
             </motion.span>
           )}
-
-          {/* =========================================
-              PETIT FADE FINAL
-          ========================================= */}
-
-          <motion.div
-            className="pointer-events-none absolute inset-0 bg-black"
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: moving ? 0.15 : 0,
-            }}
-            transition={{
-              duration: 0.6,
-            }}
-          />
         </motion.div>
       )}
     </AnimatePresence>
