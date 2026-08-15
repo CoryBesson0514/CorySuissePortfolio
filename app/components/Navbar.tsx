@@ -38,10 +38,6 @@ export default function Navbar() {
   const [copied, setCopied] = useState(false);
   const [introFinished, setIntroFinished] = useState(false);
 
-  // =========================================
-  // FIN DE L'INTRO
-  // =========================================
-
   useEffect(() => {
     const handleIntroFinished = () => {
       setIntroFinished(true);
@@ -79,58 +75,97 @@ export default function Navbar() {
           NAVBAR
       ========================================= */}
 
-      <motion.header
-        initial={{
-          y: -30,
-          opacity: 0,
-        }}
-        animate={{
-          y: 0,
-          opacity: introFinished ? 1 : 0,
-        }}
-        transition={{
-          duration: 0.7,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="fixed left-0 right-0 top-0 z-50"
-      >
+      <header className="fixed left-0 right-0 top-0 z-50">
         <div className="container-site pt-5">
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
             {/* =====================================
                 LOGO
             ===================================== */}
 
-            <a
+            <motion.a
               href="#"
               data-cory-navbar-logo
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: introFinished ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.35,
+                ease: "easeOut",
+              }}
               className="text-sm font-semibold tracking-tight"
             >
               CORY
               <span className="text-zinc-500">.</span>
-            </a>
+            </motion.a>
 
             {/* =====================================
-                NAVIGATION DESKTOP
+                NAVIGATION
             ===================================== */}
 
-            <div className="hidden items-center gap-7 md:flex">
-              {links.map((link) => (
-                <a
+            <motion.div
+              className="hidden items-center gap-7 md:flex"
+              initial={{
+                opacity: 0,
+                x: 12,
+              }}
+              animate={{
+                opacity: introFinished ? 1 : 0,
+                x: introFinished ? 0 : 12,
+              }}
+              transition={{
+                duration: 0.55,
+                delay: 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {links.map((link, index) => (
+                <motion.a
                   key={link.href}
                   href={link.href}
+                  initial={{
+                    opacity: 0,
+                    y: 6,
+                  }}
+                  animate={{
+                    opacity: introFinished ? 1 : 0,
+                    y: introFinished ? 0 : 6,
+                  }}
+                  transition={{
+                    duration: 0.45,
+                    delay: introFinished ? 0.08 * index : 0,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   className="text-sm text-zinc-400 transition hover:text-white"
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
-            </div>
+            </motion.div>
 
             {/* =====================================
-                ACTIONS DESKTOP
+                ACTIONS
             ===================================== */}
 
-            <div className="hidden items-center gap-2 md:flex">
-              {/* QR Code */}
+            <motion.div
+              className="hidden items-center gap-2 md:flex"
+              initial={{
+                opacity: 0,
+                x: 12,
+              }}
+              animate={{
+                opacity: introFinished ? 1 : 0,
+                x: introFinished ? 0 : 12,
+              }}
+              transition={{
+                duration: 0.55,
+                delay: 0.35,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {/* QR */}
 
               <button
                 onClick={() => setQrOpen(true)}
@@ -143,14 +178,16 @@ export default function Navbar() {
 
               {/* Admin */}
 
-              <a
-                href="/admin"
+              <button
+                onClick={() => {
+                  window.location.href = "/admin";
+                }}
                 aria-label="Administration"
                 title="Administration"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 <Settings size={16} />
-              </a>
+              </button>
 
               {/* Contact */}
 
@@ -160,120 +197,117 @@ export default function Navbar() {
               >
                 Me contacter
               </button>
-            </div>
+            </motion.div>
 
             {/* =====================================
-                MENU MOBILE
+                MOBILE
             ===================================== */}
 
-            <button
+            <motion.button
               onClick={() => setOpen(!open)}
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: introFinished ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.4,
+                delay: 0.3,
+              }}
               className="text-zinc-300 transition hover:text-white md:hidden"
               aria-label="Menu"
               aria-expanded={open}
             >
               {open ? <X size={21} /> : <Menu size={21} />}
-            </button>
+            </motion.button>
           </nav>
 
           {/* =====================================
-              MENU MOBILE OUVERT
+              MENU MOBILE
           ===================================== */}
 
-          {open && (
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: -10,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              exit={{
-                opacity: 0,
-                y: -10,
-              }}
-              transition={{
-                duration: 0.2,
-              }}
-              className="glass mt-2 rounded-3xl p-5 md:hidden"
-            >
-              <div className="flex flex-col gap-5">
-                {/* Liens */}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: -10,
+                  scale: 0.98,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -10,
+                  scale: 0.98,
+                }}
+                transition={{
+                  duration: 0.25,
+                }}
+                className="glass mt-2 rounded-3xl p-5 md:hidden"
+              >
+                <div className="flex flex-col gap-5">
+                  {links.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="text-zinc-300 transition hover:text-white"
+                    >
+                      {link.name}
+                    </a>
+                  ))}
 
-                {links.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="text-zinc-300 transition hover:text-white"
+                  <div className="h-px bg-white/10" />
+
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      setQrOpen(true);
+                    }}
+                    className="flex items-center gap-3 text-white"
                   >
-                    {link.name}
+                    <QrCode size={17} />
+                    QR Code
+                  </button>
+
+                  <a
+                    href="/admin"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 text-zinc-400 transition hover:text-white"
+                  >
+                    <Settings size={17} />
+                    Administration
                   </a>
-                ))}
 
-                {/* Séparateur */}
-
-                <div className="h-px bg-white/10" />
-
-                {/* QR Code mobile */}
-
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    setQrOpen(true);
-                  }}
-                  className="flex items-center gap-3 text-white transition hover:text-white"
-                >
-                  <QrCode size={17} />
-                  QR Code
-                </button>
-
-                {/* Admin mobile */}
-
-                <a
-                  href="/admin"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 text-zinc-400 transition hover:text-white"
-                >
-                  <Settings size={17} />
-                  Administration
-                </a>
-
-                {/* Contact mobile */}
-
-                <button
-                  onClick={handleContact}
-                  className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black transition hover:bg-zinc-200"
-                >
-                  Me contacter
-                </button>
-              </div>
-            </motion.div>
-          )}
+                  <button
+                    onClick={handleContact}
+                    className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black"
+                  >
+                    Me contacter
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </motion.header>
+      </header>
 
       {/* =========================================
-          FENÊTRE QR CODE
+          QR CODE
       ========================================= */}
 
       <AnimatePresence>
         {qrOpen && (
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.2,
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setQrOpen(false)}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-5 backdrop-blur-sm"
           >
@@ -300,8 +334,6 @@ export default function Navbar() {
               onClick={(event) => event.stopPropagation()}
               className="relative w-full max-w-sm rounded-[28px] border border-white/10 bg-[#111]/95 p-6 shadow-2xl backdrop-blur-xl"
             >
-              {/* Fermer */}
-
               <button
                 onClick={() => setQrOpen(false)}
                 aria-label="Fermer"
@@ -309,8 +341,6 @@ export default function Navbar() {
               >
                 <X size={18} />
               </button>
-
-              {/* Titre */}
 
               <div className="mb-6 text-center">
                 <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
@@ -326,8 +356,6 @@ export default function Navbar() {
                 </p>
               </div>
 
-              {/* QR Code */}
-
               <div className="overflow-hidden rounded-2xl bg-white p-4">
                 <img
                   src="/qr-code.png"
@@ -336,38 +364,23 @@ export default function Navbar() {
                 />
               </div>
 
-              {/* Copier le lien */}
-
               <motion.button
                 type="button"
                 onClick={handleCopyLink}
-                whileTap={{
-                  scale: 0.97,
-                }}
+                whileTap={{ scale: 0.97 }}
                 animate={{
                   scale: copied ? [1, 1.03, 1] : 1,
                 }}
-                transition={{
-                  duration: 0.25,
-                }}
+                transition={{ duration: 0.25 }}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 <AnimatePresence mode="wait">
                   {copied ? (
                     <motion.span
                       key="copied"
-                      initial={{
-                        opacity: 0,
-                        y: 4,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: -4,
-                      }}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
                       className="flex items-center gap-2"
                     >
                       <Check size={15} />
@@ -376,18 +389,9 @@ export default function Navbar() {
                   ) : (
                     <motion.span
                       key="link"
-                      initial={{
-                        opacity: 0,
-                        y: 4,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: -4,
-                      }}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
                       className="flex items-center gap-2"
                     >
                       <LinkIcon size={15} />
@@ -402,7 +406,7 @@ export default function Navbar() {
       </AnimatePresence>
 
       {/* =========================================
-          FENÊTRE DE CONTACT
+          CONTACT
       ========================================= */}
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
