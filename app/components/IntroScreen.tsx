@@ -7,16 +7,16 @@ export default function IntroScreen() {
         position: "fixed",
         inset: 0,
         zIndex: 999999,
-        background: "red",
-        color: "white",
+        background: "lime",
+        color: "black",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "60px",
-        fontWeight: "bold",
+        fontSize: "80px",
+        fontWeight: "900",
       }}
     >
-      INTRO TEST
+      TEST INTRO
     </div>
   );
 }
