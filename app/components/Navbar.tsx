@@ -80,20 +80,21 @@ export default function Navbar() {
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
             {/* =====================================
                 LOGO
+                IMPORTANT :
+                data-cory-navbar-logo permet à
+                IntroScreen de récupérer sa position.
             ===================================== */}
 
             <motion.a
               href="#"
               data-cory-navbar-logo
-              initial={{
-                opacity: 0,
-              }}
+              initial={{ opacity: 0 }}
               animate={{
                 opacity: introFinished ? 1 : 0,
               }}
               transition={{
                 duration: 0.35,
-                ease: "easeOut",
+                ease: [0.22, 1, 0.36, 1],
               }}
               className="text-sm font-semibold tracking-tight"
             >
@@ -102,7 +103,7 @@ export default function Navbar() {
             </motion.a>
 
             {/* =====================================
-                NAVIGATION
+                NAVIGATION DESKTOP
             ===================================== */}
 
             <motion.div
@@ -138,7 +139,7 @@ export default function Navbar() {
                     delay: introFinished ? 0.08 * index : 0,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="text-sm text-zinc-400 transition hover:text-white"
+                  className="text-sm text-zinc-400 transition-colors duration-300 hover:text-white"
                 >
                   {link.name}
                 </motion.a>
@@ -146,7 +147,7 @@ export default function Navbar() {
             </motion.div>
 
             {/* =====================================
-                ACTIONS
+                ACTIONS DESKTOP
             ===================================== */}
 
             <motion.div
@@ -165,7 +166,7 @@ export default function Navbar() {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              {/* QR */}
+              {/* QR CODE */}
 
               <button
                 onClick={() => setQrOpen(true)}
@@ -176,7 +177,7 @@ export default function Navbar() {
                 <QrCode size={16} />
               </button>
 
-              {/* Admin */}
+              {/* ADMIN */}
 
               <button
                 onClick={() => {
@@ -189,11 +190,11 @@ export default function Navbar() {
                 <Settings size={16} />
               </button>
 
-              {/* Contact */}
+              {/* CONTACT */}
 
               <button
                 onClick={handleContact}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium !text-black transition hover:scale-105 hover:bg-zinc-200"
+                className="rounded-full bg-white px-4 py-2 text-sm font-medium !text-black transition-all duration-300 hover:scale-105 hover:bg-zinc-200"
               >
                 Me contacter
               </button>
@@ -215,7 +216,7 @@ export default function Navbar() {
                 duration: 0.4,
                 delay: 0.3,
               }}
-              className="text-zinc-300 transition hover:text-white md:hidden"
+              className="text-zinc-300 transition-colors duration-300 hover:text-white md:hidden"
               aria-label="Menu"
               aria-expanded={open}
             >
@@ -247,6 +248,7 @@ export default function Navbar() {
                 }}
                 transition={{
                   duration: 0.25,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
                 className="glass mt-2 rounded-3xl p-5 md:hidden"
               >
@@ -256,7 +258,7 @@ export default function Navbar() {
                       key={link.href}
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="text-zinc-300 transition hover:text-white"
+                      className="text-zinc-300 transition-colors duration-300 hover:text-white"
                     >
                       {link.name}
                     </a>
@@ -264,29 +266,35 @@ export default function Navbar() {
 
                   <div className="h-px bg-white/10" />
 
+                  {/* QR */}
+
                   <button
                     onClick={() => {
                       setOpen(false);
                       setQrOpen(true);
                     }}
-                    className="flex items-center gap-3 text-white"
+                    className="flex items-center gap-3 text-white transition-colors duration-300"
                   >
                     <QrCode size={17} />
                     QR Code
                   </button>
 
+                  {/* ADMIN */}
+
                   <a
                     href="/admin"
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 text-zinc-400 transition hover:text-white"
+                    className="flex items-center gap-3 text-zinc-400 transition-colors duration-300 hover:text-white"
                   >
                     <Settings size={17} />
                     Administration
                   </a>
 
+                  {/* CONTACT */}
+
                   <button
                     onClick={handleContact}
-                    className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black"
+                    className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black transition-all duration-300 hover:bg-zinc-200"
                   >
                     Me contacter
                   </button>
@@ -334,13 +342,17 @@ export default function Navbar() {
               onClick={(event) => event.stopPropagation()}
               className="relative w-full max-w-sm rounded-[28px] border border-white/10 bg-[#111]/95 p-6 shadow-2xl backdrop-blur-xl"
             >
+              {/* FERMeR */}
+
               <button
                 onClick={() => setQrOpen(false)}
                 aria-label="Fermer"
-                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white"
+                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-all duration-300 hover:bg-white/10 hover:text-white"
               >
                 <X size={18} />
               </button>
+
+              {/* TITRE */}
 
               <div className="mb-6 text-center">
                 <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
@@ -356,6 +368,8 @@ export default function Navbar() {
                 </p>
               </div>
 
+              {/* QR */}
+
               <div className="overflow-hidden rounded-2xl bg-white p-4">
                 <img
                   src="/qr-code.png"
@@ -364,23 +378,38 @@ export default function Navbar() {
                 />
               </div>
 
+              {/* COPIER */}
+
               <motion.button
                 type="button"
                 onClick={handleCopyLink}
-                whileTap={{ scale: 0.97 }}
+                whileTap={{
+                  scale: 0.97,
+                }}
                 animate={{
                   scale: copied ? [1, 1.03, 1] : 1,
                 }}
-                transition={{ duration: 0.25 }}
+                transition={{
+                  duration: 0.25,
+                }}
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
               >
                 <AnimatePresence mode="wait">
                   {copied ? (
                     <motion.span
                       key="copied"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
+                      initial={{
+                        opacity: 0,
+                        y: 4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
                       className="flex items-center gap-2"
                     >
                       <Check size={15} />
@@ -389,9 +418,18 @@ export default function Navbar() {
                   ) : (
                     <motion.span
                       key="link"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
+                      initial={{
+                        opacity: 0,
+                        y: 4,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                      }}
+                      exit={{
+                        opacity: 0,
+                        y: -4,
+                      }}
                       className="flex items-center gap-2"
                     >
                       <LinkIcon size={15} />
