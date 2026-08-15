@@ -2,6 +2,12 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { X, Phone, Mail, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  defaultSiteConfig,
+  getSiteConfig,
+  type SiteConfig,
+} from "../lib/siteConfig";
 
 type ContactModalProps = {
   open: boolean;
@@ -9,6 +15,38 @@ type ContactModalProps = {
 };
 
 export default function ContactModal({ open, onClose }: ContactModalProps) {
+  const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const controller = new AbortController();
+
+    getSiteConfig()
+      .then((data) => {
+        if (!controller.signal.aborted) setConfig(data);
+      })
+      .catch((error) =>
+        console.error("Erreur de chargement du contact :", error),
+      );
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      controller.abort();
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open, onClose]);
+
+  const phoneHref = `tel:${config.phone.replace(/[^+\d]/g, "")}`;
+
   return (
     <AnimatePresence>
       {open && (
@@ -88,35 +126,28 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
               {/* Informations de contact */}
               <div className="mt-7 space-y-3">
                 {/* Téléphone */}
-                <div className="group flex items-center gap-4 rounded-2xl border border-red-500/20 bg-red-500/[0.04] p-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-400">
+                <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400">
                     <Phone size={18} />
                   </div>
 
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-[11px] uppercase tracking-[0.15em] text-red-400">
-                        Téléphone
-                      </p>
-
-                      <span className="rounded-full bg-red-500/10 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-red-400">
-                        Indisponible
-                      </span>
-                    </div>
-
-                    <p className="mt-1 text-sm text-zinc-400">
-                      +33 6 09 58 17 42
+                    <p className="text-[11px] uppercase tracking-[0.15em] text-zinc-600">
+                      Téléphone
                     </p>
 
-                    <p className="mt-1 text-xs text-red-400/70">
-                      Ligne temporairement suspendue
-                    </p>
+                    <a
+                      href={phoneHref}
+                      className="mt-1 block text-sm text-zinc-300 hover:text-white"
+                    >
+                      {config.phone}
+                    </a>
                   </div>
                 </div>
 
                 {/* E-mail */}
                 <a
-                  href="mailto:corybesson14@icloud.com"
+                  href={`mailto:${config.email}`}
                   className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400 transition group-hover:text-white">
@@ -128,9 +159,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
                       E-mail
                     </p>
 
-                    <p className="mt-1 text-sm text-white">
-                      corybesson14@icloud.com
-                    </p>
+                    <p className="mt-1 text-sm text-white">{config.email}</p>
                   </div>
                 </a>
               </div>

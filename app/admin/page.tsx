@@ -56,9 +56,12 @@ export default function AdminPage() {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const session = sessionStorage.getItem("cory-admin-session");
+        const response = await fetch("/api/admin/session", {
+          cache: "no-store",
+        });
+        const session = (await response.json()) as { authenticated?: boolean };
 
-        if (session === "true") {
+        if (session.authenticated) {
           setLoggedIn(true);
           await loadConfig();
         }
@@ -81,30 +84,39 @@ export default function AdminPage() {
 
     setError("");
 
-    if (username === "admin" && password === "@Gruissan11") {
-      sessionStorage.setItem("cory-admin-session", "true");
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-      setLoggedIn(true);
-
-      try {
-        await loadConfig();
-      } catch (error) {
-        console.error(error);
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        setError(data?.error ?? "Identifiant ou mot de passe incorrect.");
+        return;
       }
 
-      return;
-    }
+      setPassword("");
+      setLoggedIn(true);
+      await loadConfig();
 
-    setError("Identifiant ou mot de passe incorrect.");
+    } catch (error) {
+      console.error("Erreur lors de la connexion :", error);
+      setError("La connexion est temporairement indisponible.");
+    }
   };
 
   // =========================
   // DÉCONNEXION
   // =========================
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("cory-admin-session");
-
+  const handleLogout = async () => {
+    await fetch("/api/admin/session", { method: "DELETE" }).catch((error) => {
+      console.error("Erreur lors de la déconnexion :", error);
+    });
     setLoggedIn(false);
     setUsername("");
     setPassword("");

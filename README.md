@@ -52,3 +52,10 @@ Après avoir effectué des modifications :
 git add .
 git commit -m "nom du patch x.x.x"
 git push
+
+### Variables d'environnement
+
+Copiez `.env.example` vers `.env.local` pour le développement, puis renseignez
+les mêmes variables dans Vercel. `ADMIN_PASSWORD` et `ADMIN_SESSION_SECRET`
+doivent être des secrets longs, uniques et ne doivent jamais être commités.
+```
