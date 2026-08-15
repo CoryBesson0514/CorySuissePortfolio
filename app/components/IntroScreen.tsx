@@ -9,14 +9,15 @@ export default function IntroScreen() {
 
   const introLogoRef = useRef<HTMLSpanElement>(null);
 
-  const [position, setPosition] = useState({
-    x: 0,
-    y: 0,
+  const [target, setTarget] = useState({
+    left: 0,
+    top: 0,
   });
 
   useEffect(() => {
     const timer = setTimeout(() => {
       const introLogo = introLogoRef.current;
+
       const navbarLogo = document.querySelector(
         "[data-cory-navbar-logo]",
       ) as HTMLElement | null;
@@ -26,23 +27,22 @@ export default function IntroScreen() {
         return;
       }
 
-      const intro = introLogo.getBoundingClientRect();
-      const navbar = navbarLogo.getBoundingClientRect();
+      const introRect = introLogo.getBoundingClientRect();
+      const navbarRect = navbarLogo.getBoundingClientRect();
 
       /*
-       * On calcule les CENTRES EXACTS
-       * des deux CORY.
+       * Position EXACTE du centre du logo navbar.
        */
 
-      const introCenterX = intro.left + intro.width / 2;
-      const introCenterY = intro.top + intro.height / 2;
+      const introCenterX = introRect.left + introRect.width / 2;
+      const introCenterY = introRect.top + introRect.height / 2;
 
-      const navbarCenterX = navbar.left + navbar.width / 2;
-      const navbarCenterY = navbar.top + navbar.height / 2;
+      const navbarCenterX = navbarRect.left + navbarRect.width / 2;
+      const navbarCenterY = navbarRect.top + navbarRect.height / 2;
 
-      setPosition({
-        x: navbarCenterX - introCenterX,
-        y: navbarCenterY - introCenterY,
+      setTarget({
+        left: navbarCenterX - introCenterX,
+        top: navbarCenterY - introCenterY,
       });
 
       setMoving(true);
@@ -55,7 +55,6 @@ export default function IntroScreen() {
     if (!moving) return;
 
     const timer = setTimeout(() => {
-      window.dispatchEvent(new Event("intro-finished"));
       setShow(false);
     }, 1350);
 
@@ -67,9 +66,7 @@ export default function IntroScreen() {
       {show && (
         <motion.div
           className="fixed inset-0 z-[99999] overflow-hidden bg-black"
-          initial={{
-            opacity: 1,
-          }}
+          initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
             transition: {
@@ -79,7 +76,7 @@ export default function IntroScreen() {
           }}
         >
           {/* =========================================
-              INTRO
+              CORY AU CENTRE
           ========================================= */}
 
           <motion.div
@@ -88,13 +85,10 @@ export default function IntroScreen() {
               opacity: moving ? 0 : 1,
             }}
             transition={{
-              duration: 0.45,
-              ease: "easeOut",
+              duration: 0.25,
             }}
           >
             <div className="text-center">
-              {/* CORY */}
-
               <span
                 ref={introLogoRef}
                 className="block text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
@@ -103,15 +97,13 @@ export default function IntroScreen() {
                 <span className="text-zinc-500">.</span>
               </span>
 
-              {/* SOUS TITRE */}
-
               <motion.p
                 className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-600"
                 animate={{
                   opacity: moving ? 0 : 1,
                 }}
                 transition={{
-                  duration: 0.3,
+                  duration: 0.2,
                 }}
               >
                 Portfolio · <span className="text-zinc-300">Suisse</span>
@@ -125,19 +117,17 @@ export default function IntroScreen() {
 
           {moving && (
             <motion.span
-              className="pointer-events-none fixed z-[100000] whitespace-nowrap text-sm font-semibold tracking-tight text-white"
+              className="pointer-events-none fixed left-1/2 top-1/2 z-[100000] whitespace-nowrap text-sm font-semibold tracking-tight text-white"
               initial={{
-                left: "50%",
-                top: "50%",
                 x: "-50%",
                 y: "-50%",
               }}
               animate={{
-                x: `calc(-50% + ${position.x}px)`,
-                y: `calc(-50% + ${position.y}px)`,
+                x: `calc(-50% + ${target.left}px)`,
+                y: `calc(-50% + ${target.top}px)`,
               }}
               transition={{
-                duration: 1.2,
+                duration: 1.15,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
