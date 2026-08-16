@@ -10,10 +10,26 @@ export default function Hero() {
   return (
     <section className="grid-background relative flex min-h-screen items-center overflow-hidden">
       {/* =========================
-          LUMIÈRE CENTRALE
+          AMBIANCE DE FOND
       ========================= */}
 
-      <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.025] blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        {/* Lumière principale */}
+
+        <div className="absolute left-1/2 top-[-180px] h-[650px] w-[650px] -translate-x-1/2 rounded-full bg-purple-600/[0.14] blur-[140px]" />
+
+        {/* Lumière gauche */}
+
+        <div className="absolute left-[10%] top-[30%] h-[350px] w-[350px] rounded-full bg-indigo-500/[0.06] blur-[120px]" />
+
+        {/* Lumière droite */}
+
+        <div className="absolute right-[5%] top-[20%] h-[300px] w-[300px] rounded-full bg-violet-500/[0.06] blur-[120px]" />
+      </div>
+
+      {/* =========================
+          CONTENU
+      ========================= */}
 
       <div className="container-site relative z-10 pt-28">
         {/* =========================
