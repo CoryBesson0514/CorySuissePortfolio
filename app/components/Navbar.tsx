@@ -85,16 +85,6 @@ export default function Navbar() {
       <header className="fixed left-0 right-0 top-0 z-50">
         <div className="container-site pt-5">
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
-            {/* ==================================================
-                LOGO
-
-                IMPORTANT :
-                - data-cory-navbar-logo est utilisé par IntroScreen
-                - PAS d'opacity ici
-                - PAS d'animation ici
-                - le logo est toujours présent
-            ================================================== */}
-
             <a
               href="#"
               data-cory-navbar-logo
