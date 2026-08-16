@@ -9,89 +9,72 @@ export default function LoadingScreen() {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{
-        duration: 0.6,
+        duration: 0.65,
         ease: [0.22, 1, 0.36, 1],
       }}
     >
       {/* =====================================================
-          HALO — ARRIÈRE-PLAN UNIQUEMENT
+          FOND
       ===================================================== */}
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Halo principal */}
+        {/*
+          Halo principal.
+          Beaucoup plus petit et moins opaque.
+          Il ne doit PAS donner l'impression d'un nuage.
+        */}
 
         <motion.div
+          aria-hidden="true"
           className="
             absolute
             left-1/2
             top-1/2
-            h-[420px]
-            w-[700px]
+            h-[150px]
+            w-[520px]
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-[radial-gradient(ellipse,rgba(139,92,246,0.20)_0%,rgba(168,85,247,0.10)_35%,rgba(99,102,241,0.04)_55%,transparent_75%)]
-            blur-[70px]
+            bg-[radial-gradient(ellipse,rgba(139,92,246,0.13)_0%,rgba(139,92,246,0.055)_35%,transparent_68%)]
+            blur-[45px]
           "
           animate={{
-            x: ["-20%", "20%", "-12%", "18%", "-20%"],
-            scale: [1, 1.08, 1.03, 1.07, 1],
-            opacity: [0.65, 0.9, 0.75, 0.85, 0.65],
+            x: ["-180px", "180px", "-120px", "140px", "-180px"],
+            scaleX: [1, 1.08, 0.98, 1.06, 1],
+            opacity: [0.5, 0.8, 0.55, 0.72, 0.5],
           }}
           transition={{
-            duration: 9,
+            duration: 10,
             ease: "easeInOut",
             repeat: Infinity,
           }}
         />
 
-        {/* Lumière blanche très subtile */}
+        {/*
+          Petite lumière blanche qui traverse le violet.
+          Très discrète pour garder le fond sombre.
+        */}
 
         <motion.div
+          aria-hidden="true"
           className="
             absolute
             left-1/2
             top-1/2
-            h-[180px]
-            w-[500px]
+            h-[70px]
+            w-[280px]
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-[radial-gradient(ellipse,rgba(255,255,255,0.10)_0%,rgba(196,181,253,0.05)_30%,transparent_70%)]
-            blur-[55px]
+            bg-[radial-gradient(ellipse,rgba(255,255,255,0.11)_0%,rgba(255,255,255,0.035)_38%,transparent_72%)]
+            blur-[35px]
           "
           animate={{
-            x: ["18%", "-18%", "10%", "-15%", "18%"],
-            scaleX: [1, 1.12, 0.96, 1.08, 1],
-            opacity: [0.45, 0.7, 0.5, 0.65, 0.45],
+            x: ["140px", "-140px", "100px", "-100px", "140px"],
+            opacity: [0.25, 0.5, 0.3, 0.45, 0.25],
           }}
           transition={{
-            duration: 7,
-            ease: "easeInOut",
-            repeat: Infinity,
-          }}
-        />
-
-        {/* Petit halo violet secondaire */}
-
-        <motion.div
-          className="
-            absolute
-            left-1/2
-            top-[42%]
-            h-[220px]
-            w-[220px]
-            -translate-x-1/2
-            rounded-full
-            bg-purple-500/[0.10]
-            blur-[80px]
-          "
-          animate={{
-            x: ["-140px", "140px", "-80px", "110px", "-140px"],
-            y: ["0px", "-20px", "10px", "-15px", "0px"],
-          }}
-          transition={{
-            duration: 11,
+            duration: 8,
             ease: "easeInOut",
             repeat: Infinity,
           }}
@@ -100,10 +83,9 @@ export default function LoadingScreen() {
 
       {/* =====================================================
           LOGO
-          TOUJOURS AU-DESSUS DU HALO
       ===================================================== */}
 
-      <div className="relative z-10 text-center">
+      <div className="relative z-20 flex flex-col items-center">
         <motion.div
           initial={{
             opacity: 0,
@@ -114,15 +96,25 @@ export default function LoadingScreen() {
             y: 0,
           }}
           transition={{
-            duration: 0.6,
+            duration: 0.55,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
+          className="
+            relative
+            text-4xl
+            font-semibold
+            leading-none
+            tracking-[-0.06em]
+            text-white
+            md:text-6xl
+          "
         >
-          CORY
-          <span className="text-white">.</span>
+          {/* Blanc BRUT */}
+          <span className="text-[#ffffff]">CORY</span>
+          <span className="text-[#ffffff]">.</span>
         </motion.div>
 
+        {/* Chargement */}
         <motion.div
           initial={{
             opacity: 0,
@@ -132,36 +124,55 @@ export default function LoadingScreen() {
           }}
           transition={{
             opacity: {
-              duration: 2.5,
+              duration: 2.2,
               ease: "easeInOut",
               repeat: Infinity,
             },
           }}
-          className="mt-4 text-[10px] uppercase tracking-[0.35em] text-white/60"
+          className="
+            mt-4
+            text-[10px]
+            font-medium
+            uppercase
+            tracking-[0.35em]
+            text-white
+          "
         >
           Chargement
         </motion.div>
       </div>
 
       {/* =====================================================
-          PETITE LIGNE DE LUMIÈRE
+          INDICATEUR
       ===================================================== */}
 
-      <div className="pointer-events-none absolute bottom-[18%] left-1/2 h-px w-[180px] -translate-x-1/2 overflow-hidden bg-white/[0.06]">
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[18%]
+          left-1/2
+          h-px
+          w-[180px]
+          -translate-x-1/2
+          overflow-hidden
+          bg-white/[0.05]
+        "
+      >
         <motion.div
           className="
             h-full
-            w-[60px]
+            w-[55px]
             bg-gradient-to-r
             from-transparent
-            via-purple-300/70
+            via-white/60
             to-transparent
           "
           animate={{
-            x: ["-80px", "200px"],
+            x: ["-70px", "190px"],
           }}
           transition={{
-            duration: 2.8,
+            duration: 2.6,
             ease: "easeInOut",
             repeat: Infinity,
           }}

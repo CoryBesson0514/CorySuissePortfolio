@@ -89,11 +89,11 @@ export default function Hero() {
             duration: 0.9,
             delay: 0.1,
           }}
-          className="relative z-20 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em] text-white"
+          className="relative z-20 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
         >
-          <span className="text-white">CORY</span>
+          <span className="text-[#ffffff]">CORY</span>
           <br />
-          <span className="text-white">BESSON.</span>
+          <span className="text-gradient">BESSON.</span>
         </motion.h1>
 
         {/* ===================================================
