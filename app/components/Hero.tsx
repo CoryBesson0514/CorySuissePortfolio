@@ -13,22 +13,78 @@ export default function Hero() {
           AMBIANCE DE FOND
       ========================= */}
 
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        {/* Lumière principale */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      >
+        {/* =================================================
+            LUMIÈRE PRINCIPALE
+            Douce, large et derrière le contenu
+        ================================================= */}
 
-        <div className="absolute left-1/2 top-[-180px] h-[650px] w-[650px] -translate-x-1/2 rounded-full bg-purple-600/[0.14] blur-[140px]" />
+        <motion.div
+          className="absolute left-1/2 top-[-180px] h-[650px] w-[650px] -translate-x-1/2 rounded-full bg-purple-600/[0.075] blur-[140px]"
+          initial={{
+            opacity: 0,
+            scale: 0.9,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1.8,
+            delay: 0.2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
 
-        {/* Lumière gauche */}
+        {/* =================================================
+            LUMIÈRE GAUCHE
+        ================================================= */}
 
-        <div className="absolute left-[10%] top-[30%] h-[350px] w-[350px] rounded-full bg-indigo-500/[0.06] blur-[120px]" />
+        <motion.div
+          className="absolute left-[8%] top-[32%] h-[350px] w-[350px] rounded-full bg-indigo-500/[0.045] blur-[120px]"
+          initial={{
+            opacity: 0,
+            scale: 0.85,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 2,
+            delay: 0.4,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
 
-        {/* Lumière droite */}
+        {/* =================================================
+            LUMIÈRE DROITE
+        ================================================= */}
 
-        <div className="absolute right-[5%] top-[20%] h-[300px] w-[300px] rounded-full bg-violet-500/[0.06] blur-[120px]" />
+        <motion.div
+          className="absolute right-[5%] top-[20%] h-[300px] w-[300px] rounded-full bg-violet-500/[0.045] blur-[120px]"
+          initial={{
+            opacity: 0,
+            scale: 0.85,
+          }}
+          animate={{
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 2,
+            delay: 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
       </div>
 
       {/* =========================
           CONTENU
+          TOUJOURS AU-DESSUS
       ========================= */}
 
       <div className="container-site relative z-10 pt-28">
@@ -69,11 +125,14 @@ export default function Hero() {
           transition={{
             duration: 0.9,
             delay: 0.1,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          className="max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
+          className="relative z-10 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
         >
-          CORY
+          <span className="text-white">CORY</span>
+
           <br />
+
           <span className="text-gradient">BESSON.</span>
         </motion.h1>
 
@@ -93,6 +152,7 @@ export default function Hero() {
           transition={{
             duration: 0.7,
             delay: 0.3,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="mt-10"
         >
@@ -112,6 +172,7 @@ export default function Hero() {
             transition={{
               duration: 0.6,
               delay: 0.4,
+              ease: [0.22, 1, 0.36, 1],
             }}
             className="flex flex-wrap items-center gap-5 text-sm text-zinc-500"
           >
@@ -143,6 +204,7 @@ export default function Hero() {
             transition={{
               duration: 0.6,
               delay: 0.5,
+              ease: [0.22, 1, 0.36, 1],
             }}
             className="mt-5 flex flex-wrap items-center gap-3"
           >

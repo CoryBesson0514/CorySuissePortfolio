@@ -314,26 +314,24 @@ button {
 ========================================================= */
 
 .text-gradient {
-  background:
-    linear-gradient(
-      110deg,
-      #ffffff 0%,
-      #ffffff 38%,
-      #faf9ff 50%,
-      #ddd6fe 66%,
-      #a78bfa 82%,
-      #6366f1 100%
-    );
+  background: linear-gradient(
+    105deg,
+    #ffffff 0%,
+    #ffffff 45%,
+    #f5f3ff 58%,
+    #ddd6fe 72%,
+    #a78bfa 88%,
+    #818cf8 100%
+  );
 
   -webkit-background-clip: text;
   background-clip: text;
 
+  -webkit-text-fill-color: transparent;
   color: transparent;
 
-  /*
-    Le gradient reste dans le texte.
-    Aucun glow, blur ou opacity ici.
-  */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* =========================================================
