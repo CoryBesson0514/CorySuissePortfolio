@@ -141,8 +141,7 @@ export default function AdminPage() {
     const presets = {
       available: {
         label: "Disponible",
-        message:
-          "Disponible pour de nouvelles opportunités professionnelles et de nouveaux projets en Suisse.",
+        message: "Disponible à Neuchâtel et aux alentours",
       },
 
       soon: {
