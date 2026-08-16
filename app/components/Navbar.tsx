@@ -18,16 +18,16 @@ const links = [
     href: "#about",
   },
   {
-    name: "Points forts",
-    href: "#strengths",
-  },
-  {
     name: "Expériences",
     href: "#experience",
   },
   {
     name: "Compétences",
     href: "#skills",
+  },
+  {
+    name: "Points forts",
+    href: "#strengths",
   },
 ];
 
