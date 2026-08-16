@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, LogOut, Mail, Phone, Save } from "lucide-react";
 
@@ -36,22 +36,25 @@ export default function AdminPage() {
   // CHARGEMENT INITIAL
   // =========================
 
-  useState(() => {
+  useEffect(() => {
     loadConfig();
-  });
+  }, []);
 
   // =========================
   // DÉCONNEXION
   // =========================
 
   const handleLogout = async () => {
-    await fetch("/api/admin/session", {
-      method: "DELETE",
-    }).catch((error) => {
+    try {
+      await fetch("/api/admin/session", {
+        method: "DELETE",
+      });
+    } catch (error) {
       console.error("Erreur lors de la déconnexion :", error);
-    });
-
-    router.push("/");
+    } finally {
+      router.push("/");
+      router.refresh();
+    }
   };
 
   // =========================
@@ -158,6 +161,7 @@ export default function AdminPage() {
           {/* Déconnexion */}
 
           <button
+            type="button"
             onClick={handleLogout}
             className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-zinc-400 transition hover:bg-white/[0.07] hover:text-white"
           >
@@ -379,6 +383,7 @@ export default function AdminPage() {
           className="mt-6 flex justify-end"
         >
           <button
+            type="button"
             onClick={handleSave}
             className="flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition hover:scale-105 hover:bg-zinc-200 active:scale-95"
           >
