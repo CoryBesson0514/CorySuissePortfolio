@@ -19,7 +19,14 @@
   --blue: #6366f1;
   --pink: #ec4899;
   --orange: #f59e0b;
+
+  --glass: rgba(255, 255, 255, 0.055);
+  --glass-strong: rgba(255, 255, 255, 0.08);
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -27,14 +34,25 @@
 
 html {
   scroll-behavior: smooth;
-  background: #090714;
+  background: var(--background);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
 
+  /*
+   * IMPORTANT :
+   * Le fond est directement sur le body.
+   * Aucun pseudo-element ne se trouve au-dessus
+   * des textes ou des composants.
+   */
   background:
+    radial-gradient(
+      ellipse 700px 500px at 50% -120px,
+      rgba(139, 92, 246, 0.09),
+      transparent 70%
+    ),
     linear-gradient(
       180deg,
       #0b0912 0%,
@@ -50,12 +68,19 @@ body {
 }
 
 /* =========================================================
-   IMPORTANT
-   Aucun pseudo-element global ici.
-   
-   Le fond lumineux est géré directement dans les sections.
-   Cela évite absolument tout voile au-dessus des textes.
+   NO OVERLAY
 ========================================================= */
+
+/*
+ * Aucun body::before
+ * Aucun body::after
+ *
+ * C'est volontaire.
+ *
+ * Les anciens pseudo-elements étaient susceptibles de créer
+ * une couche colorée/voilée au-dessus du contenu selon les
+ * contextes de stacking de la page.
+ */
 
 /* =========================================================
    SELECTION
@@ -127,41 +152,18 @@ button {
   padding: 140px 0;
 }
 
-/* =========================================================
-   SECTION AMBIENT
-========================================================= */
-
-.section::before {
-  content: "";
-
-  position: absolute;
-
-  width: 420px;
-  height: 420px;
-
-  left: 50%;
-  top: 15%;
-
-  transform: translateX(-50%);
-
-  border-radius: 999px;
-
-  background: rgba(112, 65, 255, 0.055);
-
-  filter: blur(110px);
-
-  pointer-events: none;
-
-  z-index: 0;
-}
+/*
+ * Pas de halo automatique sur les sections.
+ *
+ * Si une section doit avoir une ambiance lumineuse,
+ * elle devra l'avoir explicitement dans son composant.
+ */
 
 /* =========================================================
    GRID BACKGROUND
 ========================================================= */
 
 .grid-background {
-  position: relative;
-
   background-image:
     linear-gradient(
       rgba(167, 139, 250, 0.035) 1px,
@@ -189,51 +191,71 @@ button {
 }
 
 /* =========================================================
-   TEXT GRADIENT
+   GLASS
 ========================================================= */
 
-.text-gradient {
-  display: inline-block;
+.glass {
+  position: relative;
 
-  background: linear-gradient(
-    105deg,
-    #ffffff 0%,
-    #ffffff 22%,
-    #f5f3ff 42%,
-    #ddd6fe 58%,
-    #a78bfa 76%,
-    #6366f1 100%
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
 
-  background-size: 200% 100%;
-  background-position: 0% 50%;
+  border: 1px solid var(--border);
 
-  -webkit-background-clip: text;
-  background-clip: text;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
-  animation: textGradientReveal 1.4s ease-out forwards;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
 }
 
-@keyframes textGradientReveal {
-  0% {
-    background-position: 100% 50%;
-  }
+.glass:hover {
+  border-color: rgba(139, 92, 246, 0.24);
 
-  100% {
-    background-position: 0% 50%;
-  }
+  box-shadow:
+    0 25px 90px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(139, 92, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 /* =========================================================
-   COLORFUL TEXT
+   TEXT
 ========================================================= */
 
-.text-gradient-purple {
-  display: inline-block;
+/*
+ * IMPORTANT :
+ * Le nom principal doit être BLANC PUR.
+ *
+ * Plus de gradient.
+ * Plus de transparence.
+ * Plus d'effet.
+ */
 
+.text-gradient {
+  background: none;
+
+  -webkit-background-clip: initial;
+  background-clip: initial;
+
+  color: #ffffff;
+}
+
+/*
+ * Ce gradient reste disponible pour les autres éléments
+ * du site qui l'utilisent volontairement.
+ */
+
+.text-gradient-purple {
   background: linear-gradient(
     100deg,
     #f59e0b 0%,
@@ -245,7 +267,6 @@ button {
   -webkit-background-clip: text;
   background-clip: text;
 
-  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
@@ -302,45 +323,7 @@ button {
 }
 
 /* =========================================================
-   GLASS
-========================================================= */
-
-.glass {
-  position: relative;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.075),
-      rgba(255, 255, 255, 0.025)
-    );
-
-  border: 1px solid var(--border);
-
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-
-  box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-  transition:
-    border-color 0.35s ease,
-    box-shadow 0.35s ease,
-    transform 0.35s ease;
-}
-
-.glass:hover {
-  border-color: rgba(139, 92, 246, 0.24);
-
-  box-shadow:
-    0 25px 90px rgba(0, 0, 0, 0.3),
-    0 0 50px rgba(139, 92, 246, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
-}
-
-/* =========================================================
-   SHINE
+   SHINE EFFECT
 ========================================================= */
 
 .shine {
@@ -378,7 +361,7 @@ button {
 }
 
 /* =========================================================
-   CURSEUR
+   CURSEUR PERSONNALISÉ
 ========================================================= */
 
 @media (pointer: fine) {
