@@ -8,7 +8,7 @@
   --background: #090714;
   --background-deep: #06050f;
 
-  --foreground: #f8f7ff;
+  --foreground: #ffffff;
   --muted: #aaa6bd;
 
   --border: rgba(255, 255, 255, 0.1);
@@ -53,47 +53,46 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 
   overflow-x: hidden;
-
-  /*
-    Important :
-    le body devient le contexte principal.
-    Le fond animé reste derrière tout le contenu.
-  */
-  position: relative;
-  isolation: isolate;
 }
 
 /* =========================================================
-   AMBIENT BACKGROUND
+   GLOBAL AMBIENT BACKGROUND
 ========================================================= */
 
 body::before {
   content: "";
 
   position: fixed;
-  inset: 0;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   pointer-events: none;
 
   /*
-    Toujours derrière le contenu.
+    IMPORTANT :
+    Cette couche est derrière le contenu,
+    mais PAS avec un z-index négatif.
   */
-  z-index: -1;
+
+  z-index: 0;
 
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(112, 65, 255, 0.10),
+      rgba(112, 65, 255, 0.075),
       transparent 38%
     ),
     radial-gradient(
       circle at 90% 25%,
-      rgba(99, 102, 241, 0.045),
+      rgba(99, 102, 241, 0.035),
       transparent 30%
     ),
     radial-gradient(
       circle at 10% 70%,
-      rgba(168, 85, 247, 0.025),
+      rgba(168, 85, 247, 0.02),
       transparent 30%
     );
 
@@ -131,29 +130,34 @@ body::before {
 }
 
 /* =========================================================
-   SUBTLE GRAIN
+   GRAIN
 ========================================================= */
 
 body::after {
   content: "";
 
   position: fixed;
+
   inset: 0;
 
   pointer-events: none;
 
-  /*
-    Le grain reste derrière le contenu.
-    Il est extrêmement léger pour ne jamais
-    donner une impression de voile.
-  */
-  z-index: -1;
+  z-index: 0;
 
-  opacity: 0.012;
+  opacity: 0.008;
 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 
   mix-blend-mode: normal;
+}
+
+/* =========================================================
+   ALL PAGE CONTENT
+========================================================= */
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* =========================================================
@@ -162,7 +166,7 @@ body::after {
 
 ::selection {
   background: rgba(139, 92, 246, 0.45);
-  color: white;
+  color: #ffffff;
 }
 
 /* =========================================================
@@ -245,13 +249,13 @@ button {
 
   border-radius: 999px;
 
-  background: rgba(112, 65, 255, 0.07);
+  background: rgba(112, 65, 255, 0.05);
 
   filter: blur(100px);
 
   pointer-events: none;
 
-  z-index: -1;
+  z-index: 0;
 }
 
 /* =========================================================
@@ -259,14 +263,16 @@ button {
 ========================================================= */
 
 .grid-background {
+  position: relative;
+
   background-image:
     linear-gradient(
-      rgba(167, 139, 250, 0.035) 1px,
+      rgba(167, 139, 250, 0.025) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(167, 139, 250, 0.035) 1px,
+      rgba(167, 139, 250, 0.025) 1px,
       transparent 1px
     );
 
@@ -333,10 +339,10 @@ button {
   background: linear-gradient(
     100deg,
     #ffffff 0%,
-    #ffffff 32%,
-    #f5f3ff 48%,
-    #c4b5fd 68%,
-    #8b5cf6 84%,
+    #ffffff 35%,
+    #f5f3ff 50%,
+    #ddd6fe 65%,
+    #a78bfa 82%,
     #6366f1 100%
   );
 
