@@ -407,3 +407,20 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+/* =========================================================
+   DEBUG — TEXTE HERO BLANC PUR
+========================================================= */
+
+section h1,
+section h1 span {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
