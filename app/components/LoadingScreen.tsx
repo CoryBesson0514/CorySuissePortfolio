@@ -13,12 +13,6 @@ export default function LoadingScreen() {
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      {/* =====================================================
-          LOGO
-          FOND 100% NOIR
-          LA VAGUE EXISTE UNIQUEMENT DANS "CORY"
-      ===================================================== */}
-
       <div className="relative z-10 text-center">
         <motion.div
           initial={{
@@ -35,24 +29,23 @@ export default function LoadingScreen() {
           }}
           className="relative text-4xl font-semibold tracking-[-0.06em] md:text-6xl"
         >
-          {/* Texte blanc de base */}
-          <span className="relative text-white">
-            CORY
-            <span className="text-white">.</span>
+          {/* Blanc pur */}
+          <span className="text-white">
+            CORY<span className="text-white">.</span>
           </span>
 
-          {/* =================================================
-              COUCHE DE COULEUR
-              MASQUÉE UNIQUEMENT PAR LE TEXTE
-          ================================================= */}
-
+          {/* Vague violette UNIQUEMENT dans les lettres */}
           <motion.span
             aria-hidden="true"
             className="
               pointer-events-none
               absolute
               inset-0
-              bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_25%,#8b5cf6_42%,#a855f7_50%,#6366f1_58%,#ffffff_75%,#ffffff_100%)]
+              bg-gradient-to-r
+              from-white
+              via-white
+              via-purple-500
+              to-white
               bg-[length:250%_100%]
               bg-clip-text
               text-transparent
@@ -66,19 +59,12 @@ export default function LoadingScreen() {
               repeat: Infinity,
             }}
           >
-            CORY
-            <span>.</span>
+            CORY<span>.</span>
           </motion.span>
         </motion.div>
 
-        {/* =====================================================
-            TEXTE CHARGEMENT
-        ===================================================== */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-          }}
+          initial={{ opacity: 0 }}
           animate={{
             opacity: [0.35, 0.65, 0.35],
           }}
@@ -93,20 +79,9 @@ export default function LoadingScreen() {
         </motion.div>
       </div>
 
-      {/* =====================================================
-          PETITE BARRE
-      ===================================================== */}
-
       <div className="pointer-events-none absolute bottom-[18%] left-1/2 h-px w-[180px] -translate-x-1/2 overflow-hidden bg-white/[0.06]">
         <motion.div
-          className="
-            h-full
-            w-[60px]
-            bg-gradient-to-r
-            from-transparent
-            via-purple-300/70
-            to-transparent
-          "
+          className="h-full w-[60px] bg-gradient-to-r from-transparent via-purple-300/70 to-transparent"
           animate={{
             x: ["-80px", "200px"],
           }}
