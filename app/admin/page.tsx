@@ -20,6 +20,48 @@ export default function AdminPage() {
   const [saved, setSaved] = useState(false);
 
   // =========================
+  // ÉTAT DE L'AUTHENTIFICATION
+  // =========================
+
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  // =========================
+  // VÉRIFICATION SESSION
+  // =========================
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/api/admin/session", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          router.replace("/admin/login");
+          return;
+        }
+
+        const data = await response.json();
+
+        if (!data.authenticated) {
+          router.replace("/admin/login");
+          return;
+        }
+
+        setCheckingAuth(false);
+      } catch (error) {
+        console.error("Erreur lors de la vérification de la session :", error);
+
+        router.replace("/admin/login");
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
+  // =========================
   // CHARGER LA CONFIGURATION
   // =========================
 
@@ -37,8 +79,10 @@ export default function AdminPage() {
   // =========================
 
   useEffect(() => {
-    loadConfig();
-  }, []);
+    if (!checkingAuth) {
+      loadConfig();
+    }
+  }, [checkingAuth]);
 
   // =========================
   // DÉCONNEXION
@@ -48,11 +92,12 @@ export default function AdminPage() {
     try {
       await fetch("/api/admin/session", {
         method: "DELETE",
+        credentials: "include",
       });
     } catch (error) {
       console.error("Erreur lors de la déconnexion :", error);
     } finally {
-      router.push("/");
+      router.replace("/");
       router.refresh();
     }
   };
@@ -119,6 +164,26 @@ export default function AdminPage() {
       availabilityMessage: presets[status].message,
     }));
   };
+
+  // =========================
+  // CHARGEMENT SESSION
+  // =========================
+
+  if (checkingAuth) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#050505] text-white">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/10 border-t-white" />
+
+          <p className="text-sm text-zinc-500">Vérification...</p>
+        </motion.div>
+      </main>
+    );
+  }
 
   // =========================
   // ADMIN
