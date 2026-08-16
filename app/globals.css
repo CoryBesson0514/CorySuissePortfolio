@@ -48,10 +48,10 @@ body::after {
   background: linear-gradient(
     110deg,
     #ffffff 0%,
-    #ffffff 35%,
-    #ddd6fe 65%,
-    #a78bfa 82%,
-    #6366f1 100%
+    #ffffff 20%,
+    #ddd6fe 40%,
+    #a78bfa 65%,
+    #6366f1 85%
   );
 
   -webkit-background-clip: text;
