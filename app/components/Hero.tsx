@@ -8,52 +8,15 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="grid-background relative isolate flex min-h-screen items-center overflow-hidden">
-      {/* =====================================================
-          AMBIANCE DU HERO
-          STRICTEMENT DERRIÈRE LE CONTENU
-      ===================================================== */}
-
-      <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        {/* Halo principal */}
-
-        <motion.div
-          className="absolute left-1/2 top-[-220px] h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-purple-600/[0.055] blur-[130px]"
-          initial={{
-            opacity: 0,
-            scale: 0.9,
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-          }}
-          transition={{
-            duration: 1.8,
-            ease: "easeOut",
-          }}
-        />
-
-        {/* Halo gauche */}
-
-        <div className="absolute left-[5%] top-[35%] h-[300px] w-[300px] rounded-full bg-indigo-500/[0.025] blur-[120px]" />
-
-        {/* Halo droit */}
-
-        <div className="absolute right-[5%] top-[20%] h-[280px] w-[280px] rounded-full bg-violet-500/[0.025] blur-[120px]" />
-      </div>
-
+    <section className="grid-background relative flex min-h-screen items-center overflow-hidden">
       {/* =====================================================
           CONTENU
-          TOUJOURS AU-DESSUS
       ===================================================== */}
 
       <div className="container-site relative z-10 pt-28">
-        {/* ===================================================
+        {/* =================================================
             STATUT
-        =================================================== */}
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -67,14 +30,14 @@ export default function Hero() {
           transition={{
             duration: 0.8,
           }}
-          className="relative z-20 mb-8"
+          className="mb-8"
         >
           <AvailabilityBadge />
         </motion.div>
 
-        {/* ===================================================
+        {/* =================================================
             NOM
-        =================================================== */}
+        ================================================= */}
 
         <motion.h1
           initial={{
@@ -89,16 +52,26 @@ export default function Hero() {
             duration: 0.9,
             delay: 0.1,
           }}
-          className="relative z-20 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
+          className="relative z-50 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
         >
-          <span className="text-[#ffffff]">CORY</span>
+          <span
+            className="relative z-50 text-white"
+            style={{
+              color: "#ffffff",
+              WebkitTextFillColor: "#ffffff",
+            }}
+          >
+            CORY
+          </span>
+
           <br />
-          <span className="text-gradient">BESSON.</span>
+
+          <span className="relative z-50 text-gradient">BESSON.</span>
         </motion.h1>
 
-        {/* ===================================================
+        {/* =================================================
             INFORMATIONS
-        =================================================== */}
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -113,12 +86,8 @@ export default function Hero() {
             duration: 0.7,
             delay: 0.3,
           }}
-          className="relative z-20 mt-10"
+          className="relative z-50 mt-10"
         >
-          {/* =================================================
-              LOCALISATION + VÉHICULE
-          ================================================= */}
-
           <motion.div
             initial={{
               opacity: 0,
@@ -181,9 +150,9 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* ===================================================
+        {/* =================================================
             FLÈCHE
-        =================================================== */}
+        ================================================= */}
 
         <motion.a
           href="#about"
@@ -197,7 +166,7 @@ export default function Hero() {
             delay: 1,
             duration: 0.6,
           }}
-          className="absolute bottom-10 left-1/2 z-20 hidden -translate-x-1/2 text-zinc-500 md:block"
+          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 text-zinc-500 md:block"
         >
           <ArrowDown className="animate-bounce" />
         </motion.a>
