@@ -34,7 +34,6 @@ export default function IntroScreen() {
         >
           {/* =================================================
               LOGO
-              VIOLET UNIQUEMENT À L'INTÉRIEUR DE CORY
           ================================================= */}
 
           <motion.div
@@ -54,17 +53,17 @@ export default function IntroScreen() {
           >
             <div className="relative text-5xl font-semibold tracking-[-0.07em] md:text-7xl">
               {/* =================================================
-                  TEXTE BLANC DE BASE
+                  CORY BLANC
               ================================================= */}
 
-              <span className="text-white">
+              <span className="relative z-0 text-white">
                 CORY
                 <span className="text-zinc-500">.</span>
               </span>
 
               {/* =================================================
                   VAGUE VIOLETTE
-                  ELLE EST MASQUÉE DANS LES LETTRES
+                  UNIQUEMENT DANS LES LETTRES
               ================================================= */}
 
               <motion.span
@@ -73,30 +72,20 @@ export default function IntroScreen() {
                   pointer-events-none
                   absolute
                   inset-0
-                  bg-gradient-to-r
-                  from-white
-                  via-white
-                  via-purple-400
-                  via-purple-500
-                  via-indigo-500
-                  to-white
+                  z-10
+                  bg-[linear-gradient(90deg,#ffffff_0%,#ffffff_30%,#8b5cf6_45%,#c084fc_50%,#6366f1_55%,#ffffff_70%,#ffffff_100%)]
                   bg-[length:300%_100%]
                   bg-clip-text
                   text-transparent
                 "
                 animate={{
-                  backgroundPosition: [
-                    "120% 50%",
-                    "0% 50%",
-                    "-120% 50%",
-                    "120% 50%",
-                  ],
+                  backgroundPosition: ["120% 50%", "0% 50%", "-120% 50%"],
                 }}
                 transition={{
-                  duration: 5,
+                  duration: 3.5,
                   ease: "easeInOut",
                   repeat: Infinity,
-                  repeatDelay: 0.4,
+                  repeatDelay: 1.2,
                 }}
               >
                 CORY
