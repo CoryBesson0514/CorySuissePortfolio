@@ -72,27 +72,18 @@ body {
 
 body::before {
   content: "";
+
   position: fixed;
-  inset: -30%;
+  inset: 0;
 
   pointer-events: none;
   z-index: -1;
 
-  background:
-    radial-gradient(
-      circle at 30% 20%,
-      rgba(139, 92, 246, 0.09),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 70% 60%,
-      rgba(99, 102, 241, 0.07),
-      transparent 30%
-    );
+  background: none;
 
-  filter: blur(80px);
+  filter: none;
 
-  animation: ambientFloat 18s ease-in-out infinite alternate;
+  animation: none;
 }
 
 @keyframes ambientFloat {
