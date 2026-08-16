@@ -5,51 +5,99 @@ import { motion } from "motion/react";
 export default function LoadingScreen() {
   return (
     <motion.div
-      className="fixed inset-0 z-[99990] flex items-center justify-center bg-[#050509]"
+      className="fixed inset-0 z-[99990] flex items-center justify-center overflow-hidden bg-[#050509]"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{
-        duration: 0.5,
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
       }}
     >
-      <motion.div
-        className="relative z-[100] text-5xl font-semibold tracking-[-0.06em]"
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-        }}
-      >
-        {/* Texte blanc */}
-        <span className="text-white">CORY.</span>
+      {/* =====================================================
+          LOGO
+          LA COULEUR RESTE STRICTEMENT À L'INTÉRIEUR DU TEXTE
+      ===================================================== */}
 
-        {/* Vague STRICTEMENT limitée au texte */}
-        <motion.span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 text-transparent"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent 0%, transparent 35%, #6366f1 45%, #8b5cf6 50%, #a855f7 55%, #ec4899 60%, transparent 70%, transparent 100%)",
-            backgroundSize: "250% 100%",
-            backgroundPosition: "200% 0",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+      <div className="relative z-10 text-center">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 8,
           }}
           animate={{
-            backgroundPosition: ["200% 0%", "-100% 0%"],
+            opacity: 1,
+            y: 0,
           }}
           transition={{
-            duration: 2.5,
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="text-4xl font-semibold tracking-[-0.06em] md:text-6xl"
+        >
+          <motion.span
+            className="inline-block bg-[linear-gradient(110deg,#ffffff_0%,#ffffff_38%,#ffffff_50%,#a78bfa_65%,#8b5cf6_75%,#6366f1_85%,#ffffff_100%)] bg-[length:300%_100%] bg-clip-text text-transparent"
+            animate={{
+              backgroundPosition: ["100% 50%", "0% 50%", "100% 50%"],
+            }}
+            transition={{
+              duration: 5,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+          >
+            CORY
+            <span className="text-white">.</span>
+          </motion.span>
+        </motion.div>
+
+        {/* =====================================================
+            CHARGEMENT
+        ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: [0.35, 0.65, 0.35],
+          }}
+          transition={{
+            opacity: {
+              duration: 2.5,
+              ease: "easeInOut",
+              repeat: Infinity,
+            },
+          }}
+          className="mt-4 text-[10px] uppercase tracking-[0.35em] text-white/60"
+        >
+          Chargement
+        </motion.div>
+      </div>
+
+      {/* =====================================================
+          LIGNE DE CHARGEMENT
+      ===================================================== */}
+
+      <div className="pointer-events-none absolute bottom-[18%] left-1/2 h-px w-[180px] -translate-x-1/2 overflow-hidden bg-white/[0.06]">
+        <motion.div
+          className="
+            h-full
+            w-[60px]
+            bg-gradient-to-r
+            from-transparent
+            via-purple-300/70
+            to-transparent
+          "
+          animate={{
+            x: ["-80px", "200px"],
+          }}
+          transition={{
+            duration: 2.8,
             ease: "easeInOut",
             repeat: Infinity,
-            repeatDelay: 1,
           }}
-        >
-          CORY.
-        </motion.span>
-      </motion.div>
+        />
+      </div>
     </motion.div>
   );
 }
