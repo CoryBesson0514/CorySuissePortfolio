@@ -9,15 +9,22 @@ export default function AdminLoginPage() {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
+
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+
   const [checkingSession, setCheckingSession] = useState(true);
+
   const [error, setError] = useState("");
 
-  // ==================================================
-  // VÉRIFICATION DE LA SESSION
-  // ==================================================
+  const [cooldown, setCooldown] = useState(0);
+
+  /*
+   * ============================================================
+   * VÉRIFICATION SESSION
+   * ============================================================
+   */
 
   useEffect(() => {
     let cancelled = false;
@@ -34,6 +41,7 @@ export default function AdminLoginPage() {
           if (!cancelled) {
             setCheckingSession(false);
           }
+
           return;
         }
 
@@ -63,14 +71,43 @@ export default function AdminLoginPage() {
     };
   }, [router]);
 
-  // ==================================================
-  // CONNEXION
-  // ==================================================
+  /*
+   * ============================================================
+   * TIMER COOLDOWN
+   * ============================================================
+   */
+
+  useEffect(() => {
+    if (cooldown <= 0) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setCooldown((current) => {
+        if (current <= 1) {
+          window.clearInterval(timer);
+          return 0;
+        }
+
+        return current - 1;
+      });
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [cooldown]);
+
+  /*
+   * ============================================================
+   * CONNEXION
+   * ============================================================
+   */
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (loading) {
+    if (loading || cooldown > 0) {
       return;
     }
 
@@ -92,20 +129,43 @@ export default function AdminLoginPage() {
 
       const data = await response.json().catch(() => null);
 
-      // ==================================================
-      // ERREUR
-      // ==================================================
+      /*
+       * --------------------------------------------------------
+       * COOLDOWN
+       * --------------------------------------------------------
+       */
 
-      if (!response.ok) {
-        setError(data?.error || "Identifiant ou mot de passe incorrect.");
+      if (response.status === 429 || data?.cooldown) {
+        const seconds = Math.max(1, Number(data?.remainingSeconds ?? 30));
+
+        setCooldown(seconds);
+
+        setError(data?.error ?? "Trop de tentatives. Veuillez patienter.");
 
         setLoading(false);
+
         return;
       }
 
-      // ==================================================
-      // CONNEXION RÉUSSIE
-      // ==================================================
+      /*
+       * --------------------------------------------------------
+       * AUTRE ERREUR
+       * --------------------------------------------------------
+       */
+
+      if (!response.ok) {
+        setError(data?.error ?? "Identifiant ou mot de passe incorrect.");
+
+        setLoading(false);
+
+        return;
+      }
+
+      /*
+       * --------------------------------------------------------
+       * CONNEXION RÉUSSIE
+       * --------------------------------------------------------
+       */
 
       router.replace("/admin");
       router.refresh();
@@ -118,23 +178,25 @@ export default function AdminLoginPage() {
     }
   };
 
-  // ==================================================
-  // CHARGEMENT
-  // ==================================================
+  /*
+   * ============================================================
+   * ÉCRAN DE CHARGEMENT
+   * ============================================================
+   */
 
   if (checkingSession) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#050505] text-white">
-        <div className="flex items-center justify-center">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/10 border-t-white" />
-        </div>
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/10 border-t-white" />
       </main>
     );
   }
 
-  // ==================================================
-  // PAGE LOGIN
-  // ==================================================
+  /*
+   * ============================================================
+   * LOGIN
+   * ============================================================
+   */
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#050505] px-5 text-white">
@@ -202,7 +264,7 @@ export default function AdminLoginPage() {
               onChange={(event) => setUsername(event.target.value)}
               placeholder="Identifiant"
               required
-              disabled={loading}
+              disabled={loading || cooldown > 0}
               className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white placeholder:text-zinc-700 outline-none transition focus:border-white/25 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
@@ -229,13 +291,13 @@ export default function AdminLoginPage() {
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Mot de passe"
               required
-              disabled={loading}
+              disabled={loading || cooldown > 0}
               className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white placeholder:text-zinc-700 outline-none transition focus:border-white/25 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
           {/* ==================================================
-              MESSAGE D'ERREUR
+              MESSAGE
           ================================================== */}
 
           {error && (
@@ -253,7 +315,14 @@ export default function AdminLoginPage() {
               }}
               className="mt-5 rounded-2xl border border-red-500/20 bg-red-500/[0.06] px-4 py-3 text-sm text-red-400"
             >
-              {error}
+              <div>{error}</div>
+
+              {cooldown > 0 && (
+                <div className="mt-2 font-medium text-red-300">
+                  Réessayez dans {cooldown} seconde
+                  {cooldown > 1 ? "s" : ""}.
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -263,10 +332,15 @@ export default function AdminLoginPage() {
 
           <button
             type="submit"
-            disabled={loading}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.02] hover:bg-zinc-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={loading || cooldown > 0}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-black transition-all duration-300 hover:scale-[1.02] hover:bg-zinc-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
           >
-            {loading ? (
+            {cooldown > 0 ? (
+              <>
+                <Lock size={16} />
+                Réessayer dans {cooldown}s
+              </>
+            ) : loading ? (
               <>
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
                 Connexion...
@@ -281,7 +355,7 @@ export default function AdminLoginPage() {
         </form>
 
         {/* ==================================================
-            RETOUR AU SITE
+            RETOUR
         ================================================== */}
 
         <div className="mt-6 text-center">
