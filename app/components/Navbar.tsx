@@ -9,7 +9,7 @@ import {
   Link as LinkIcon,
   Check,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ContactModal from "./ContactModal";
 
 const links = [
@@ -36,26 +36,6 @@ export default function Navbar() {
   const [contactOpen, setContactOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  const [introFinished, setIntroFinished] = useState(false);
-
-  /*
-   * L'intro nous prévient lorsqu'elle est terminée.
-   * Le logo n'utilise PAS cet état :
-   * il doit rester présent pour que IntroScreen
-   * puisse calculer sa position exacte.
-   */
-  useEffect(() => {
-    const handleIntroFinished = () => {
-      setIntroFinished(true);
-    };
-
-    window.addEventListener("intro-finished", handleIntroFinished);
-
-    return () => {
-      window.removeEventListener("intro-finished", handleIntroFinished);
-    };
-  }, []);
 
   const handleContact = () => {
     setOpen(false);
@@ -85,6 +65,10 @@ export default function Navbar() {
       <header className="fixed left-0 right-0 top-0 z-50">
         <div className="container-site pt-5">
           <nav className="glass flex items-center justify-between rounded-full px-5 py-3">
+            {/* ==================================================
+                LOGO
+            ================================================== */}
+
             <a
               href="#"
               data-cory-navbar-logo
@@ -105,12 +89,12 @@ export default function Navbar() {
                 x: 12,
               }}
               animate={{
-                opacity: introFinished ? 1 : 0,
-                x: introFinished ? 0 : 12,
+                opacity: 1,
+                x: 0,
               }}
               transition={{
                 duration: 0.55,
-                delay: 0.1,
+                delay: 0.35,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
@@ -123,12 +107,12 @@ export default function Navbar() {
                     y: 6,
                   }}
                   animate={{
-                    opacity: introFinished ? 1 : 0,
-                    y: introFinished ? 0 : 6,
+                    opacity: 1,
+                    y: 0,
                   }}
                   transition={{
                     duration: 0.45,
-                    delay: introFinished ? index * 0.07 : 0,
+                    delay: 0.4 + index * 0.07,
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   className="text-sm text-zinc-400 transition-colors duration-300 hover:text-white"
@@ -149,18 +133,19 @@ export default function Navbar() {
                 x: 12,
               }}
               animate={{
-                opacity: introFinished ? 1 : 0,
-                x: introFinished ? 0 : 12,
+                opacity: 1,
+                x: 0,
               }}
               transition={{
                 duration: 0.55,
-                delay: 0.28,
+                delay: 0.55,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
               {/* QR CODE */}
 
               <button
+                type="button"
                 onClick={() => setQrOpen(true)}
                 aria-label="QR Code"
                 title="QR Code"
@@ -172,6 +157,7 @@ export default function Navbar() {
               {/* ADMIN */}
 
               <button
+                type="button"
                 onClick={() => {
                   window.location.href = "/admin";
                 }}
@@ -185,6 +171,7 @@ export default function Navbar() {
               {/* CONTACT */}
 
               <button
+                type="button"
                 onClick={handleContact}
                 className="rounded-full bg-white px-4 py-2 text-sm font-medium !text-black transition-all duration-300 hover:scale-105 hover:bg-zinc-200"
               >
@@ -197,16 +184,17 @@ export default function Navbar() {
             ================================================== */}
 
             <motion.button
+              type="button"
               onClick={() => setOpen(!open)}
               initial={{
                 opacity: 0,
               }}
               animate={{
-                opacity: introFinished ? 1 : 0,
+                opacity: 1,
               }}
               transition={{
                 duration: 0.4,
-                delay: 0.25,
+                delay: 0.5,
               }}
               className="text-zinc-300 transition-colors duration-300 hover:text-white md:hidden"
               aria-label="Menu"
@@ -265,6 +253,7 @@ export default function Navbar() {
                   {/* QR */}
 
                   <button
+                    type="button"
                     onClick={() => {
                       setOpen(false);
                       setQrOpen(true);
@@ -289,6 +278,7 @@ export default function Navbar() {
                   {/* CONTACT */}
 
                   <button
+                    type="button"
                     onClick={handleContact}
                     className="rounded-full bg-white px-4 py-3 text-sm font-medium !text-black transition-all duration-300 hover:bg-zinc-200"
                   >
@@ -349,6 +339,7 @@ export default function Navbar() {
               {/* FERMER */}
 
               <button
+                type="button"
                 onClick={() => setQrOpen(false)}
                 aria-label="Fermer"
                 className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-all duration-300 hover:bg-white/10 hover:text-white"
