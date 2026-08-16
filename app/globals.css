@@ -52,46 +52,68 @@ body {
 }
 
 /* =========================================================
-   AMBIENT LIGHT
+   AMBIENT BACKGROUND
 ========================================================= */
 
 body::before {
   content: "";
 
   position: fixed;
-  inset: -30%;
+  inset: 0;
 
   pointer-events: none;
+
+  /*
+    Le fond reste derrière absolument tout le contenu.
+  */
   z-index: -1;
 
   background:
     radial-gradient(
-      circle at 30% 20%,
-      rgba(139, 92, 246, 0.07),
-      transparent 28%
+      circle at 50% -10%,
+      rgba(112, 65, 255, 0.12),
+      transparent 38%
     ),
     radial-gradient(
-      circle at 70% 60%,
-      rgba(99, 102, 241, 0.05),
+      circle at 90% 25%,
+      rgba(99, 102, 241, 0.055),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 10% 70%,
+      rgba(168, 85, 247, 0.035),
       transparent 30%
     );
 
-  filter: blur(80px);
+  opacity: 0;
 
-  animation: ambientFloat 18s ease-in-out infinite alternate;
+  animation: backgroundReveal 1.8s ease-out 0.15s forwards,
+    ambientFloat 18s ease-in-out 2s infinite alternate;
+}
+
+@keyframes backgroundReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes ambientFloat {
   0% {
-    transform: translate3d(-2%, -1%, 0) scale(1);
+    transform: translate3d(-1%, -1%, 0) scale(1);
   }
 
   50% {
-    transform: translate3d(2%, 1%, 0) scale(1.04);
+    transform: translate3d(1%, 1%, 0) scale(1.025);
   }
 
   100% {
-    transform: translate3d(-1%, 2%, 0) scale(1.02);
+    transform: translate3d(-1%, 1%, 0) scale(1.015);
   }
 }
 
@@ -108,12 +130,12 @@ body::after {
   pointer-events: none;
 
   /*
-    Le grain reste derrière le contenu.
-    Il ne vient plus "voiler" les textes.
+    Le grain est derrière le contenu.
+    Il ne touche plus visuellement les textes.
   */
   z-index: -1;
 
-  opacity: 0.025;
+  opacity: 0.018;
 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 
@@ -292,20 +314,26 @@ button {
 ========================================================= */
 
 .text-gradient {
-  background: linear-gradient(
-    110deg,
-    #ffffff 0%,
-    #ffffff 35%,
-    #f5f3ff 50%,
-    #c4b5fd 68%,
-    #8b5cf6 84%,
-    #6366f1 100%
-  );
+  background:
+    linear-gradient(
+      110deg,
+      #ffffff 0%,
+      #ffffff 38%,
+      #faf9ff 50%,
+      #ddd6fe 66%,
+      #a78bfa 82%,
+      #6366f1 100%
+    );
 
   -webkit-background-clip: text;
   background-clip: text;
 
   color: transparent;
+
+  /*
+    Le gradient reste dans le texte.
+    Aucun glow, blur ou opacity ici.
+  */
 }
 
 /* =========================================================
@@ -447,7 +475,7 @@ button {
   }
 
   body::before {
-    filter: blur(60px);
+    animation-duration: 1.5s, 20s;
   }
 }
 
