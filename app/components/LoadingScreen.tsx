@@ -9,83 +9,15 @@ export default function LoadingScreen() {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{
-        duration: 0.65,
+        duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
       }}
     >
       {/* =====================================================
-          FOND
-      ===================================================== */}
-
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/*
-          Halo principal.
-          Beaucoup plus petit et moins opaque.
-          Il ne doit PAS donner l'impression d'un nuage.
-        */}
-
-        <motion.div
-          aria-hidden="true"
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            h-[150px]
-            w-[520px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-[radial-gradient(ellipse,rgba(139,92,246,0.13)_0%,rgba(139,92,246,0.055)_35%,transparent_68%)]
-            blur-[45px]
-          "
-          animate={{
-            x: ["-180px", "180px", "-120px", "140px", "-180px"],
-            scaleX: [1, 1.08, 0.98, 1.06, 1],
-            opacity: [0.5, 0.8, 0.55, 0.72, 0.5],
-          }}
-          transition={{
-            duration: 10,
-            ease: "easeInOut",
-            repeat: Infinity,
-          }}
-        />
-
-        {/*
-          Petite lumière blanche qui traverse le violet.
-          Très discrète pour garder le fond sombre.
-        */}
-
-        <motion.div
-          aria-hidden="true"
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            h-[70px]
-            w-[280px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-[radial-gradient(ellipse,rgba(255,255,255,0.11)_0%,rgba(255,255,255,0.035)_38%,transparent_72%)]
-            blur-[35px]
-          "
-          animate={{
-            x: ["140px", "-140px", "100px", "-100px", "140px"],
-            opacity: [0.25, 0.5, 0.3, 0.45, 0.25],
-          }}
-          transition={{
-            duration: 8,
-            ease: "easeInOut",
-            repeat: Infinity,
-          }}
-        />
-      </div>
-
-      {/* =====================================================
           LOGO
       ===================================================== */}
 
-      <div className="relative z-20 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center">
         <motion.div
           initial={{
             opacity: 0,
@@ -96,38 +28,66 @@ export default function LoadingScreen() {
             y: 0,
           }}
           transition={{
-            duration: 0.55,
+            duration: 0.5,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="
-            relative
-            text-4xl
-            font-semibold
-            leading-none
-            tracking-[-0.06em]
-            text-white
-            md:text-6xl
-          "
+          className="relative overflow-hidden text-4xl font-semibold leading-none tracking-[-0.06em] md:text-6xl"
         >
-          {/* Blanc BRUT */}
-          <span className="text-[#ffffff]">CORY</span>
-          <span className="text-[#ffffff]">.</span>
+          {/* =================================================
+              TEXTE BLANC DE BASE
+          ================================================= */}
+
+          <span className="relative z-10 text-white">CORY.</span>
+
+          {/* =================================================
+              VAGUE DE COULEUR
+              La couleur est CLIPPÉE dans le texte.
+          ================================================= */}
+
+          <motion.span
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute
+              inset-0
+              z-20
+              text-transparent
+              bg-clip-text
+              [-webkit-background-clip:text]
+              bg-[linear-gradient(110deg,transparent_0%,transparent_30%,#6366f1_40%,#8b5cf6_48%,#a855f7_54%,#ec4899_60%,#8b5cf6_66%,#6366f1_72%,transparent_82%,transparent_100%)]
+            "
+            animate={{
+              backgroundPosition: ["-180% 0%", "180% 0%"],
+            }}
+            transition={{
+              duration: 2.4,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1.2,
+            }}
+            style={{
+              backgroundSize: "220% 100%",
+            }}
+          >
+            CORY.
+          </motion.span>
         </motion.div>
 
-        {/* Chargement */}
+        {/* =====================================================
+            CHARGEMENT
+        ===================================================== */}
+
         <motion.div
           initial={{
             opacity: 0,
           }}
           animate={{
-            opacity: [0.35, 0.65, 0.35],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
-            opacity: {
-              duration: 2.2,
-              ease: "easeInOut",
-              repeat: Infinity,
-            },
+            duration: 2.2,
+            ease: "easeInOut",
+            repeat: Infinity,
           }}
           className="
             mt-4
@@ -143,7 +103,7 @@ export default function LoadingScreen() {
       </div>
 
       {/* =====================================================
-          INDICATEUR
+          PETIT INDICATEUR
       ===================================================== */}
 
       <div
@@ -165,7 +125,7 @@ export default function LoadingScreen() {
             w-[55px]
             bg-gradient-to-r
             from-transparent
-            via-white/60
+            via-purple-300/70
             to-transparent
           "
           animate={{
