@@ -461,7 +461,7 @@ export default function Experience() {
             >
               <div className="relative pl-8 md:pl-0">
                 <p className="text-sm font-medium text-emerald-400">
-                  2026 — aujourd'hui
+                  2026 — aujourd’hui
                 </p>
               </div>
 

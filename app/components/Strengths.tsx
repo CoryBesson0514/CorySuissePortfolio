@@ -97,8 +97,8 @@ export default function Strengths() {
         >
           Au fil de mes expériences professionnelles, j'ai développé des
           qualités qui me permettent aujourd'hui de m'intégrer rapidement dans
-          un nouvel environnement et de travailler efficacement en équipe comme
-          en autonomie.
+          un nouvel environnement et de travailler efficacement aussi bien en
+          équipe qu’en autonomie.
         </motion.p>
 
         {/* =========================
