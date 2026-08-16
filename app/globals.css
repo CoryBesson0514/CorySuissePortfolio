@@ -24,6 +24,10 @@
   --glass-strong: rgba(255, 255, 255, 0.08);
 }
 
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -49,6 +53,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 
   overflow-x: hidden;
+
+  /*
+    Important :
+    le body devient le contexte principal.
+    Le fond animé reste derrière tout le contenu.
+  */
+  position: relative;
+  isolation: isolate;
 }
 
 /* =========================================================
@@ -64,30 +76,31 @@ body::before {
   pointer-events: none;
 
   /*
-    Le fond reste derrière absolument tout le contenu.
+    Toujours derrière le contenu.
   */
   z-index: -1;
 
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(112, 65, 255, 0.12),
+      rgba(112, 65, 255, 0.10),
       transparent 38%
     ),
     radial-gradient(
       circle at 90% 25%,
-      rgba(99, 102, 241, 0.055),
+      rgba(99, 102, 241, 0.045),
       transparent 30%
     ),
     radial-gradient(
       circle at 10% 70%,
-      rgba(168, 85, 247, 0.035),
+      rgba(168, 85, 247, 0.025),
       transparent 30%
     );
 
   opacity: 0;
 
-  animation: backgroundReveal 1.8s ease-out 0.15s forwards,
+  animation:
+    backgroundReveal 1.8s ease-out 0.15s forwards,
     ambientFloat 18s ease-in-out 2s infinite alternate;
 }
 
@@ -130,16 +143,17 @@ body::after {
   pointer-events: none;
 
   /*
-    Le grain est derrière le contenu.
-    Il ne touche plus visuellement les textes.
+    Le grain reste derrière le contenu.
+    Il est extrêmement léger pour ne jamais
+    donner une impression de voile.
   */
   z-index: -1;
 
-  opacity: 0.018;
+  opacity: 0.012;
 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 
-  mix-blend-mode: overlay;
+  mix-blend-mode: normal;
 }
 
 /* =========================================================
@@ -314,24 +328,26 @@ button {
 ========================================================= */
 
 .text-gradient {
+  display: inline-block;
+
   background: linear-gradient(
-    105deg,
+    100deg,
     #ffffff 0%,
-    #ffffff 45%,
-    #f5f3ff 58%,
-    #ddd6fe 72%,
-    #a78bfa 88%,
-    #818cf8 100%
+    #ffffff 32%,
+    #f5f3ff 48%,
+    #c4b5fd 68%,
+    #8b5cf6 84%,
+    #6366f1 100%
   );
+
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 
   -webkit-background-clip: text;
   background-clip: text;
 
   -webkit-text-fill-color: transparent;
   color: transparent;
-
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 
 /* =========================================================
@@ -339,6 +355,8 @@ button {
 ========================================================= */
 
 .text-gradient-purple {
+  display: inline-block;
+
   background: linear-gradient(
     100deg,
     #f59e0b 0%,
@@ -347,9 +365,13 @@ button {
     #6366f1 100%
   );
 
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
   -webkit-background-clip: text;
   background-clip: text;
 
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
