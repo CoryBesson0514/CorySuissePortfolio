@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="grid-background relative flex min-h-screen items-center overflow-hidden">
+    <section className="grid-background relative isolate flex min-h-screen items-center overflow-hidden">
       {/* =========================
           AMBIANCE DE FOND
       ========================= */}
