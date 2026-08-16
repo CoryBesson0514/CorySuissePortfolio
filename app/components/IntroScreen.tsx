@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 export default function IntroScreen() {
   const [show, setShow] = useState(true);
   const [moving, setMoving] = useState(false);
+  const [wave, setWave] = useState(false);
 
   const introLogoRef = useRef<HTMLSpanElement>(null);
 
@@ -14,12 +15,30 @@ export default function IntroScreen() {
     y: 0,
   });
 
+  /*
+   * =========================================================
+   * ANIMATION DU LOGO
+   * =========================================================
+   *
+   * 0s → 2s
+   * Blanc pur
+   *
+   * 2s → 3.2s
+   * Vague violette / bleue
+   *
+   * 3.2s → 5s
+   * Retour progressif au blanc
+   *
+   * 5s
+   * Départ vers la navbar
+   */
+
   useEffect(() => {
-    /*
-     * On laisse le logo central visible quelques secondes,
-     * puis on calcule la position EXACTE du logo de la navbar.
-     */
-    const timer = setTimeout(() => {
+    const waveTimer = setTimeout(() => {
+      setWave(true);
+    }, 2000);
+
+    const moveTimer = setTimeout(() => {
       const introLogo = introLogoRef.current;
 
       const navbarLogo = document.querySelector(
@@ -36,21 +55,21 @@ export default function IntroScreen() {
       const navbarRect = navbarLogo.getBoundingClientRect();
 
       /*
-       * Centre du CORY de l'intro.
+       * Centre du logo de l'intro.
        */
       const introCenterX = introRect.left + introRect.width / 2;
 
       const introCenterY = introRect.top + introRect.height / 2;
 
       /*
-       * Centre du CORY de la navbar.
+       * Centre du logo de la navbar.
        */
       const navbarCenterX = navbarRect.left + navbarRect.width / 2;
 
       const navbarCenterY = navbarRect.top + navbarRect.height / 2;
 
       /*
-       * Distance exacte à parcourir.
+       * Distance exacte jusqu'à la navbar.
        */
       setTarget({
         x: navbarCenterX - introCenterX,
@@ -58,16 +77,20 @@ export default function IntroScreen() {
       });
 
       setMoving(true);
-    }, 3000);
+    }, 5000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(waveTimer);
+      clearTimeout(moveTimer);
+    };
   }, []);
 
   /*
-   * Une fois le déplacement terminé :
-   * - on prévient la navbar
-   * - on retire l'écran d'intro
+   * =========================================================
+   * FIN DU DÉPLACEMENT
+   * =========================================================
    */
+
   useEffect(() => {
     if (!moving) return;
 
@@ -111,13 +134,48 @@ export default function IntroScreen() {
             }}
           >
             <div className="text-center">
+              {/* =================================================
+                  CORY.
+              ================================================= */}
+
               <span
                 ref={introLogoRef}
-                className="block text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
+                className="block text-4xl font-semibold tracking-[-0.06em] md:text-6xl"
               >
-                CORY
-                <span className="text-zinc-500">.</span>
+                <motion.span
+                  animate={{
+                    backgroundPosition: wave
+                      ? ["0% 50%", "100% 50%", "0% 50%"]
+                      : "0% 50%",
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(110deg, #ffffff 0%, #ffffff 35%, #a78bfa 45%, #8b5cf6 52%, #6366f1 60%, #a855f7 68%, #ffffff 82%, #ffffff 100%)",
+                    backgroundSize: "300% 100%",
+                    backgroundPosition: "0% 50%",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  CORY
+                  <span
+                    style={{
+                      color: "#ffffff",
+                    }}
+                  >
+                    .
+                  </span>
+                </motion.span>
               </span>
+
+              {/* =================================================
+                  SOUS-TITRE
+              ================================================= */}
 
               <motion.p
                 className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-600"
