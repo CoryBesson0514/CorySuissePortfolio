@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "motion/react";
 export default function IntroScreen() {
   const [show, setShow] = useState(true);
   const [moving, setMoving] = useState(false);
-  const [wave, setWave] = useState(false);
 
   const introLogoRef = useRef<HTMLSpanElement>(null);
 
@@ -15,36 +14,19 @@ export default function IntroScreen() {
     y: 0,
   });
 
-  /*
-   * =========================================================
-   * ANIMATION DU LOGO
-   * =========================================================
-   *
-   * 0s → 2s
-   * Blanc pur
-   *
-   * 2s → 3.2s
-   * Vague violette / bleue
-   *
-   * 3.2s → 5s
-   * Retour progressif au blanc
-   *
-   * 5s
-   * Départ vers la navbar
-   */
-
   useEffect(() => {
-    const waveTimer = setTimeout(() => {
-      setWave(true);
-    }, 2000);
-
-    const moveTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       const introLogo = introLogoRef.current;
 
       const navbarLogo = document.querySelector(
         "[data-cory-navbar-logo]",
       ) as HTMLElement | null;
 
+      /*
+       * Si la navbar n'est pas encore disponible,
+       * on ferme proprement l'intro sans lancer
+       * un petit logo qui part dans un coin.
+       */
       if (!introLogo || !navbarLogo) {
         window.dispatchEvent(new Event("intro-finished"));
         setShow(false);
@@ -54,49 +36,30 @@ export default function IntroScreen() {
       const introRect = introLogo.getBoundingClientRect();
       const navbarRect = navbarLogo.getBoundingClientRect();
 
-      /*
-       * Centre du logo de l'intro.
-       */
       const introCenterX = introRect.left + introRect.width / 2;
 
       const introCenterY = introRect.top + introRect.height / 2;
 
-      /*
-       * Centre du logo de la navbar.
-       */
       const navbarCenterX = navbarRect.left + navbarRect.width / 2;
 
       const navbarCenterY = navbarRect.top + navbarRect.height / 2;
 
-      /*
-       * Distance exacte jusqu'à la navbar.
-       */
       setTarget({
         x: navbarCenterX - introCenterX,
         y: navbarCenterY - introCenterY,
       });
 
       setMoving(true);
-    }, 5000);
+    }, 3000);
 
-    return () => {
-      clearTimeout(waveTimer);
-      clearTimeout(moveTimer);
-    };
+    return () => clearTimeout(timer);
   }, []);
-
-  /*
-   * =========================================================
-   * FIN DU DÉPLACEMENT
-   * =========================================================
-   */
 
   useEffect(() => {
     if (!moving) return;
 
     const timer = setTimeout(() => {
       window.dispatchEvent(new Event("intro-finished"));
-
       setShow(false);
     }, 1250);
 
@@ -107,7 +70,7 @@ export default function IntroScreen() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[99999] overflow-hidden bg-black"
+          className="intro-screen fixed inset-0 overflow-hidden bg-black"
           initial={{
             opacity: 1,
           }}
@@ -129,53 +92,18 @@ export default function IntroScreen() {
               opacity: moving ? 0 : 1,
             }}
             transition={{
-              duration: 0.18,
+              duration: 0.2,
               ease: "easeOut",
             }}
           >
             <div className="text-center">
-              {/* =================================================
-                  CORY.
-              ================================================= */}
-
               <span
                 ref={introLogoRef}
-                className="block text-4xl font-semibold tracking-[-0.06em] md:text-6xl"
+                className="block text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
               >
-                <motion.span
-                  animate={{
-                    backgroundPosition: wave
-                      ? ["0% 50%", "100% 50%", "0% 50%"]
-                      : "0% 50%",
-                  }}
-                  transition={{
-                    duration: 1.2,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(110deg, #ffffff 0%, #ffffff 35%, #a78bfa 45%, #8b5cf6 52%, #6366f1 60%, #a855f7 68%, #ffffff 82%, #ffffff 100%)",
-                    backgroundSize: "300% 100%",
-                    backgroundPosition: "0% 50%",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  CORY
-                  <span
-                    style={{
-                      color: "#ffffff",
-                    }}
-                  >
-                    .
-                  </span>
-                </motion.span>
+                CORY
+                <span className="text-zinc-500">.</span>
               </span>
-
-              {/* =================================================
-                  SOUS-TITRE
-              ================================================= */}
 
               <motion.p
                 className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-600"
@@ -223,7 +151,7 @@ export default function IntroScreen() {
           </AnimatePresence>
 
           {/* =================================================
-              PETIT FADE FINAL
+              FADE FINAL
           ================================================= */}
 
           <motion.div

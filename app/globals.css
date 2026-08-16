@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #090714;
+  background: var(--background);
 }
 
 body {
@@ -48,30 +48,30 @@ body {
   overflow-x: hidden;
 
   /*
-    Important :
-    le contenu reste toujours au-dessus
-    des effets de fond.
+    Crée un contexte propre pour le fond.
+    IMPORTANT : on ne force PAS les enfants
+    en position relative ici.
   */
   position: relative;
+  isolation: isolate;
 }
 
 /* =========================================================
    AMBIENT BACKGROUND
-   UNIQUEMENT DERRIÈRE LE CONTENU
 ========================================================= */
 
 body::before {
   content: "";
 
   position: fixed;
-  inset: 0;
+  inset: -10%;
 
   pointer-events: none;
 
   /*
-    Le fond est dans un vrai calque inférieur.
+    Derrière le contenu.
   */
-  z-index: 0;
+  z-index: -1;
 
   background:
     radial-gradient(
@@ -89,8 +89,6 @@ body::before {
       rgba(168, 85, 247, 0.025),
       transparent 28%
     );
-
-  opacity: 1;
 
   animation: ambientFloat 18s ease-in-out infinite alternate;
 }
@@ -114,20 +112,6 @@ body::before {
 }
 
 /* =========================================================
-   CONTENT LAYER
-========================================================= */
-
-body > * {
-  position: relative;
-  z-index: 1;
-}
-
-/*
-  L'IntroScreen est ensuite placé volontairement
-  au-dessus de tout avec son propre z-index.
-*/
-
-/* =========================================================
    SUBTLE GRAIN
 ========================================================= */
 
@@ -140,9 +124,9 @@ body::after {
   pointer-events: none;
 
   /*
-    Derrière absolument tout le contenu.
+    Derrière tout le contenu.
   */
-  z-index: 0;
+  z-index: -1;
 
   opacity: 0.012;
 
@@ -246,7 +230,7 @@ button {
 
   pointer-events: none;
 
-  z-index: 0;
+  z-index: -1;
 }
 
 /* =========================================================
@@ -324,25 +308,15 @@ button {
    TEXT GRADIENT
 ========================================================= */
 
-/*
-  IMPORTANT :
-  aucun blur
-  aucun opacity
-  aucun shadow
-  aucun overlay
-
-  Le gradient est appliqué DIRECTEMENT aux lettres.
-*/
-
 .text-gradient {
   display: inline-block;
 
   background: linear-gradient(
     110deg,
     #ffffff 0%,
-    #ffffff 35%,
-    #f5f3ff 50%,
-    #c4b5fd 65%,
+    #ffffff 34%,
+    #f8f7ff 46%,
+    #ddd6fe 62%,
     #a78bfa 80%,
     #6366f1 100%
   );
@@ -375,9 +349,6 @@ button {
     #a855f7 65%,
     #6366f1 100%
   );
-
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 
   -webkit-background-clip: text;
   background-clip: text;
@@ -481,19 +452,13 @@ button {
 }
 
 /* =========================================================
-   INTRO / LOADING
+   LOADING / INTRO
 ========================================================= */
-
-/*
-  Tous les écrans de chargement passent au-dessus
-  du contenu du site.
-*/
 
 .intro-screen,
 .loading-screen {
   position: fixed !important;
-  inset: 0;
-
+  inset: 0 !important;
   z-index: 99999 !important;
 }
 
