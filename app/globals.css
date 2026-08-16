@@ -27,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--background);
+  background: #090714;
 }
 
 body {
@@ -43,97 +43,19 @@ body {
     );
 
   color: #ffffff;
+
   font-family: Arial, Helvetica, sans-serif;
 
   overflow-x: hidden;
-
-  /*
-    Crée un contexte propre pour le fond.
-    IMPORTANT : on ne force PAS les enfants
-    en position relative ici.
-  */
-  position: relative;
-  isolation: isolate;
 }
 
 /* =========================================================
-   AMBIENT BACKGROUND
+   IMPORTANT
+   Aucun pseudo-element global ici.
+   
+   Le fond lumineux est géré directement dans les sections.
+   Cela évite absolument tout voile au-dessus des textes.
 ========================================================= */
-
-body::before {
-  content: "";
-
-  position: fixed;
-  inset: -10%;
-
-  pointer-events: none;
-
-  /*
-    Derrière le contenu.
-  */
-  z-index: -1;
-
-  background:
-    radial-gradient(
-      circle at 50% -5%,
-      rgba(112, 65, 255, 0.11),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 90% 25%,
-      rgba(99, 102, 241, 0.045),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 10% 70%,
-      rgba(168, 85, 247, 0.025),
-      transparent 28%
-    );
-
-  animation: ambientFloat 18s ease-in-out infinite alternate;
-}
-
-/* =========================================================
-   AMBIENT ANIMATION
-========================================================= */
-
-@keyframes ambientFloat {
-  0% {
-    transform: translate3d(-1%, -1%, 0) scale(1);
-  }
-
-  50% {
-    transform: translate3d(1%, 1%, 0) scale(1.025);
-  }
-
-  100% {
-    transform: translate3d(-1%, 1%, 0) scale(1.015);
-  }
-}
-
-/* =========================================================
-   SUBTLE GRAIN
-========================================================= */
-
-body::after {
-  content: "";
-
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-
-  /*
-    Derrière tout le contenu.
-  */
-  z-index: -1;
-
-  opacity: 0.012;
-
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-
-  mix-blend-mode: overlay;
-}
 
 /* =========================================================
    SELECTION
@@ -206,7 +128,7 @@ button {
 }
 
 /* =========================================================
-   SECTION AMBIENT GLOW
+   SECTION AMBIENT
 ========================================================= */
 
 .section::before {
@@ -224,13 +146,13 @@ button {
 
   border-radius: 999px;
 
-  background: rgba(112, 65, 255, 0.06);
+  background: rgba(112, 65, 255, 0.055);
 
-  filter: blur(100px);
+  filter: blur(110px);
 
   pointer-events: none;
 
-  z-index: -1;
+  z-index: 0;
 }
 
 /* =========================================================
@@ -242,12 +164,12 @@ button {
 
   background-image:
     linear-gradient(
-      rgba(167, 139, 250, 0.025) 1px,
+      rgba(167, 139, 250, 0.035) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(167, 139, 250, 0.025) 1px,
+      rgba(167, 139, 250, 0.035) 1px,
       transparent 1px
     );
 
@@ -267,44 +189,6 @@ button {
 }
 
 /* =========================================================
-   GLASS
-========================================================= */
-
-.glass {
-  position: relative;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.075),
-      rgba(255, 255, 255, 0.025)
-    );
-
-  border: 1px solid var(--border);
-
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-
-  box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-  transition:
-    border-color 0.35s ease,
-    box-shadow 0.35s ease,
-    transform 0.35s ease;
-}
-
-.glass:hover {
-  border-color: rgba(139, 92, 246, 0.24);
-
-  box-shadow:
-    0 25px 90px rgba(0, 0, 0, 0.3),
-    0 0 50px rgba(139, 92, 246, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
-}
-
-/* =========================================================
    TEXT GRADIENT
 ========================================================= */
 
@@ -312,17 +196,17 @@ button {
   display: inline-block;
 
   background: linear-gradient(
-    110deg,
+    105deg,
     #ffffff 0%,
-    #ffffff 34%,
-    #f8f7ff 46%,
-    #ddd6fe 62%,
-    #a78bfa 80%,
+    #ffffff 22%,
+    #f5f3ff 42%,
+    #ddd6fe 58%,
+    #a78bfa 76%,
     #6366f1 100%
   );
 
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: 0% 50%;
 
   -webkit-background-clip: text;
   background-clip: text;
@@ -330,9 +214,17 @@ button {
   -webkit-text-fill-color: transparent;
   color: transparent;
 
-  opacity: 1;
-  filter: none;
-  text-shadow: none;
+  animation: textGradientReveal 1.4s ease-out forwards;
+}
+
+@keyframes textGradientReveal {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* =========================================================
@@ -355,10 +247,6 @@ button {
 
   -webkit-text-fill-color: transparent;
   color: transparent;
-
-  opacity: 1;
-  filter: none;
-  text-shadow: none;
 }
 
 /* =========================================================
@@ -414,7 +302,45 @@ button {
 }
 
 /* =========================================================
-   SHINE EFFECT
+   GLASS
+========================================================= */
+
+.glass {
+  position: relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.glass:hover {
+  border-color: rgba(139, 92, 246, 0.24);
+
+  box-shadow:
+    0 25px 90px rgba(0, 0, 0, 0.3),
+    0 0 50px rgba(139, 92, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* =========================================================
+   SHINE
 ========================================================= */
 
 .shine {
@@ -452,18 +378,7 @@ button {
 }
 
 /* =========================================================
-   LOADING / INTRO
-========================================================= */
-
-.intro-screen,
-.loading-screen {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 99999 !important;
-}
-
-/* =========================================================
-   CURSEUR PERSONNALISÉ
+   CURSEUR
 ========================================================= */
 
 @media (pointer: fine) {
@@ -489,10 +404,6 @@ button {
 
   .container-site {
     width: min(100% - 28px, 1180px);
-  }
-
-  body::before {
-    animation-duration: 20s;
   }
 }
 

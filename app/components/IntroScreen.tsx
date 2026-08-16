@@ -1,76 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from "react";
 
 export default function IntroScreen() {
   const [show, setShow] = useState(true);
-  const [moving, setMoving] = useState(false);
-
-  const introLogoRef = useRef<HTMLSpanElement>(null);
-
-  const [target, setTarget] = useState({
-    x: 0,
-    y: 0,
-  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const introLogo = introLogoRef.current;
+      setShow(false);
 
-      const navbarLogo = document.querySelector(
-        "[data-cory-navbar-logo]",
-      ) as HTMLElement | null;
-
-      /*
-       * Si la navbar n'est pas encore disponible,
-       * on ferme proprement l'intro sans lancer
-       * un petit logo qui part dans un coin.
-       */
-      if (!introLogo || !navbarLogo) {
-        window.dispatchEvent(new Event("intro-finished"));
-        setShow(false);
-        return;
-      }
-
-      const introRect = introLogo.getBoundingClientRect();
-      const navbarRect = navbarLogo.getBoundingClientRect();
-
-      const introCenterX = introRect.left + introRect.width / 2;
-
-      const introCenterY = introRect.top + introRect.height / 2;
-
-      const navbarCenterX = navbarRect.left + navbarRect.width / 2;
-
-      const navbarCenterY = navbarRect.top + navbarRect.height / 2;
-
-      setTarget({
-        x: navbarCenterX - introCenterX,
-        y: navbarCenterY - introCenterY,
-      });
-
-      setMoving(true);
-    }, 3000);
+      window.dispatchEvent(new Event("intro-finished"));
+    }, 5200);
 
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (!moving) return;
-
-    const timer = setTimeout(() => {
-      window.dispatchEvent(new Event("intro-finished"));
-      setShow(false);
-    }, 1250);
-
-    return () => clearTimeout(timer);
-  }, [moving]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="intro-screen fixed inset-0 overflow-hidden bg-black"
+          className="fixed inset-0 z-[99999] flex items-center justify-center overflow-hidden bg-black"
           initial={{
             opacity: 1,
           }}
@@ -83,89 +33,92 @@ export default function IntroScreen() {
           }}
         >
           {/* =================================================
-              LOGO CENTRAL
+              VAGUE DE COULEUR
           ================================================= */}
 
           <motion.div
-            className="absolute inset-0 flex items-center justify-center"
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            initial={{
+              opacity: 0,
+              scale: 0.7,
+              x: "-20%",
+            }}
             animate={{
-              opacity: moving ? 0 : 1,
+              opacity: [0, 1, 1, 0],
+              scale: [0.7, 1.15, 1.15, 1.4],
+              x: ["-20%", "0%", "20%", "40%"],
             }}
             transition={{
-              duration: 0.2,
-              ease: "easeOut",
+              duration: 3.8,
+              delay: 1.7,
+              ease: "easeInOut",
             }}
           >
-            <div className="text-center">
-              <span
-                ref={introLogoRef}
-                className="block text-4xl font-semibold tracking-[-0.06em] text-white md:text-6xl"
-              >
-                CORY
-                <span className="text-zinc-500">.</span>
-              </span>
+            <div className="absolute left-1/2 top-1/2 h-[420px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-600/30 blur-[120px]" />
 
-              <motion.p
-                className="mt-3 text-xs uppercase tracking-[0.3em] text-zinc-600"
-                animate={{
-                  opacity: moving ? 0 : 1,
-                }}
-                transition={{
-                  duration: 0.15,
-                }}
-              >
-                Portfolio · <span className="text-zinc-300">Suisse</span>
-              </motion.p>
-            </div>
+            <div className="absolute left-[30%] top-[40%] h-[300px] w-[500px] rounded-full bg-violet-500/25 blur-[110px]" />
+
+            <div className="absolute right-[20%] top-[30%] h-[280px] w-[450px] rounded-full bg-indigo-500/20 blur-[110px]" />
           </motion.div>
 
           {/* =================================================
-              LOGO QUI REJOINT LA NAVBAR
-          ================================================= */}
-
-          <AnimatePresence>
-            {moving && (
-              <motion.span
-                className="pointer-events-none fixed left-1/2 top-1/2 z-[100000] whitespace-nowrap text-sm font-semibold tracking-tight text-white"
-                initial={{
-                  x: "-50%",
-                  y: "-50%",
-                  scale: 1,
-                  opacity: 1,
-                }}
-                animate={{
-                  x: `calc(-50% + ${target.x}px)`,
-                  y: `calc(-50% + ${target.y}px)`,
-                  scale: 1,
-                  opacity: 1,
-                }}
-                transition={{
-                  duration: 1.1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                CORY
-                <span className="text-zinc-500">.</span>
-              </motion.span>
-            )}
-          </AnimatePresence>
-
-          {/* =================================================
-              FADE FINAL
+              LOGO
           ================================================= */}
 
           <motion.div
-            className="pointer-events-none absolute inset-0 z-[99998] bg-black"
+            className="relative z-10 text-center"
             initial={{
               opacity: 0,
+              scale: 0.96,
             }}
             animate={{
-              opacity: moving ? 0.15 : 0,
+              opacity: 1,
+              scale: 1,
             }}
             transition={{
-              duration: 0.35,
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
             }}
-          />
+          >
+            <motion.div
+              className="text-5xl font-semibold tracking-[-0.07em] md:text-7xl"
+              animate={{
+                color: [
+                  "#ffffff",
+                  "#ffffff",
+                  "#c4b5fd",
+                  "#a78bfa",
+                  "#ffffff",
+                  "#ffffff",
+                ],
+              }}
+              transition={{
+                duration: 5,
+                times: [0, 0.35, 0.48, 0.6, 0.78, 1],
+                ease: "easeInOut",
+              }}
+            >
+              CORY
+              <span className="text-zinc-500">.</span>
+            </motion.div>
+
+            <motion.p
+              className="mt-3 text-[10px] uppercase tracking-[0.35em] text-zinc-600"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.8,
+                duration: 0.6,
+              }}
+            >
+              Portfolio · Suisse
+            </motion.p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
