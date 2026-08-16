@@ -52,10 +52,12 @@ export default function Hero() {
             duration: 0.9,
             delay: 0.1,
           }}
-          className="relative z-20 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
+          className="relative z-10 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
         >
           <span className="text-white">CORY</span>
+
           <br />
+
           <span className="text-gradient">BESSON.</span>
         </motion.h1>
 
@@ -76,7 +78,7 @@ export default function Hero() {
             duration: 0.7,
             delay: 0.3,
           }}
-          className="relative z-20 mt-10"
+          className="relative z-10 mt-10"
         >
           {/* =========================
               LOCALISATION + VÉHICULE
@@ -124,6 +126,8 @@ export default function Hero() {
             }}
             className="mt-5 flex flex-wrap items-center gap-3"
           >
+            {/* Découvrir */}
+
             <a
               href="#about"
               className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
@@ -134,6 +138,8 @@ export default function Hero() {
                 className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
               />
             </a>
+
+            {/* CV */}
 
             <Link
               href="/cv"

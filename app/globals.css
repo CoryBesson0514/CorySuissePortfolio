@@ -19,14 +19,7 @@
   --blue: #6366f1;
   --pink: #ec4899;
   --orange: #f59e0b;
-
-  --glass: rgba(255, 255, 255, 0.055);
-  --glass-strong: rgba(255, 255, 255, 0.08);
 }
-
-/* =========================================================
-   RESET
-========================================================= */
 
 * {
   box-sizing: border-box;
@@ -34,7 +27,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--background);
+  background: #090714;
 }
 
 body {
@@ -49,71 +42,62 @@ body {
       #06050f 100%
     );
 
-  color: var(--foreground);
+  color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 
   overflow-x: hidden;
+
+  /*
+    Important :
+    le contenu reste toujours au-dessus
+    des effets de fond.
+  */
+  position: relative;
 }
 
 /* =========================================================
-   GLOBAL AMBIENT BACKGROUND
+   AMBIENT BACKGROUND
+   UNIQUEMENT DERRIÈRE LE CONTENU
 ========================================================= */
 
 body::before {
   content: "";
 
   position: fixed;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 
   pointer-events: none;
 
   /*
-    IMPORTANT :
-    Cette couche est derrière le contenu,
-    mais PAS avec un z-index négatif.
+    Le fond est dans un vrai calque inférieur.
   */
-
   z-index: 0;
 
   background:
     radial-gradient(
-      circle at 50% -10%,
-      rgba(112, 65, 255, 0.075),
-      transparent 38%
+      circle at 50% -5%,
+      rgba(112, 65, 255, 0.11),
+      transparent 34%
     ),
     radial-gradient(
       circle at 90% 25%,
-      rgba(99, 102, 241, 0.035),
-      transparent 30%
+      rgba(99, 102, 241, 0.045),
+      transparent 28%
     ),
     radial-gradient(
       circle at 10% 70%,
-      rgba(168, 85, 247, 0.02),
-      transparent 30%
+      rgba(168, 85, 247, 0.025),
+      transparent 28%
     );
 
-  opacity: 0;
+  opacity: 1;
 
-  animation:
-    backgroundReveal 1.8s ease-out 0.15s forwards,
-    ambientFloat 18s ease-in-out 2s infinite alternate;
+  animation: ambientFloat 18s ease-in-out infinite alternate;
 }
 
-@keyframes backgroundReveal {
-  0% {
-    opacity: 0;
-    transform: scale(1.08);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+/* =========================================================
+   AMBIENT ANIMATION
+========================================================= */
 
 @keyframes ambientFloat {
   0% {
@@ -130,34 +114,41 @@ body::before {
 }
 
 /* =========================================================
-   GRAIN
+   CONTENT LAYER
+========================================================= */
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+  L'IntroScreen est ensuite placé volontairement
+  au-dessus de tout avec son propre z-index.
+*/
+
+/* =========================================================
+   SUBTLE GRAIN
 ========================================================= */
 
 body::after {
   content: "";
 
   position: fixed;
-
   inset: 0;
 
   pointer-events: none;
 
+  /*
+    Derrière absolument tout le contenu.
+  */
   z-index: 0;
 
-  opacity: 0.008;
+  opacity: 0.012;
 
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 
-  mix-blend-mode: normal;
-}
-
-/* =========================================================
-   ALL PAGE CONTENT
-========================================================= */
-
-body > * {
-  position: relative;
-  z-index: 1;
+  mix-blend-mode: overlay;
 }
 
 /* =========================================================
@@ -249,7 +240,7 @@ button {
 
   border-radius: 999px;
 
-  background: rgba(112, 65, 255, 0.05);
+  background: rgba(112, 65, 255, 0.06);
 
   filter: blur(100px);
 
@@ -333,16 +324,26 @@ button {
    TEXT GRADIENT
 ========================================================= */
 
+/*
+  IMPORTANT :
+  aucun blur
+  aucun opacity
+  aucun shadow
+  aucun overlay
+
+  Le gradient est appliqué DIRECTEMENT aux lettres.
+*/
+
 .text-gradient {
   display: inline-block;
 
   background: linear-gradient(
-    100deg,
+    110deg,
     #ffffff 0%,
     #ffffff 35%,
     #f5f3ff 50%,
-    #ddd6fe 65%,
-    #a78bfa 82%,
+    #c4b5fd 65%,
+    #a78bfa 80%,
     #6366f1 100%
   );
 
@@ -354,6 +355,10 @@ button {
 
   -webkit-text-fill-color: transparent;
   color: transparent;
+
+  opacity: 1;
+  filter: none;
+  text-shadow: none;
 }
 
 /* =========================================================
@@ -379,6 +384,10 @@ button {
 
   -webkit-text-fill-color: transparent;
   color: transparent;
+
+  opacity: 1;
+  filter: none;
+  text-shadow: none;
 }
 
 /* =========================================================
@@ -472,6 +481,23 @@ button {
 }
 
 /* =========================================================
+   INTRO / LOADING
+========================================================= */
+
+/*
+  Tous les écrans de chargement passent au-dessus
+  du contenu du site.
+*/
+
+.intro-screen,
+.loading-screen {
+  position: fixed !important;
+  inset: 0;
+
+  z-index: 99999 !important;
+}
+
+/* =========================================================
    CURSEUR PERSONNALISÉ
 ========================================================= */
 
@@ -501,7 +527,7 @@ button {
   }
 
   body::before {
-    animation-duration: 1.5s, 20s;
+    animation-duration: 20s;
   }
 }
 
