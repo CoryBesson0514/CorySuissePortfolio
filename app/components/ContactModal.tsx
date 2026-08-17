@@ -486,7 +486,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
               ================================================= */}
 
               <p className="mt-5 text-center text-[10px] text-zinc-700">
-                Réponse généralement rapide
+                © 2026 Cory Besson
               </p>
             </div>
           </motion.div>
