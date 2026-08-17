@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
 
 const skills = [
   {
@@ -99,20 +98,13 @@ export default function Skills() {
               className="group relative border-b border-white/10 p-8 transition-all duration-500 hover:bg-white/[0.025] md:p-10"
             >
               {/* =================================================
-                  NUMÉRO + ICÔNE
+                  NUMÉRO
               ================================================= */}
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center">
                 <span className="text-sm font-medium text-zinc-600 transition-colors duration-300 group-hover:text-violet-400">
                   {skill.number}
                 </span>
-
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-600 transition-all duration-500 group-hover:border-violet-400/30 group-hover:bg-violet-500/10 group-hover:text-violet-300">
-                  <ArrowUpRight
-                    size={16}
-                    className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </div>
               </div>
 
               {/* =================================================
