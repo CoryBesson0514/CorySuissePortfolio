@@ -21,14 +21,18 @@ export default function Hero() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 30,
+            y: 24,
+            filter: "blur(6px)",
           }}
           animate={{
             opacity: 1,
             y: 0,
+            filter: "blur(0px)",
           }}
           transition={{
-            duration: 0.8,
+            duration: 0.7,
+            delay: 0.05,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="mb-8"
         >
@@ -42,15 +46,18 @@ export default function Hero() {
         <motion.h1
           initial={{
             opacity: 0,
-            y: 50,
+            y: 45,
+            filter: "blur(8px)",
           }}
           animate={{
             opacity: 1,
             y: 0,
+            filter: "blur(0px)",
           }}
           transition={{
             duration: 0.9,
-            delay: 0.1,
+            delay: 0.15,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="relative z-50 max-w-6xl text-[clamp(4rem,10vw,9rem)] font-semibold leading-[0.85] tracking-[-0.07em]"
         >
@@ -76,18 +83,25 @@ export default function Hero() {
         <motion.div
           initial={{
             opacity: 0,
-            y: 25,
+            y: 22,
+            filter: "blur(5px)",
           }}
           animate={{
             opacity: 1,
             y: 0,
+            filter: "blur(0px)",
           }}
           transition={{
             duration: 0.7,
-            delay: 0.3,
+            delay: 0.4,
+            ease: [0.22, 1, 0.36, 1],
           }}
           className="relative z-50 mt-10"
         >
+          {/* =================================================
+              LOCALISATION + VÉHICULE
+          ================================================= */}
+
           <motion.div
             initial={{
               opacity: 0,
@@ -99,7 +113,8 @@ export default function Hero() {
             }}
             transition={{
               duration: 0.6,
-              delay: 0.4,
+              delay: 0.5,
+              ease: [0.22, 1, 0.36, 1],
             }}
             className="flex flex-wrap items-center gap-5 text-sm text-zinc-500"
           >
@@ -118,7 +133,7 @@ export default function Hero() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 10,
+              y: 12,
             }}
             animate={{
               opacity: 1,
@@ -126,10 +141,13 @@ export default function Hero() {
             }}
             transition={{
               duration: 0.6,
-              delay: 0.5,
+              delay: 0.6,
+              ease: [0.22, 1, 0.36, 1],
             }}
             className="mt-5 flex flex-wrap items-center gap-3"
           >
+            {/* Découvrir */}
+
             <a
               href="#about"
               className="group flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm transition duration-300 hover:bg-white hover:text-black"
@@ -140,6 +158,8 @@ export default function Hero() {
                 className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
               />
             </a>
+
+            {/* CV */}
 
             <Link
               href="/cv"
@@ -158,15 +178,18 @@ export default function Hero() {
           href="#about"
           initial={{
             opacity: 0,
+            y: 8,
           }}
           animate={{
             opacity: 1,
+            y: 0,
           }}
           transition={{
-            delay: 1,
-            duration: 0.6,
+            delay: 1.15,
+            duration: 0.7,
+            ease: [0.22, 1, 0.36, 1],
           }}
-          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 text-zinc-500 md:block"
+          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 text-zinc-500 transition-colors duration-300 hover:text-white md:block"
         >
           <ArrowDown className="animate-bounce" />
         </motion.a>
