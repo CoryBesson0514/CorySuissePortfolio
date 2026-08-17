@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
 
 const skills = [
   {
@@ -31,10 +32,33 @@ const skills = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section relative overflow-hidden">
       <div className="container-site">
-        {/* Header */}
-        <div className="mb-16">
+        {/* =================================================
+            HEADER
+        ================================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+            filter: "blur(6px)",
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+          className="mb-16"
+        >
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             Compétences
           </p>
@@ -43,46 +67,77 @@ export default function Skills() {
             Ce que je peux apporter,
             <span className="text-zinc-500"> au-delà d'un simple CV.</span>
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Skills */}
+        {/* =================================================
+            SKILLS
+        ================================================= */}
+
         <div className="grid border-t border-white/10 md:grid-cols-2">
           {skills.map((skill, index) => (
             <motion.div
               key={skill.number}
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 35,
+                filter: "blur(5px)",
               }}
               whileInView={{
                 opacity: 1,
                 y: 0,
+                filter: "blur(0px)",
               }}
               viewport={{
                 once: true,
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.5,
+                duration: 0.65,
                 delay: index * 0.08,
+                ease: "easeOut",
               }}
-              className="group border-b border-white/10 p-8 transition-colors duration-300 hover:bg-white/[0.03] md:p-10"
+              className="group relative border-b border-white/10 p-8 transition-all duration-500 hover:bg-white/[0.025] md:p-10"
             >
-              <div className="flex items-start gap-6">
-                <span className="text-sm text-zinc-600 transition-colors duration-300 group-hover:text-zinc-400">
+              {/* =================================================
+                  NUMÉRO + ICÔNE
+              ================================================= */}
+
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-zinc-600 transition-colors duration-300 group-hover:text-violet-400">
                   {skill.number}
                 </span>
+
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-600 transition-all duration-500 group-hover:border-violet-400/30 group-hover:bg-violet-500/10 group-hover:text-violet-300">
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </div>
               </div>
 
-              <h3 className="mt-10 text-2xl font-medium text-white md:text-3xl">
+              {/* =================================================
+                  TITRE
+              ================================================= */}
+
+              <h3 className="mt-12 text-2xl font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-violet-100 md:text-3xl">
                 {skill.title}
               </h3>
 
-              <p className="mt-4 max-w-lg text-base leading-relaxed text-zinc-500 md:text-lg">
+              {/* =================================================
+                  DESCRIPTION
+              ================================================= */}
+
+              <p className="mt-4 max-w-lg text-base leading-relaxed text-zinc-500 transition-colors duration-300 group-hover:text-zinc-400 md:text-lg">
                 {skill.description}
               </p>
 
-              <div className="mt-8 h-px w-0 bg-white transition-all duration-500 group-hover:w-full" />
+              {/* =================================================
+                  INDICATEUR
+              ================================================= */}
+
+              <div className="mt-8 h-px w-full overflow-hidden bg-white/5">
+                <div className="h-full w-0 bg-gradient-to-r from-violet-500 via-purple-400 to-transparent transition-all duration-700 ease-out group-hover:w-full" />
+              </div>
             </motion.div>
           ))}
         </div>
