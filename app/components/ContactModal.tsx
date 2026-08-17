@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { X, Phone, Mail, MessageCircle } from "lucide-react";
+import { X, Phone, Mail, MessageCircle, ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   defaultSiteConfig,
@@ -20,26 +20,24 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
   useEffect(() => {
     if (!open) return;
 
-    const controller = new AbortController();
-
     getSiteConfig()
-      .then((data) => {
-        if (!controller.signal.aborted) setConfig(data);
-      })
+      .then((data) => setConfig(data))
       .catch((error) =>
         console.error("Erreur de chargement du contact :", error),
       );
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
+
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     return () => {
-      controller.abort();
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
     };
@@ -51,127 +49,372 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center px-5"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto px-4 py-6 sm:px-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Me contacter"
         >
-          {/* Fond */}
+          {/* =================================================
+              FOND
+          ================================================= */}
+
           <motion.div
-            className="absolute inset-0 bg-black/75 backdrop-blur-md"
+            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
             onClick={onClose}
           />
 
-          {/* Fenêtre */}
+          {/* =================================================
+              FENÊTRE
+          ================================================= */}
+
           <motion.div
             initial={{
               opacity: 0,
-              scale: 0.92,
               y: 25,
+              scale: 0.96,
             }}
             animate={{
               opacity: 1,
-              scale: 1,
               y: 0,
+              scale: 1,
             }}
             exit={{
               opacity: 0,
-              scale: 0.92,
-              y: 25,
+              y: 20,
+              scale: 0.97,
             }}
             transition={{
-              duration: 0.3,
-              ease: "easeOut",
+              duration: 0.4,
+              ease: [0.22, 1, 0.36, 1],
             }}
-            className="relative w-full max-w-lg overflow-hidden rounded-[28px] border border-white/10 bg-[#090909] shadow-2xl"
+            className="
+              relative
+              z-10
+              my-auto
+              w-full
+              max-w-lg
+              overflow-hidden
+              rounded-[30px]
+              border
+              border-white/10
+              bg-[#090909]
+              shadow-[0_30px_100px_rgba(0,0,0,0.65)]
+            "
           >
-            {/* Bouton fermer */}
-            <button
+            {/* =================================================
+                BOUTON FERMER
+            ================================================= */}
+
+            <motion.button
+              type="button"
               onClick={onClose}
               aria-label="Fermer"
-              className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 text-zinc-400 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:text-white"
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
+              className="
+                absolute
+                right-5
+                top-5
+                z-30
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/10
+                bg-black/50
+                text-white
+                backdrop-blur-xl
+                transition-colors
+                duration-300
+                hover:bg-white/10
+              "
             >
-              <X size={19} />
-            </button>
+              <X size={18} strokeWidth={1.8} />
+            </motion.button>
 
-            {/* Photo */}
-            <div className="relative h-[280px] w-full overflow-hidden">
-              <img
+            {/* =================================================
+                PHOTO
+            ================================================= */}
+
+            <div className="relative h-[250px] w-full overflow-hidden sm:h-[280px]">
+              <motion.img
                 src="/moi.jpg"
                 alt="Cory Besson"
+                initial={{
+                  scale: 1.04,
+                }}
+                animate={{
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: "easeOut",
+                }}
                 className="h-full w-full object-cover"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-transparent to-transparent" />
+              {/* Dégradé bas */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090909] via-[#090909]/20 to-transparent" />
+
+              {/* Très léger halo violet */}
+              <div
+                aria-hidden="true"
+                className="
+                  pointer-events-none
+                  absolute
+                  -bottom-24
+                  left-1/2
+                  h-48
+                  w-72
+                  -translate-x-1/2
+                  rounded-full
+                  bg-violet-500/10
+                  blur-[90px]
+                "
+              />
+
+              {/* Ligne subtile */}
+              <div className="absolute bottom-0 left-7 right-7 h-px bg-white/10" />
             </div>
 
-            {/* Contenu */}
-            <div className="px-7 pb-8 pt-1">
-              <p className="text-[11px] uppercase tracking-[0.25em] text-zinc-500">
+            {/* =================================================
+                CONTENU
+            ================================================= */}
+
+            <div className="px-6 pb-7 pt-1 sm:px-7 sm:pb-8">
+              {/* Label */}
+
+              <motion.p
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.4 }}
+                className="
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  tracking-[0.28em]
+                  text-zinc-500
+                "
+              >
                 Me contacter
-              </p>
+              </motion.p>
 
-              <h2 className="mt-2 text-3xl font-medium tracking-tight text-white">
+              {/* Nom */}
+
+              <motion.h2
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.45 }}
+                className="
+                  mt-2
+                  text-3xl
+                  font-semibold
+                  tracking-[-0.04em]
+                  text-white
+                "
+              >
                 Cory Besson
-              </h2>
+              </motion.h2>
 
-              <p className="mt-2 max-w-sm text-sm leading-relaxed text-zinc-500">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25, duration: 0.45 }}
+                className="
+                  mt-2
+                  max-w-sm
+                  text-sm
+                  leading-relaxed
+                  text-zinc-500
+                "
+              >
                 Disponible pour de nouvelles opportunités professionnelles en
                 Suisse.
-              </p>
+              </motion.p>
 
-              {/* Informations de contact */}
+              {/* =================================================
+                  CONTACT
+              ================================================= */}
+
               <div className="mt-7 space-y-3">
                 {/* Téléphone */}
-                <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400">
-                    <Phone size={18} />
+
+                <a
+                  href={phoneHref}
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-4
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-white/[0.025]
+                    p-4
+                    transition-all
+                    duration-300
+                    hover:border-white/20
+                    hover:bg-white/[0.055]
+                  "
+                >
+                  <div
+                    className="
+                      flex
+                      h-11
+                      w-11
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-xl
+                      border
+                      border-white/10
+                      bg-white/[0.045]
+                      text-zinc-400
+                      transition-all
+                      duration-300
+                      group-hover:border-violet-400/20
+                      group-hover:bg-violet-500/10
+                      group-hover:text-violet-200
+                    "
+                  >
+                    <Phone size={18} strokeWidth={1.8} />
                   </div>
 
-                  <div className="min-w-0">
-                    <p className="text-[11px] uppercase tracking-[0.15em] text-zinc-600">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-600">
                       Téléphone
                     </p>
 
-                    <a
-                      href={phoneHref}
-                      className="mt-1 block text-sm text-zinc-300 hover:text-white"
-                    >
+                    <p className="mt-1 truncate text-sm text-white">
                       {config.phone}
-                    </a>
+                    </p>
                   </div>
-                </div>
+
+                  <ArrowUpRight
+                    size={16}
+                    className="
+                      shrink-0
+                      text-zinc-700
+                      transition-all
+                      duration-300
+                      group-hover:-translate-y-0.5
+                      group-hover:translate-x-0.5
+                      group-hover:text-violet-300
+                    "
+                  />
+                </a>
 
                 {/* E-mail */}
+
                 <a
                   href={`mailto:${config.email}`}
-                  className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
+                  className="
+                    group
+                    flex
+                    items-center
+                    gap-4
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-white/[0.025]
+                    p-4
+                    transition-all
+                    duration-300
+                    hover:border-white/20
+                    hover:bg-white/[0.055]
+                  "
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-zinc-400 transition group-hover:text-white">
-                    <Mail size={18} />
+                  <div
+                    className="
+                      flex
+                      h-11
+                      w-11
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-xl
+                      border
+                      border-white/10
+                      bg-white/[0.045]
+                      text-zinc-400
+                      transition-all
+                      duration-300
+                      group-hover:border-violet-400/20
+                      group-hover:bg-violet-500/10
+                      group-hover:text-violet-200
+                    "
+                  >
+                    <Mail size={18} strokeWidth={1.8} />
                   </div>
 
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.15em] text-zinc-600">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-zinc-600">
                       E-mail
                     </p>
 
-                    <p className="mt-1 text-sm text-white">{config.email}</p>
+                    <p className="mt-1 truncate text-sm text-white">
+                      {config.email}
+                    </p>
                   </div>
+
+                  <ArrowUpRight
+                    size={16}
+                    className="
+                      shrink-0
+                      text-zinc-700
+                      transition-all
+                      duration-300
+                      group-hover:-translate-y-0.5
+                      group-hover:translate-x-0.5
+                      group-hover:text-violet-300
+                    "
+                  />
                 </a>
               </div>
 
-              {/* Réseaux sociaux */}
-              <div className="mt-5 grid grid-cols-2 gap-3">
+              {/* =================================================
+                  RÉSEAUX
+              ================================================= */}
+
+              <div className="mt-3 grid grid-cols-2 gap-3">
                 {/* Instagram */}
+
                 <a
                   href="https://www.instagram.com/cory.besson"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-12 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.025] text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+                  className="
+                    group
+                    flex
+                    h-12
+                    items-center
+                    justify-center
+                    gap-2
+                    rounded-xl
+                    border
+                    border-white/10
+                    bg-white/[0.025]
+                    text-zinc-400
+                    transition-all
+                    duration-300
+                    hover:border-white/20
+                    hover:bg-white/[0.06]
+                    hover:text-white
+                  "
                 >
                   <svg
                     width="18"
@@ -200,20 +443,51 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
                 </a>
 
                 {/* WhatsApp */}
+
                 <a
                   href="https://wa.me/33609581742"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-12 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.025] text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+                  className="
+                    group
+                    flex
+                    h-12
+                    items-center
+                    justify-center
+                    gap-2
+                    rounded-xl
+                    border
+                    border-white/10
+                    bg-white/[0.025]
+                    text-zinc-400
+                    transition-all
+                    duration-300
+                    hover:border-white/20
+                    hover:bg-white/[0.06]
+                    hover:text-white
+                  "
                 >
                   <MessageCircle
                     size={18}
-                    className="transition-transform duration-300 group-hover:scale-110"
+                    strokeWidth={1.8}
+                    className="
+                      transition-transform
+                      duration-300
+                      group-hover:scale-110
+                    "
                   />
 
                   <span className="text-sm">WhatsApp</span>
                 </a>
               </div>
+
+              {/* =================================================
+                  FOOTER
+              ================================================= */}
+
+              <p className="mt-5 text-center text-[10px] text-zinc-700">
+                Réponse généralement rapide
+              </p>
             </div>
           </motion.div>
         </motion.div>
