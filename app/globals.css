@@ -1,9 +1,27 @@
 @import "tailwindcss";
 
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root {
-  --background: #090714;
-  --foreground: #ffffff;
+  --background: #08080d;
+  --foreground: #f5f5f7;
+
+  --muted: #8b8b96;
+  --muted-dark: #555560;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-hover: rgba(167, 139, 250, 0.24);
+
+  --purple: #8b5cf6;
+  --purple-light: #a78bfa;
+  --blue: #6366f1;
 }
+
+/* =========================================================
+   BASE
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -11,7 +29,8 @@
 
 html {
   scroll-behavior: smooth;
-  background: #090714;
+  background: var(--background);
+  color-scheme: dark;
 }
 
 body {
@@ -19,25 +38,32 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 
-  background: #090714;
+  background:
+    radial-gradient(
+      circle at 50% -20%,
+      rgba(99, 102, 241, 0.07),
+      transparent 38%
+    ),
+    var(--background);
 
-  color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* =========================================================
-   FOND
-   IMPORTANT :
-   aucun pseudo-element,
-   aucun filter,
-   aucun blur,
-   aucun overlay.
+   SÉLECTION
 ========================================================= */
 
-body::before,
-body::after {
-  display: none !important;
-  content: none !important;
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: white;
 }
 
 /* =========================================================
@@ -48,10 +74,10 @@ body::after {
   background: linear-gradient(
     110deg,
     #ffffff 0%,
-    #ffffff 20%,
-    #ddd6fe 40%,
-    #a78bfa 65%,
-    #6366f1 85%
+    #ffffff 28%,
+    #ddd6fe 52%,
+    #a78bfa 76%,
+    #818cf8 100%
   );
 
   -webkit-background-clip: text;
@@ -64,9 +90,9 @@ body::after {
 .text-gradient-purple {
   background: linear-gradient(
     100deg,
-    #f59e0b 0%,
-    #ec4899 30%,
-    #a855f7 65%,
+    #c4b5fd 0%,
+    #a78bfa 40%,
+    #818cf8 75%,
     #6366f1 100%
   );
 
@@ -95,23 +121,34 @@ body::after {
   padding: 140px 0;
 }
 
-.section::before {
-  display: none !important;
+/*
+   Séparation très légère entre les grosses sections.
+   Pas de grosse ligne visible : juste une variation
+   presque imperceptible de lumière.
+*/
+
+.section + .section {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.008),
+      transparent 120px
+    );
 }
 
 /* =========================================================
-   GRID
+   GRID BACKGROUND
 ========================================================= */
 
 .grid-background {
   background-image:
     linear-gradient(
-      rgba(167, 139, 250, 0.025) 1px,
+      rgba(167, 139, 250, 0.018) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(167, 139, 250, 0.025) 1px,
+      rgba(167, 139, 250, 0.018) 1px,
       transparent 1px
     );
 
@@ -125,24 +162,42 @@ body::after {
 .glass {
   position: relative;
 
-  background: rgba(255, 255, 255, 0.045);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.025)
+    );
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
 
   box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.25);
+    0 20px 70px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
   transition:
     border-color 0.35s ease,
     box-shadow 0.35s ease,
+    background 0.35s ease,
     transform 0.35s ease;
 }
 
 .glass:hover {
-  border-color: rgba(139, 92, 246, 0.24);
+  border-color: var(--border-hover);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(139, 92, 246, 0.025)
+    );
 
   box-shadow:
-    0 25px 90px rgba(0, 0, 0, 0.3);
+    0 25px 90px rgba(0, 0, 0, 0.28),
+    0 0 50px rgba(139, 92, 246, 0.035);
 }
 
 /* =========================================================
@@ -151,14 +206,14 @@ body::after {
 
 .glow-purple {
   box-shadow:
-    0 0 30px rgba(139, 92, 246, 0.2),
-    0 0 80px rgba(139, 92, 246, 0.08);
+    0 0 30px rgba(139, 92, 246, 0.18),
+    0 0 80px rgba(139, 92, 246, 0.07);
 }
 
 .glow-blue {
   box-shadow:
-    0 0 30px rgba(99, 102, 241, 0.2),
-    0 0 80px rgba(99, 102, 241, 0.08);
+    0 0 30px rgba(99, 102, 241, 0.18),
+    0 0 80px rgba(99, 102, 241, 0.07);
 }
 
 /* =========================================================
@@ -172,19 +227,19 @@ body::after {
 
   pointer-events: none;
 
-  filter: blur(70px);
+  filter: blur(90px);
 
-  opacity: 0.5;
+  opacity: 0.42;
 
-  animation: orbFloat 10s ease-in-out infinite alternate;
+  animation: orbFloat 12s ease-in-out infinite alternate;
 }
 
 .glow-orb-purple {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.26);
 }
 
 .glow-orb-blue {
-  background: rgba(99, 102, 241, 0.24);
+  background: rgba(99, 102, 241, 0.2);
 }
 
 @keyframes orbFloat {
@@ -220,7 +275,7 @@ body::after {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.1),
     transparent
   );
 
@@ -249,6 +304,14 @@ button {
 }
 
 /* =========================================================
+   IMAGES
+========================================================= */
+
+img {
+  max-width: 100%;
+}
+
+/* =========================================================
    SCROLLBAR
 ========================================================= */
 
@@ -257,12 +320,14 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #070611;
+  background: #08080d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #403080;
+  background: #33295c;
   border-radius: 999px;
+
+  border: 2px solid #08080d;
 }
 
 ::-webkit-scrollbar-thumb:hover {

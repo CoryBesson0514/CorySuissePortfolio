@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { GraduationCap, ArrowUpRight } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 
 const education = [
   {
@@ -127,7 +127,7 @@ export default function Education() {
 
                 {/* Contenu */}
 
-                <div className="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+                <div className="mt-8">
                   <div>
                     <h3 className="max-w-3xl text-2xl font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-violet-100 md:text-3xl">
                       {item.title}
@@ -142,13 +142,6 @@ export default function Education() {
                     <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-500 md:text-lg">
                       {item.description}
                     </p>
-                  </div>
-
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-zinc-600 transition-all duration-500 group-hover:border-violet-400/30 group-hover:bg-violet-500/10 group-hover:text-violet-300">
-                    <ArrowUpRight
-                      size={17}
-                      className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
                   </div>
                 </div>
 

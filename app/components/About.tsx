@@ -32,7 +32,7 @@ export default function About() {
 
     const spaceOnRight = window.innerWidth - rect.right;
 
-    let x;
+    let x: number;
 
     if (spaceOnRight >= imageWidth + gap) {
       x = rect.right + gap;
@@ -59,7 +59,6 @@ export default function About() {
     image: ImageKey,
   ) => {
     event.stopPropagation();
-
     setActiveImage(image);
   };
 
@@ -68,9 +67,33 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="section relative">
+    <section id="about" className="section relative overflow-hidden">
       <div className="container-site">
-        <div className="mb-12">
+        {/* =================================================
+            HEADER
+        ================================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+            filter: "blur(6px)",
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+          className="mb-12"
+        >
           <p className="mb-4 text-sm uppercase tracking-[0.2em] text-zinc-500">
             À propos
           </p>
@@ -79,9 +102,32 @@ export default function About() {
             Un nouveau départ en Suisse,
             <span className="text-zinc-500"> avec l'envie de construire.</span>
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20">
+        {/* =================================================
+            CONTENU
+        ================================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.1,
+            ease: "easeOut",
+          }}
+          className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-20"
+        >
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-zinc-600">
               Ma situation
@@ -90,11 +136,10 @@ export default function About() {
 
           <div className="space-y-6 text-lg leading-relaxed text-zinc-400 md:text-xl">
             <p>
-              <span className="text-white">Français, à 22 ans,</span> j'ai
-              choisi de m'installer en{" "}
-              <span className="text-white">Suisse</span> pour rejoindre une
-              partie de ma famille et saisir une nouvelle opportunité
-              professionnelle.
+              <span className="text-white">À 22 ans,</span> j'ai choisi de
+              m'installer en <span className="text-white">Suisse</span> pour
+              rejoindre une partie de ma famille et saisir une nouvelle
+              opportunité professionnelle.
             </p>
 
             <p>
@@ -118,10 +163,13 @@ export default function About() {
               développer mes compétences.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* IMAGE */}
+      {/* =================================================
+          IMAGE BSN
+      ================================================= */}
+
       <AnimatePresence>
         {activeImage && (
           <motion.div
@@ -154,8 +202,12 @@ export default function About() {
               flex
               items-center
               justify-center
+              bg-black/40
+              backdrop-blur-sm
               lg:pointer-events-none
               lg:inset-auto
+              lg:bg-transparent
+              lg:backdrop-blur-none
               lg:block
             "
           >

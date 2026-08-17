@@ -15,24 +15,41 @@ export default function Cursor() {
   });
 
   const [cursorType, setCursorType] = useState<CursorType>("default");
+  const [enabled, setEnabled] = useState(false);
 
   const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-
     if (isAdmin) {
-      // Admin : curseur système
-      html.classList.remove("custom-cursor");
-
-      html.style.cursor = "auto";
-      body.style.cursor = "auto";
+      setEnabled(false);
+      document.documentElement.classList.remove("custom-cursor");
+      document.documentElement.style.cursor = "";
+      document.body.style.cursor = "";
 
       return;
     }
 
-    // Site public : curseur personnalisé
+    const mediaQuery = window.matchMedia("(pointer: fine)");
+
+    const updateEnabled = () => {
+      setEnabled(mediaQuery.matches);
+    };
+
+    updateEnabled();
+
+    mediaQuery.addEventListener("change", updateEnabled);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateEnabled);
+    };
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (isAdmin || !enabled) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+
     html.classList.add("custom-cursor");
 
     html.style.cursor = "";
@@ -51,6 +68,10 @@ export default function Cursor() {
         return;
       }
 
+      /*
+       * Éléments avec un comportement spécifique
+       */
+
       const cursorElement = target.closest("[data-cursor]");
 
       if (cursorElement) {
@@ -61,6 +82,10 @@ export default function Cursor() {
           return;
         }
       }
+
+      /*
+       * Liens / boutons classiques
+       */
 
       if (
         target.closest("a") ||
@@ -76,38 +101,55 @@ export default function Cursor() {
       setCursorType("default");
     };
 
+    const handleMouseLeave = () => {
+      setCursorType("default");
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.documentElement.removeEventListener(
+        "mouseleave",
+        handleMouseLeave,
+      );
+
       html.classList.remove("custom-cursor");
     };
-  }, [isAdmin]);
+  }, [isAdmin, enabled]);
 
-  if (isAdmin) {
+  if (isAdmin || !enabled) {
     return null;
   }
 
-  const size = cursorType === "default" ? 10 : cursorType === "hover" ? 18 : 54;
+  /*
+   * Taille du curseur
+   */
+
+  const size = cursorType === "default" ? 9 : cursorType === "hover" ? 18 : 58;
+
+  const label =
+    cursorType === "view" ? "VIEW" : cursorType === "open" ? "OPEN" : "";
 
   return (
     <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-[9999] flex items-center justify-center rounded-full bg-white text-[9px] font-medium tracking-[0.12em] text-black"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] flex items-center justify-center rounded-full bg-white text-[8px] font-semibold tracking-[0.14em] text-black"
       animate={{
         x: position.x - size / 2,
         y: position.y - size / 2,
         width: size,
         height: size,
+        opacity: 1,
       }}
       transition={{
         type: "spring",
-        stiffness: 500,
-        damping: 30,
-        mass: 0.2,
+        stiffness: 600,
+        damping: 35,
+        mass: 0.18,
       }}
     >
-      {cursorType === "view" && "VIEW"}
-      {cursorType === "open" && "OPEN"}
+      {label}
     </motion.div>
   );
 }

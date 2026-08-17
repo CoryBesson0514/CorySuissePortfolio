@@ -26,6 +26,10 @@ const links = [
     href: "#skills",
   },
   {
+    name: "Formation",
+    href: "#education",
+  },
+  {
     name: "Points forts",
     href: "#strengths",
   },
