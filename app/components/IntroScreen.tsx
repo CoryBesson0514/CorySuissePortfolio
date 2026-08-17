@@ -7,13 +7,24 @@ export default function IntroScreen() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    // Bloque le défilement pendant l'écran d'introduction
+    document.body.style.overflow = "hidden";
+
     const timer = setTimeout(() => {
       setShow(false);
+
+      // Réactive le défilement une fois l'intro terminée
+      document.body.style.overflow = "";
 
       window.dispatchEvent(new Event("intro-finished"));
     }, 5200);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+
+      // Sécurité : réactive toujours le scroll si le composant est démonté
+      document.body.style.overflow = "";
+    };
   }, []);
 
   return (
